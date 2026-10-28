@@ -1,0 +1,70 @@
+MASCOTA TANEXTLI - IMAGENES PARA ANIMAR
+==============================================
+
+Todas las imagenes miden 640 x 877 px, tienen fondo transparente y el mismo
+encuadre. Por eso se ponen una encima de otra, en el mismo lugar, y encajan
+sin acomodar nada.
+
+ORDEN PARA APILAR (de atras hacia adelante)
+----------------------------------------------
+ 1. capas/cola.png        detras de todo
+ 2. capas/brazo.png       el brazo que saluda (va detras del puno verde)
+ 3. capas/cuerpo.png      vestido, piernas, zapatos, el otro brazo
+ 4. capas/cabeza.png      cabeza con orejas y moño (sin ojos, cejas ni boca)
+ 5. capas/ceja-i.png  y  capas/ceja-d.png
+ 6. ojos                  capas/ojo-i.png + ojo-d.png  (abiertos)
+                          o bien expresiones/ojos/... (cerrados o felices)
+ 7. boca                  capas/sonrisa.png (la original)
+                          o bien una de expresiones/bocas/...
+
+Lo que se mueve junto con la cabeza: cabeza, cejas, ojos y boca. Si inclinas o
+subes la cabeza, mueve esas piezas JUNTAS (en un mismo grupo).
+
+EXPRESIONES (cambia la pieza)
+----------------------------------------------
+expresiones/bocas/
+  boca-abierta.png   hablando
+  boca-grande.png    muy contenta / celebrando
+  boca-triste.png    triste
+  boca-sorpresa.png  sorprendida (la O)
+  boca-hmm.png       pensando / dudando
+expresiones/ojos/
+  ojo-cerrado-i/d.png   ojos cerrados (dormida, parpadeo largo)
+  ojo-feliz-i/d.png     ojos felices en arco  ^  ^
+
+Cuando uses una de estas bocas, QUITA capas/sonrisa.png.
+Cuando uses ojos cerrados o felices, QUITA capas/ojo-i.png y ojo-d.png.
+
+PUNTOS DE GIRO (x, y en pixeles del lienzo 640x877)
+----------------------------------------------
+ brazo (saludar)                     170,  442
+ cola (mover)                        455,  591
+ cabeza (inclinar/asentir)           266,  393
+ ojo-i (parpadeo, escala Y)          223,  250
+ ojo-d (parpadeo, escala Y)          348,  266
+ ceja-i (subir/bajar/inclinar)       227,  180
+ ceja-d (subir/bajar/inclinar)       361,  196
+ boca (centro de las bocas)          275,  340
+ pies (saltos, aplastarse)           305,  851
+
+Para CSS, el transform-origin de cada pieza son esos dos numeros en px
+(si la imagen se muestra a otro tamano, multiplicalos por tamano/640).
+
+MOVIMIENTOS RECOMENDADOS
+----------------------------------------------
+ brazo     girar entre -25 y +18 grados (saludar)
+ cola      girar entre -14 y +20 grados (mover)
+ cabeza    girar +-6 grados y subir/bajar hasta 10 px (asentir, ladear)
+ ojos      escala vertical de 1 a 0.05 y de vuelta (parpadeo)
+ cejas     subir 8-12 px (sorpresa), girar +-15 grados en sentido contrario
+           una de la otra (tristeza)
+ todo      subir/bajar y aplastar un poco el cuerpo para saltos
+
+OTROS ARCHIVOS
+----------------------------------------------
+ mascota-completa.png / .webp   la mascota entera en reposo (misma medida)
+ avatar-cara.png                solo la cara, 320x320, para avatar o globo
+
+Nota: las bocas y los ojos cerrados/felices estan dibujados con el mismo
+estilo de linea de la mascota original; si tu equipo de diseno tiene los
+originales en Figma, se pueden cambiar por esos con el mismo nombre.

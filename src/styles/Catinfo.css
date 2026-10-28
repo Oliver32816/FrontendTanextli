@@ -1,0 +1,70 @@
+.intro-titulo {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1b4332;
+  margin: 24px 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.intro-hojas {
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+
+.intro-tarjeta {
+  background: #fff;
+  border: 2px solid #dfe9e2;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.intro-tarjeta svg {
+  width: 24px;
+  height: 24px;
+  color: #1b4332;
+  margin-bottom: 10px;
+}
+
+.intro-tarjeta h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: #1b4332;
+}
+
+.intro-tarjeta p {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2d6a4f;
+  line-height: 1.4;
+}
+
+.intro-continuar {
+  display: block;
+  margin: 0 auto;
+  padding: 13px 40px;
+  border: none;
+  border-radius: 8px;
+  background: #1b4332;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.intro-continuar:hover { background: #2d6a4f; }
+
+@media (max-width: 600px) {
+  .intro-grid { grid-template-columns: 1fr; max-width: 100%; }
+}

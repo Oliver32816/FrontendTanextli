@@ -1,0 +1,68 @@
+.mascota {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mascota-globo-arriba { flex-direction: column; }
+.mascota-globo-derecha { flex-direction: row-reverse; }
+
+/* Tamaños de la mascota: ajústalos aquí si la animación lo necesita */
+.mascota-medio {
+  display: block;
+  object-fit: contain;
+  border-radius: 16px;
+}
+.mascota-pequeno .mascota-medio { width: 90px; }
+.mascota-mediano .mascota-medio { width: 150px; }
+.mascota-grande .mascota-medio { width: 230px; }
+
+/* Globo de diálogo */
+.mascota-globo {
+  position: relative;
+  max-width: 340px;
+  padding: 12px 20px;
+  background: #fff;
+  border: 2px solid #bfe6c4;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(27, 67, 50, 0.12);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #1b4332;
+  animation: mascota-globo-entrada 0.35s ease both;
+}
+
+/* Colita del globo */
+.mascota-globo::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 2px solid #bfe6c4;
+  transform: rotate(45deg);
+}
+.mascota-globo-arriba .mascota-globo::after {
+  bottom: -9px;
+  left: 50%;
+  margin-left: -7px;
+  border-top: none;
+  border-left: none;
+}
+.mascota-globo-derecha .mascota-globo::after {
+  left: -9px;
+  top: 50%;
+  margin-top: -7px;
+  border-right: none;
+  border-top: none;
+}
+
+@keyframes mascota-globo-entrada {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascota-globo { animation: none; }
+}

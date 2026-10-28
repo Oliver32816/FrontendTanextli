@@ -1,0 +1,232 @@
+.menu-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #eaf7ec;
+}
+
+.sidebar {
+  width: 190px;
+  background: #1b4332;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  align-self: flex-start;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 32px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-nav-abajo {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #dfe9e2;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-salir {
+  color: #f3b3b3;
+}
+
+.menu-contenido {
+  flex: 1;
+  padding: 24px 40px;
+}
+
+.menu-topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.icono-boton {
+  border: none;
+  background: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1b4332;
+}
+
+.bienvenida-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #d8f0da, #eefcef);
+  border: 2px solid #bfe6c4;
+  border-radius: 12px;
+  padding: 24px 32px;
+  margin-bottom: 28px;
+}
+
+.bienvenida-card h2 {
+  margin: 0 0 6px;
+  color: #1b4332;
+}
+
+.bienvenida-card p {
+  margin: 0;
+  color: #2d6a4f;
+  font-weight: 600;
+  max-width: 420px;
+}
+
+.bienvenida-mascota {
+  width: 110px;
+  flex-shrink: 0;
+  /* NUEVO: la mascota animada es más alta que la imagen; este margen evita que la tarjeta crezca de más */
+  margin: -18px 0;
+}
+
+.menu-subtitulo {
+  text-align: center;
+  color: #1b4332;
+  margin-bottom: 20px;
+}
+
+.categorias-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.categoria-card {
+  display: block;
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease;
+}
+
+.categoria-card:hover {
+  transform: translateY(-2px);
+}
+
+.categoria-card h3 {
+  margin: 6px 0 4px;
+}
+
+.categoria-card p {
+  margin: 0 0 14px;
+  font-size: 13.5px;
+}
+
+.categoria-icono {
+  font-size: 26px;
+}
+
+.categoria-barra {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.categoria-barra-relleno {
+  height: 100%;
+  background: currentColor;
+}
+
+.categoria-progreso {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.categoria-naranja {
+  background: #ffe4cf;
+  color: #c2540a;
+}
+
+.categoria-morado {
+  background: #ecdcfb;
+  color: #7a35c9;
+}
+
+.categoria-azul {
+  background: #d6e8fd;
+  color: #1c63c4;
+}
+
+.categoria-verde {
+  background: #cdeed4;
+  color: #1b4332;
+}
+
+@media (max-width: 760px) {
+  .menu-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    position: static;
+    height: auto;
+  }
+
+  .sidebar-nav-abajo {
+    margin-top: 0;
+    border: none;
+  }
+
+  .categorias-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bienvenida-card {
+    flex-direction: column;
+    text-align: center;
+  }
+    .bienvenida-mascota {
+    width: 180px;
+  flex-shrink: 0;
+  margin: -40px 0;
+  }
+}
+
+.sidebar .icono {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}

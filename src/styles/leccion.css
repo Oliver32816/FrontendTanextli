@@ -1,0 +1,528 @@
+.lp-pagina {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #c9f7cf 0%, #fdfde8 100%);
+}
+
+/* ---------- Cabecera ---------- */
+.lp-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+  background: #dcf8e2;
+  border-bottom: 2px solid #bfe6c4;
+  border-radius: 0 0 16px 16px;
+}
+
+.lp-volver {
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  border: none;
+  background: none;
+  color: #1b4332;
+  cursor: pointer;
+}
+.lp-volver svg { width: 100%; height: 100%; }
+
+.lp-cabecera-titulo {
+  flex: 1;
+  margin: 0;
+  padding-right: 36px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+/* ---------- Barra de avance de la lección ---------- */
+.lp-progreso {
+  width: calc(100% - 48px);
+  max-width: 640px;
+  height: 8px;
+  margin: 14px auto 0;
+  border-radius: 4px;
+  background: rgba(27, 67, 50, 0.15);
+  overflow: hidden;
+}
+.lp-progreso-relleno {
+  height: 100%;
+  background: #2d6a4f;
+  transition: width 0.3s ease;
+}
+
+/* ---------- Contenido ---------- */
+.lp-contenido {
+  flex: 1;
+  width: 100%;
+  max-width: 820px;
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 24px 150px; /* espacio abajo para la barra de resultado */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: lp-entrada 0.3s ease both;
+}
+
+.lp-actividad {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  color: #c2540a;
+}
+
+.lp-instruccion {
+  margin: -8px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2d6a4f;
+}
+
+.lp-mascota-zona {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lp-tarjeta {
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  background: #fff;
+  border: 2px solid #dfe9e2;
+  border-radius: 18px;
+}
+
+.lp-imagen {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Círculo de color (categoría Colores) */
+.lp-muestra {
+  width: 84px;
+  height: 84px;
+  border: 3px solid rgba(27, 67, 50, 0.2);
+  border-radius: 50%;
+}
+
+.lp-palabra {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+.lp-traduccion {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2d6a4f;
+}
+
+.lp-pregunta {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+/* ---------- Audio y micrófono ---------- */
+.lp-audio {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #bfe6c4;
+  border-radius: 14px;
+  background: #eafaf0;
+  color: #1b4332;
+  cursor: pointer;
+}
+.lp-audio svg { width: 26px; height: 26px; }
+.lp-audio:hover { background: #d8f0da; }
+
+.lp-mic {
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #bfe6c4;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff, #e6f7ea);
+  color: #1b4332;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lp-mic svg {
+  width: 42px;
+  height: 42px;
+  pointer-events: none;
+}
+.lp-mic.grabando {
+  background: #2d6a4f;
+  border-color: #1b4332;
+  color: #fff;
+  animation: lp-pulso 1.1s ease-in-out infinite;
+}
+
+.lp-ayuda {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  color: #1b4332;
+}
+
+.lp-aviso {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: #b3261e;
+}
+
+.lp-enlace {
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2d6a4f;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Unir las parejas ---------- */
+.lp-pares {
+  width: 100%;
+  max-width: 460px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.lp-columna {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.lp-par {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 10px;
+  border: 2px solid #cfd6d2;
+  border-radius: 14px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  color: #1b4332;
+  cursor: pointer;
+}
+.lp-par:hover { border-color: #2d6a4f; }
+.lp-par.seleccionada { border-color: #1b4332; background: #e1f5e7; }
+.lp-par.unida {
+  border-color: #9bd8a8;
+  background: #e9f7ec;
+  color: #7f9d8b;
+  opacity: 0.6;
+  cursor: default;
+}
+.lp-par.fallo {
+  border-color: #b3261e;
+  background: #fdecec;
+  animation: lp-temblor 0.35s ease;
+}
+
+.lp-par-muestra {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 2px solid rgba(27, 67, 50, 0.25);
+  border-radius: 50%;
+}
+
+/* ---------- Opción múltiple ---------- */
+.lp-opciones {
+  width: 100%;
+  max-width: 380px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.lp-opcion {
+  padding: 22px 10px;
+  border: 2px solid #cfd6d2;
+  border-radius: 14px;
+  background: linear-gradient(#fff, #eef6f1);
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 800;
+  color: #1b4332;
+  cursor: pointer;
+}
+.lp-opcion:hover:not(:disabled) { border-color: #2d6a4f; }
+.lp-opcion:disabled { cursor: default; }
+.lp-opcion.seleccionada { border-color: #1b4332; background: linear-gradient(#fff, #a8d5b8); }
+.lp-opcion.correcta { border-color: #2d6a4f; background: #cdeed4; }
+.lp-opcion.incorrecta { border-color: #b3261e; background: #fdecec; }
+
+/* ---------- Escritura ---------- */
+.lp-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #cfd6d2;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: #1b4332;
+}
+.lp-input:focus {
+  outline: none;
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+}
+.lp-input.correcta { border-color: #2d6a4f; background: #eafaf0; }
+.lp-input.incorrecta { border-color: #b3261e; background: #fdecec; }
+
+/* ---------- Botones ---------- */
+.lp-boton {
+  width: 100%;
+  max-width: 300px;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: #1b4332;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+.lp-boton:hover:not(:disabled) { background: #2d6a4f; }
+.lp-boton:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.lp-boton-secundario {
+  width: 100%;
+  max-width: 220px;
+  padding: 10px;
+  border: 2px solid #cfd6d2;
+  border-radius: 10px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1b4332;
+  cursor: pointer;
+}
+.lp-boton-secundario:hover { border-color: #2d6a4f; }
+
+/* ---------- Barra de resultado (sube desde abajo) ---------- */
+.lp-barra {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 16px 24px;
+  border-top: 2px solid;
+  animation: lp-barra-entrada 0.3s ease both;
+}
+.lp-barra.correcta { background: #d7f5dd; border-color: #9bd8a8; }
+.lp-barra.incorrecta { background: #fde4e1; border-color: #f0b3ac; }
+
+.lp-barra-contenido {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.lp-barra-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.lp-barra .mascota-medio { width: 64px; }
+
+.lp-barra-titulo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+.lp-barra.correcta .lp-barra-titulo { color: #1b4332; }
+.lp-barra.incorrecta .lp-barra-titulo { color: #b3261e; }
+
+.lp-barra-detalle {
+  margin: 2px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #33413a;
+}
+
+.lp-boton-barra {
+  width: auto;
+  min-width: 180px;
+  padding: 13px 28px;
+}
+.lp-barra.incorrecta .lp-boton-barra { background: #b3261e; }
+.lp-barra.incorrecta .lp-boton-barra:hover { background: #8f1d18; }
+
+/* ---------- Pantalla final ---------- */
+.lp-resumen {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.lp-resumen-titulo {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #c2540a;
+}
+
+.lp-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.lp-stat {
+  width: 150px;
+  overflow: hidden;
+  border: 2px solid;
+  border-radius: 14px;
+  background: #fff;
+}
+.lp-stat.naranja { border-color: #f4a261; }
+.lp-stat.verde { border-color: #7ccf8f; }
+
+.lp-stat-cab {
+  margin: 0;
+  padding: 5px 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #1b2a22;
+}
+.lp-stat.naranja .lp-stat-cab { background: #f4a261; }
+.lp-stat.verde .lp-stat-cab { background: #7ccf8f; }
+
+.lp-stat-valor {
+  margin: 0;
+  padding: 16px 0;
+  font-size: 26px;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+.lp-resumen-botones {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.lp-resumen-botones .lp-boton,
+.lp-resumen-botones .lp-boton-secundario {
+  width: auto;
+  flex: 1 1 160px;
+  max-width: 200px;
+}
+
+/* ---------- "Próximamente" ---------- */
+.lp-fin {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes lp-entrada {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lp-barra-entrada {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes lp-temblor {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes lp-pulso {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.45); }
+  50% { box-shadow: 0 0 0 14px rgba(45, 106, 79, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-contenido, .lp-barra, .lp-par.fallo, .lp-mic.grabando { animation: none; }
+  .lp-progreso-relleno { transition: none; }
+}
+
+@media (max-width: 600px) {
+  .lp-cabecera { padding: 12px 14px; }
+  .lp-cabecera-titulo { font-size: 19px; }
+  .lp-contenido { padding: 16px 16px 190px; }
+  .lp-barra { padding: 14px 16px; }
+  .lp-barra-contenido { flex-direction: column; align-items: stretch; }
+  .lp-boton-barra { width: 100%; }
+  .lp-stats { flex-direction: column; }
+}
+
+/* ---------- Mascota a un lado (pantallas anchas) ---------- */
+@media (min-width: 820px) {
+  .lp-mascota-zona {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 190px;
+    justify-content: center;
+  }
+  .lp-mascota-zona .mascota-globo {
+    max-width: 190px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .lp-mascota-zona .mascota-medio { width: 100px; }
+    /* En los pasos pares la mascota pasa al lado izquierdo */
+  .lp-contenido.lado-izquierdo .lp-mascota-zona {
+    right: auto;
+    left: 24px;
+  }
+}

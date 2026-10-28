@@ -1,0 +1,190 @@
+/* Mismo diseño que el original, pasado de estilos en línea a CSS */
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth__card {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  min-height: 580px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* ---- Lado izquierdo ---- */
+.auth__left {
+  flex: 1;
+  background-color: #d8f3dc;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.auth__circle {
+  position: absolute;
+  border-radius: 50%;
+}
+.auth__circle--1 { top: -30px; left: -30px; width: 140px; height: 140px; background: #c7f9cc; opacity: .6; }
+.auth__circle--2 { bottom: -40px; right: -40px; width: 180px; height: 180px; background: #b7e4c7; opacity: .5; }
+
+.auth__subtitle {
+  color: #2d6a4f;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  z-index: 1;
+}
+
+.auth__left-title {
+  color: #1b4332;
+  font-size: 48px;
+  font-weight: 800;
+  margin: 10px 0;
+  z-index: 1;
+}
+
+.auth__left-text {
+  color: #2d6a4f;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  z-index: 1;
+}
+
+.auth__mascota {
+  z-index: 1;
+  margin-top: 15px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.auth__mascota img { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---- Lado derecho ---- */
+.auth__right {
+  flex: 1.1;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth__brand { font-size: 32px; font-weight: 800; color: #1b4332; margin: 0; }
+.auth__tagline { font-size: 14px; color: #52b788; margin: 4px 0 25px; font-weight: 500; }
+.auth__form-title { font-size: 18px; font-weight: 700; color: #1b4332; margin: 0 0 20px; }
+
+.auth__form { display: flex; flex-direction: column; }
+
+.auth__group { display: flex; flex-direction: column; margin-bottom: 15px; }
+.auth__group label { font-size: 12px; color: #2d6a4f; margin-bottom: 6px; font-weight: 600; }
+.auth__group input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  outline: none;
+}
+.auth__group input:focus { border-color: #52b788; box-shadow: 0 0 0 3px rgba(82, 183, 136, .2); }
+
+.auth__forgot { text-align: right; margin: -5px 0 15px; }
+.auth__forgot a { font-size: 11px; color: #52b788; text-decoration: none; }
+
+.auth__btn-primary {
+  background-color: #1b4332;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.auth__divider { display: flex; align-items: center; margin: 20px 0; }
+.auth__divider span { flex: 1; height: 1px; background: #e0e0e0; }
+.auth__divider i { width: 10px; height: 10px; border-radius: 50%; border: 1px solid #b0b0b0; margin: 0 8px; }
+
+.auth__btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+}
+
+.auth__btn-primary:disabled,
+.auth__btn-google:disabled { opacity: .6; cursor: wait; }
+
+.auth__btn-primary:focus-visible,
+.auth__btn-google:focus-visible,
+.auth__toggle button:focus-visible { outline: 3px solid #52b788; outline-offset: 2px; }
+
+.auth__toggle { text-align: center; margin-top: 20px; font-size: 12px; color: #666; }
+.auth__toggle button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #1b4332;
+  font-weight: 700;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.auth__message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid;
+}
+.auth__message--success { background: #e6f4ea; color: #137333; border-color: #a8dab5; }
+.auth__message--error   { background: #fce8e6; color: #c5221f; border-color: #f5c2c0; }
+
+/* ---- Celular: se apilan los paneles ---- */
+@media (max-width: 720px) {
+  .auth__card { flex-direction: column; min-height: auto; }
+  .auth__left { padding: 30px 20px; }
+  .auth__left-title { font-size: 36px; }
+  .auth__mascota { width: 120px; height: 120px; }
+  .auth__right { padding: 30px 24px; }
+
+  .auth__mascota-animada {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+
+  /* NUEVO: lugar de la mascota animada */
+.auth__mascota-animada {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+}
