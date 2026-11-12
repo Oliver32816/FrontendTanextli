@@ -70,7 +70,6 @@
   justify-content: center;
   animation: ob-entrada 0.4s ease both;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .ob-centro {
@@ -81,6 +80,22 @@
   text-align: center;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+/* Contenedores acotados para evitar desbordes de capas de la mascota */
+.ob-mascota-wrapper-grande,
+.ob-mascota-wrapper-pequeno {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.ob-mascota-wrapper-grande .mascota,
+.ob-mascota-wrapper-pequeno .mascota {
+  max-width: 100% !important;
+  height: auto !important;
 }
 
 .ob-subtexto {
@@ -100,21 +115,8 @@
   box-sizing: border-box;
 }
 
-/* La mascota con su globo va alineada a la izquierda de la lista */
 .ob-columna .mascota {
   justify-content: flex-end;
-  max-width: 100%;
-}
-
-/* Blindaje estricto para que la mascota y sus capas no se desborden en el onboarding */
-.ob-centro .mascota,
-.ob-columna .mascota,
-.ob-centro .mxa-ancla,
-.ob-columna .mxa-ancla,
-.ob-centro .mascota-capas-wrapper,
-.ob-columna .mascota-capas-wrapper {
-  max-width: 100% !important;
-  box-sizing: border-box;
 }
 
 .ob-lista {

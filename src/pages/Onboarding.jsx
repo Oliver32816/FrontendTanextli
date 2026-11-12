@@ -7,20 +7,14 @@ import {
 } from '../components/Icons'
 import '../styles/onboarding.css'
 
-// ¿Habrá recompensas? Cuando el equipo lo decida, cámbialo a true para mostrar ese paso
-// (y edita su texto más abajo).
 const HAY_RECOMPENSAS = false
 
-// Lista de "lo que vas a aprender": sale de las categorías de data/categorias.js
 const itemsCategorias = Object.values(categorias).map((c) => ({
   icono: c.icono,
   titulo: c.titulo,
   texto: c.descripcion,
 }))
 
-// Pasos de la bienvenida, en orden. Para cambiar un texto, edítalo aquí.
-//   tipo 'bienvenida' y 'cierre': mascota grande al centro
-//   tipo 'categorias' y 'tutorial': mascota con globo y una lista de elementos
 const pasos = [
   {
     id: 'bienvenida',
@@ -76,7 +70,6 @@ const pasos = [
           estado: 'feliz',
           mensaje: '¡Y también hay recompensas!',
           items: [
-            // Pendiente: reemplazar por las recompensas reales cuando se definan
             { icono: '⭐', titulo: 'Gana recompensas', texto: 'Completa lecciones para conseguirlas.' },
           ],
         },
@@ -135,12 +128,16 @@ function Onboarding({ onTerminar }) {
       <main className="ob-contenido" key={actual.id}>
         {actual.tipo === 'bienvenida' || actual.tipo === 'cierre' ? (
           <div className="ob-centro">
-            <Mascota estado={actual.estado} mensaje={actual.mensaje} tamano="grande" globo="arriba" />
+            <div className="ob-mascota-wrapper-grande">
+              <Mascota estado={actual.estado} mensaje={actual.mensaje} tamano="grande" globo="arriba" />
+            </div>
             {actual.subtexto && <p className="ob-subtexto">{actual.subtexto}</p>}
           </div>
         ) : (
           <div className="ob-columna">
-            <Mascota estado={actual.estado} mensaje={actual.mensaje} tamano="pequeno" globo="derecha" />
+            <div className="ob-mascota-wrapper-pequeno">
+              <Mascota estado={actual.estado} mensaje={actual.mensaje} tamano="pequeno" globo="derecha" />
+            </div>
             <ul className="ob-lista">
               {items.map((item) => (
                 <li key={item.titulo} className="ob-item">
