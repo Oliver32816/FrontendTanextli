@@ -39,6 +39,17 @@
 .mascota-mediano .mascota-medio { width: 150px; }
 .mascota-grande .mascota-medio { width: 230px; }
 
+/* Control estricto para los íconos SVG globales (.icono) */
+svg.icono {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+  flex-shrink: 0;
+}
+
 /* Globo de diálogo */
 .mascota-globo {
   position: relative;
