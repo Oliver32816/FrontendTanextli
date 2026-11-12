@@ -5,10 +5,10 @@ import { verificarSesion } from './services/authService'
 import Menu from './pages/Menu'
 import CategoriaIntro from './pages/catInfo'
 import Categoria from './pages/Categoria'
-import AcercaDe from './pages/acercaDe'
+import AcercaDe from './pages/AcercaDe'
 import Cargando from './components/Cargando'
 import NoEncontrada from './pages/NoEncontrada'
-import Onboarding from './pages/Onboarding'
+import Onboarding from './pages/Auth/Onboarding'
 import { onboardingPendiente, marcarOnboardingCompletado } from './services/onboarding'
 import Leccion from './pages/Leccion'
 
@@ -31,15 +31,15 @@ function App() {
   // Sin sesión: cualquier ruta (/menu, /categoria/...) muestra el login
   if (!usuario) return <AuthScreen onLogin={setUsuario} />
   if (onboardingPendiente(usuario)) {
-  return (
-    <Onboarding
-      onTerminar={() => {
-        marcarOnboardingCompletado(usuario)
-        setBienvenidaVista((n) => n + 1)
-      }}
-    />
-  )
-}
+    return (
+      <Onboarding
+        onTerminar={() => {
+          marcarOnboardingCompletado(usuario)
+          setBienvenidaVista((n) => n + 1)
+        }}
+      />
+    )
+  }
 
   return (
     <Routes>
