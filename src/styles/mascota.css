@@ -7,9 +7,11 @@
 .mascota-globo-arriba { flex-direction: column; }
 .mascota-globo-derecha { flex-direction: row-reverse; }
 
-/* Tamaños de la mascota: ajústalos aquí si la animación lo necesita */
+/* Tamaños de la mascota con restricciones responsivas */
 .mascota-medio {
   display: block;
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
   border-radius: 16px;
 }
