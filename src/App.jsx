@@ -8,7 +8,7 @@ import Categoria from './pages/Categoria'
 import AcercaDe from './pages/AcercaDe'
 import Cargando from './components/Cargando'
 import NoEncontrada from './pages/NoEncontrada'
-import Onboarding from './pages/Auth/Onboarding'
+import Onboarding from './pages/Onboarding'
 import { onboardingPendiente, marcarOnboardingCompletado } from './services/onboarding'
 import Leccion from './pages/Leccion'
 
