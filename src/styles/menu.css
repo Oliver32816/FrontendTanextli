@@ -112,7 +112,6 @@
 .bienvenida-mascota {
   width: 110px;
   flex-shrink: 0;
-  /* NUEVO: la mascota animada es más alta que la imagen; este margen evita que la tarjeta crezca de más */
   margin: -18px 0;
 }
 
@@ -218,15 +217,20 @@
     flex-direction: column;
     text-align: center;
   }
-    .bienvenida-mascota {
+  .bienvenida-mascota {
     width: 180px;
-  flex-shrink: 0;
-  margin: -40px 0;
+    flex-shrink: 0;
+    margin: -40px 0;
   }
 }
 
-.sidebar .icono {
-  width: 20px;
-  height: 20px;
+/* Regla global estricta para asegurar que todos los iconos mantengan su tamaño correcto */
+.icono, svg.icono {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
   flex-shrink: 0;
 }
