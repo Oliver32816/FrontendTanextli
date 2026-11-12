@@ -9,23 +9,34 @@
 .mascota-globo-arriba { flex-direction: column; }
 .mascota-globo-derecha { flex-direction: row-reverse; }
 
-/* Contenedor y dimensiones de la mascota con control responsivo estricto */
+/* Contenedor seguro para capas y medios */
+.mxa-ancla {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.mascota-capas-wrapper {
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Restricciones responsivas estrictas para imágenes y videos */
 .mascota-medio {
   display: block;
-  width: 100%;
+  max-width: 100%;
   height: auto;
   object-fit: contain;
   border-radius: 16px;
 }
 
-/* Forzar límites según la clase de tamaño contenedora */
-.mascota-pequeno { max-width: 90px; }
 .mascota-pequeno .mascota-medio { width: 90px; }
-
-.mascota-mediano { max-width: 150px; }
 .mascota-mediano .mascota-medio { width: 150px; }
-
-.mascota-grande { max-width: 230px; }
 .mascota-grande .mascota-medio { width: 230px; }
 
 /* Globo de diálogo */
