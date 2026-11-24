@@ -196,3 +196,12 @@
   line-height: 1.4;
 }
 }
+
+/* ---- Pantalla de cambio de contraseña ---- */
+.auth__card--sola { max-width: 460px; min-height: 0; }
+.auth__card--sola .auth__right { padding: 36px 32px; }
+.auth__nota { font-size: 13px; color: #555; line-height: 1.5; margin: -4px 0 18px; }
+.auth__link-secundario {
+  display: block; margin: 14px auto 0; background: none; border: none; cursor: pointer;
+  color: #666; font-size: 12px; text-decoration: underline; font-family: inherit;
+}

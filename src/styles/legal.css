@@ -1,0 +1,29 @@
+.legal {
+  min-height: 100vh;
+  background: #f4f6f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+}
+.legal__cabecera {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 24px; background: #d8f3dc; border-bottom: 1px solid #b7e4c7;
+}
+.legal__marca { font-weight: 800; font-size: 20px; color: #1b4332; text-decoration: none; }
+.legal__cabecera nav { display: flex; gap: 18px; }
+.legal__cabecera nav a { color: #1b4332; font-weight: 600; font-size: 14px; text-decoration: none; }
+.legal__cabecera nav a:hover { text-decoration: underline; }
+.legal__contenido {
+  max-width: 760px; margin: 32px auto; padding: 36px 40px; background: #fff;
+  border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); line-height: 1.65;
+}
+.legal__contenido h1 { color: #1b4332; margin: 0 0 4px; font-size: 30px; }
+.legal__contenido h2 { color: #2d6a4f; margin: 28px 0 8px; font-size: 18px; }
+.legal__contenido ul { padding-left: 22px; }
+.legal__contenido li { margin-bottom: 6px; }
+.legal__contenido a { color: #2d6a4f; }
+.legal__fecha { color: #777; font-size: 13px; margin: 0 0 20px; }
+.legal__volver { margin-top: 32px; }
+@media (max-width: 600px) {
+  .legal__contenido { margin: 0; border-radius: 0; padding: 24px 20px; }
+  .legal__cabecera { padding: 14px 16px; }
+}

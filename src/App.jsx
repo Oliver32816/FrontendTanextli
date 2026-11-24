@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import AuthScreen from './pages/Auth/AuthScreen'
-import { verificarSesion } from './services/authService'
+import CambiarPassword from './pages/Auth/CambiarPassword'
+import { verificarSesion, cerrarSesion } from './services/authService'
+import { sincronizarProgreso } from './services/progreso'
+import { EVENTO_SESION_VENCIDA } from './services/api'
+import { Privacidad, Terminos } from './pages/Legal'
 import Menu from './pages/Menu'
 import CategoriaIntro from './pages/catInfo'
 import Categoria from './pages/Categoria'
@@ -19,26 +23,64 @@ import './styles/preferencias.css'
 // Aplica la letra grande / animaciones guardadas desde que abre la app
 aplicarPreferencias()
 
+// Páginas que se ven sin iniciar sesión
+const PUBLICAS = { '/privacidad': Privacidad, '/terminos': Terminos }
+
 function App() {
-    //const [usuario, setUsuario] = useState(null)
-  // AHORA (TEMPORAL, solo para desarrollo)
-  const [usuario, setUsuario] = useState({ nombre_usuario: 'Edgar', correo: 'edgar@dev.com' })
-  const [revisando, setRevisando] = useState(false)
+  const [usuario, setUsuario] = useState(null)
+  const [revisando, setRevisando] = useState(true)
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const [, setBienvenidaVista] = useState(0)
 
-  // Al abrir la app, revisa si ya había una sesión iniciada
-  /*useEffect(() => {
-    verificarSesion().then((u) => {
-      setUsuario(u)
-      setRevisando(false)
-    })
-  }, [])*/
+  // Al abrir la app: revisa la sesión guardada y trae el progreso del servidor
+  useEffect(() => {
+    let activo = true
+    verificarSesion()
+      .then(async (u) => {
+        if (u) await sincronizarProgreso()
+        if (activo) setUsuario(u)
+      })
+      .finally(() => activo && setRevisando(false))
+    return () => { activo = false }
+  }, [])
+
+  // Si el servidor rechaza el token (venció a los 7 días), regresa al login
+  useEffect(() => {
+    const vencida = () => {
+      cerrarSesion()
+      setUsuario(null)
+    }
+    window.addEventListener(EVENTO_SESION_VENCIDA, vencida)
+    return () => window.removeEventListener(EVENTO_SESION_VENCIDA, vencida)
+  }, [])
+
+  // Después de iniciar sesión (correo o Google): primero el progreso, luego la app
+  const entrar = async (u) => {
+    setRevisando(true)
+    await sincronizarProgreso()
+    setUsuario(u)
+    setRevisando(false)
+  }
+
+  const salir = async () => {
+    await cerrarSesion()
+    setUsuario(null)
+    navigate('/', { replace: true })
+  }
+
+  const Publica = PUBLICAS[pathname]
+  if (Publica) return <Publica />
 
   if (revisando) return <Cargando />
 
   // Sin sesión: cualquier ruta (/menu, /categoria/...) muestra el login
-  if (!usuario) return <AuthScreen onLogin={setUsuario} />
+  if (!usuario) return <AuthScreen onLogin={entrar} />
+
+  // Entró con una contraseña temporal: debe elegir una nueva
+  if (usuario.debe_cambiar_password) {
+    return <CambiarPassword usuario={usuario} onListo={setUsuario} onSalir={salir} />
+  }
 
   if (onboardingPendiente(usuario)) {
     return (
