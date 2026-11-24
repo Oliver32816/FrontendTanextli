@@ -77,7 +77,7 @@ function Mascota({
     medio = (
       <MascotaAnimada
         estado={estadoCapas}
-        tamano={TAMANOS_CAPAS[tamano] || 260}
+        tamano={typeof tamano === 'number' ? tamano : TAMANOS_CAPAS[tamano] || 260}
         entrada={entrada}
       />
     )
@@ -107,7 +107,7 @@ function Mascota({
   }
 
   return (
-    <div className={`mascota mascota-${tamano} mascota-globo-${globo}`}>
+    <div className={`mascota mascota-${typeof tamano === 'number' ? 'libre' : tamano} mascota-globo-${globo}`}>
       {mensajeActual && !flotar && <div className="mascota-globo" role="status">{mensajeActual}</div>}
 
       {/* NUEVO: "mxa-ancla" mide justo lo mismo que la mascota; el globo flotante se pega arriba de ella */}
