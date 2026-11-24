@@ -1,98 +1,82 @@
-const API_URL = import.meta.env.VITE_API_URL || "https://olo.tail0de9ec.ts.net/api";
-const TOKEN_KEY = "tanextli_token";
-const USER_KEY = "tanextli_user";
+// Cuenta del usuario: registro, inicio de sesión (correo o Google), sesión guardada y contraseña.
+import { pedir, obtenerToken, TOKEN_KEY } from './api'
+import { olvidarProgreso } from './progreso'
 
-async function pedir(endpoint, { method = "GET", body, token } = {}) {
-  let response;
+const USER_KEY = 'tanextli_user'
+
+export { obtenerToken }
+
+function guardarSesion(datos) {
   try {
-    response = await fetch(`${API_URL}${endpoint}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
-      },
-      body: body ? JSON.stringify(body) : undefined,
-    });
+    if (datos.token) localStorage.setItem(TOKEN_KEY, datos.token)
+    if (datos.usuario) localStorage.setItem(USER_KEY, JSON.stringify(datos.usuario))
   } catch {
-    throw new Error("No hay conexión con el servidor. Revisa que el backend esté encendido.");
+    // sin almacenamiento: la sesión dura mientras la página siga abierta
   }
-
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) {
-  const error = new Error(data.error || data.message || "Ocurrió un error, intenta de nuevo.");
-  error.status = response.status;   // NUEVO
-  throw error;
-}
-return data;
+  return datos.usuario
 }
 
-function guardarSesion(data) {
-  const token = data.token || data.accessToken;
-  const usuario = data.usuario || data.user;
-  
-  if (token) localStorage.setItem(TOKEN_KEY, token);
-  if (usuario) localStorage.setItem(USER_KEY, JSON.stringify(usuario));
-  return usuario;
+export function actualizarUsuarioGuardado(cambios) {
+  const usuario = { ...obtenerUsuarioGuardado(), ...cambios }
+  try {
+    localStorage.setItem(USER_KEY, JSON.stringify(usuario))
+  } catch {
+    // sin almacenamiento
+  }
+  return usuario
 }
 
-// 1. Registro por correo y contraseña
+// Registro con correo y contraseña. Después de crear la cuenta inicia sesión sola.
 export async function registrar({ nombre_usuario, correo, password }) {
-  const bodyData = {
-    nombre_usuario,
-    correo,
-    email: correo,
-    password,
-    contrasena: password
-  };
-  const data = await pedir("/registro", { method: "POST", body: bodyData });
-  return guardarSesion(data);
+  await pedir('/registro', { method: 'POST', body: { nombre_usuario, correo, password }, conToken: false })
+  return iniciarSesion({ correo, password })
 }
 
-// 2. Inicio de sesión por correo y contraseña
 export async function iniciarSesion({ correo, password }) {
-  const bodyData = {
-    correo,
-    email: correo,
-    password,
-    contrasena: password
-  };
-  const data = await pedir("/login", { method: "POST", body: bodyData });
-  return guardarSesion(data);
+  const datos = await pedir('/login', { method: 'POST', body: { correo, password }, conToken: false })
+  return guardarSesion(datos)
 }
 
-// 3. Función compatible si AuthScreen intenta invocar inicio con Google
-export async function iniciarConGoogle() {
-  alert("El inicio de sesión con Google no está activo actualmente. Por favor, ingresa con tu correo y contraseña.");
-  throw new Error("Inicio con Google deshabilitado temporalmente.");
+// "Continuar con Google": credential es el token que entrega el botón de Google.
+// El servidor crea la cuenta si es la primera vez o entra a la que ya existe.
+export async function iniciarConGoogle(credential) {
+  const datos = await pedir('/auth/google', { method: 'POST', body: { credential }, conToken: false })
+  return guardarSesion(datos)
 }
 
-export function obtenerToken() {
-  return localStorage.getItem(TOKEN_KEY);
+export async function cambiarPassword({ actual, nueva }) {
+  await pedir('/perfil/password', { method: 'PUT', body: { password_actual: actual, password_nueva: nueva } })
+  return actualizarUsuarioGuardado({ debe_cambiar_password: false })
 }
 
 export function obtenerUsuarioGuardado() {
   try {
-    return JSON.parse(localStorage.getItem(USER_KEY));
+    return JSON.parse(localStorage.getItem(USER_KEY))
   } catch {
-    return null;
+    return null
   }
 }
 
+// Al abrir la app: si hay token, pregunta al servidor quién es el usuario.
+// Sin internet se usa el usuario guardado para no sacar a la persona de la app.
 export async function verificarSesion() {
-  const token = obtenerToken();
-  if (!token) return null;
+  if (!obtenerToken()) return null
   try {
-    const data = await pedir("/perfil", { token });
-    const usuario = data.usuario || data.user || data;
-    localStorage.setItem(USER_KEY, JSON.stringify(usuario));
-    return usuario;
-  } catch {
-    cerrarSesion();
-    return null;
+    const { usuario } = await pedir('/perfil')
+    return guardarSesion({ usuario })
+  } catch (err) {
+    if (err.sinConexion) return obtenerUsuarioGuardado()
+    cerrarSesion()
+    return null
   }
 }
 
 export async function cerrarSesion() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(USER_KEY);
+  try {
+    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(USER_KEY)
+  } catch {
+    // sin almacenamiento: no hay nada que borrar
+  }
+  olvidarProgreso()
 }

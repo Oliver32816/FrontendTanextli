@@ -84,14 +84,16 @@ function Configuracion({ usuario }) {
     reaccionar('agradecida') // NUEVO
   }
 
-  const reiniciar = () => {
-    if (window.confirm('¿Seguro que quieres borrar tu progreso? Todas las lecciones volverán a estar bloqueadas.')) {
-      reiniciarProgreso()
+      const reiniciar = async () => {
+    if (!window.confirm('¿Seguro que quieres borrar tu progreso? Todas las lecciones volverán a estar bloqueadas.')) return
+    try {
+      await reiniciarProgreso()
       avisar('cuidado', 'Listo: tu progreso se reinició.')
-      reaccionar('animo') // NUEVO
+      reaccionar('animo')
+    } catch (err) {
+      avisar('cuidado', `No se pudo reiniciar: ${err.message}`)
     }
   }
-
   const restablecer = () => {
     if (window.confirm('¿Regresar los ajustes a como estaban al principio? Tu progreso no se borra.')) {
       const nuevas = restablecerPreferencias()
