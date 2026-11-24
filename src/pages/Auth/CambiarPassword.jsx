@@ -1,6 +1,7 @@
 // Aparece después de entrar con una contraseña temporal (el equipo la restableció desde el panel).
 import { useState } from 'react'
 import { cambiarPassword } from '../../services/authService'
+import BotonTema from '../../components/BotonTema'
 import './AuthScreen.css'
 
 const Icono = {
@@ -51,7 +52,7 @@ export default function CambiarPassword({ usuario, onListo, onSalir }) {
   return (
     <div className="auth">
       <div className="tx-fondo-decorativo" aria-hidden="true"><span /><span /><span /></div>
-
+      <BotonTema className="auth-tema" />
       <main className="auth-tarjeta auth-tarjeta--sola tx-aparecer">
         <div className="auth-panel">
           <div className="auth-icono-grande" aria-hidden="true">{Icono.llave}</div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { cerrarSesion, obtenerUsuarioGuardado } from '../services/authService'
+import BotonTema from './BotonTema'
 import {
   IconInicio, IconFamilia, IconColores, IconFrases, IconMenuHamburguesa,
   IconNumeros, IconPerfil, IconConfiguracion, IconSalir, IconInfo,
@@ -16,10 +17,21 @@ const SECCIONES = [
   { to: '/categoria/frases', texto: 'Frases', Icono: IconFrases, tono: 'verde' },
 ]
 
+// Escudo para el enlace de privacidad
+function IconEscudo() {
+  return (
+    <svg className="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3 5 6v5c0 4.5 3 8.5 7 10 4-1.5 7-5.5 7-10V6l-7-3z" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  )
+}
+
 const CUENTA = [
   { to: '/perfil', texto: 'Perfil', Icono: IconPerfil },
   { to: '/configuracion', texto: 'Configuración', Icono: IconConfiguracion },
   { to: '/acerca-de', texto: 'Acerca de', Icono: IconInfo },
+  { to: '/privacidad', texto: 'Privacidad', Icono: IconEscudo },
 ]
 
 const iniciales = (nombre = '') =>
@@ -63,19 +75,25 @@ function Sidebar() {
           <img src="/logo.svg" alt="" width="34" height="34" />
           <span>Tanextli</span>
         </NavLink>
-        <button type="button" className="sidebar-abrir" onClick={() => setAbierto(true)}
-          aria-label="Abrir menú" aria-expanded={abierto} aria-controls="sidebar">
-          <IconMenuHamburguesa />
-        </button>
+        <div className="sidebar-movil-acciones">
+          <BotonTema />
+          <button type="button" className="sidebar-abrir" onClick={() => setAbierto(true)}
+            aria-label="Abrir menú" aria-expanded={abierto} aria-controls="sidebar">
+            <IconMenuHamburguesa />
+          </button>
+        </div>
       </header>
 
       <div className={`sidebar-velo ${abierto ? 'visible' : ''}`} onClick={() => setAbierto(false)} aria-hidden="true" />
 
       <aside id="sidebar" className={`sidebar ${abierto ? 'abierto' : ''}`}>
-        <NavLink to="/menu" className="sidebar-marca sidebar-marca-grande">
-          <img src="/logo.svg" alt="" width="40" height="40" />
-          <span>Tanextli<small>Aprende náhuatl</small></span>
-        </NavLink>
+        <div className="sidebar-cabecera">
+          <NavLink to="/menu" className="sidebar-marca">
+            <img src="/logo.svg" alt="" width="40" height="40" />
+            <span>Tanextli<small>Aprende náhuatl</small></span>
+          </NavLink>
+          <BotonTema className="sidebar-tema" />
+        </div>
 
         <p className="sidebar-titulo">Aprender</p>
         <nav className="sidebar-nav" aria-label="Categorías">

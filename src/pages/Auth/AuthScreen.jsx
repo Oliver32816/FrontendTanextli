@@ -6,6 +6,7 @@ import MascotaAnimada from '../../components/MascotaAnimada'
 import { useMascota } from '../../components/useMascota'
 import BotonGoogle from '../../components/BotonGoogle'
 import { useAncho, tamanoMascota } from '../../components/useAncho'
+import BotonTema from '../../components/BotonTema'
 import './AuthScreen.css'
 
 // Palabras que flotan alrededor de Lobita (del contenido de las lecciones)
@@ -98,7 +99,7 @@ export default function AuthScreen({ onLogin }) {
   return (
     <div className="auth">
       <div className="tx-fondo-decorativo" aria-hidden="true"><span /><span /><span /></div>
-
+      <BotonTema className="auth-tema" />
       <div className="auth-tarjeta tx-aparecer">
         {/* ---------- Lado de Lobita ---------- */}
         <aside className="auth-escena" aria-hidden="true">

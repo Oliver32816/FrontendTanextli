@@ -18,11 +18,12 @@ import Leccion from './pages/Leccion'
 import Perfil from './pages/Perfil'
 import Configuracion from './pages/Configuracion'
 import { aplicarPreferencias } from './services/preferencias'
+import { seguirTemaDelDispositivo } from './services/tema'
 import './styles/preferencias.css'
 
 // Aplica la letra grande / animaciones guardadas desde que abre la app
 aplicarPreferencias()
-
+seguirTemaDelDispositivo()
 // Páginas que se ven sin iniciar sesión
 const PUBLICAS = { '/privacidad': Privacidad, '/terminos': Terminos }
 

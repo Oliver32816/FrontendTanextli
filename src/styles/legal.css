@@ -1,12 +1,14 @@
+/* Aviso de privacidad y términos (mismo diseño que el portal) */
 .legal {
   position: relative;
   min-height: 100vh;
   background: var(--tx-fondo);
   font-family: var(--tx-fuente);
   color: var(--tx-texto);
+  line-height: 1.6;
 }
 
-/* Encabezado de vidrio, igual al del portal */
+/* Encabezado de vidrio */
 .legal-cabecera {
   position: sticky;
   top: 0;
@@ -17,72 +19,86 @@
   border-bottom: 1px solid var(--tx-borde);
 }
 .legal-cabecera-interior {
-  width: min(100% - 2.5rem, 1080px);
+  width: min(100% - 2.5rem, 1180px);
   margin-inline: auto;
   height: 68px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
 }
-.legal-nav { display: flex; gap: .25rem; }
+.legal-nav { margin-left: auto; display: flex; gap: .25rem; }
 .legal-nav a {
-  padding: .5rem .85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .55rem .85rem;
   border-radius: 999px;
   font-weight: 600;
-  font-size: .92rem;
+  font-size: .93rem;
   color: var(--tx-texto-suave);
   text-decoration: none;
   transition: color .2s, background-color .2s;
 }
+.legal-nav a svg { width: 18px; height: 18px; }
 .legal-nav a:hover { color: var(--tx-texto); background: var(--tx-verde-50); }
 .legal-nav a[aria-current="page"] { color: var(--tx-primario); background: var(--tx-verde-100); }
 
+/* Encabezado de la página */
 .legal-hero {
   position: relative;
   z-index: 1;
-  width: min(100% - 2.5rem, 820px);
+  width: min(100% - 2.5rem, 1180px);
   margin: 0 auto;
   padding: 3rem 0 1.5rem;
 }
-.legal-hero h1 { margin: 1rem 0 .5rem; font-size: clamp(2rem, 5vw, 3rem); font-weight: 850; letter-spacing: -.02em; line-height: 1.1; }
-.legal-fecha { margin: 0; color: var(--tx-texto-tenue); font-size: .9rem; }
+.legal-hero h1 { margin: 1rem 0 .75rem; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 850; letter-spacing: -.01em; line-height: 1.2; }
+.legal-lead { margin: 0; max-width: 62ch; font-size: clamp(1.02rem, 2vw, 1.2rem); color: var(--tx-texto-suave); }
 
-.legal-contenido {
+/* Índice + texto */
+.legal-documento {
   position: relative;
   z-index: 1;
-  width: min(100% - 2.5rem, 820px);
-  margin: 0 auto 4rem;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  line-height: 1.7;
+  width: min(100% - 2.5rem, 1180px);
+  margin: 0 auto;
+  padding-bottom: 4rem;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
 }
-.legal-contenido > :first-child { margin-top: 0; }
-.legal-contenido h2 {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  margin: 2rem 0 .6rem;
-  font-size: 1.15rem;
-  color: var(--tx-verde-700);
+.legal-indice { position: sticky; top: 92px; display: grid; gap: .25rem; font-size: .92rem; }
+.legal-indice a {
+  color: var(--tx-texto-suave);
+  padding: .4rem .75rem;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+  transition: background-color .2s, color .2s, border-color .2s;
 }
-.legal-contenido h2::before {
-  content: "";
-  width: 10px;
-  height: 10px;
-  border-radius: 4px;
-  background: linear-gradient(135deg, var(--tx-verde-400), var(--tx-verde-600));
-  flex-shrink: 0;
-}
-.legal-contenido p { margin: 0 0 1rem; color: var(--tx-texto-suave); }
-.legal-contenido strong { color: var(--tx-texto); }
-.legal-contenido ul { margin: 0 0 1rem; padding-left: 1.3rem; color: var(--tx-texto-suave); }
-.legal-contenido li { margin-bottom: .45rem; }
-.legal-contenido li::marker { color: var(--tx-verde-500); }
-.legal-contenido a { color: var(--tx-verde-600); font-weight: 600; }
-.legal-volver { margin-top: 2rem !important; }
+.legal-indice a:hover { background: var(--tx-verde-50); color: var(--tx-texto); }
+.legal-indice a.activo { border-left-color: var(--tx-verde-400); color: var(--tx-primario); background: var(--tx-verde-50); font-weight: 700; }
 
-@media (max-width: 600px) {
-  .legal-cabecera-interior { width: calc(100% - 1.5rem); }
-  .legal-marca-texto { display: none; }
+.legal-prosa { max-width: 72ch; padding: clamp(1.25rem, 3vw, 1.75rem); }
+.legal-prosa > :first-child { margin-top: 0; }
+.legal-prosa h2 { font-size: 1.35rem; margin: 2rem 0 .5em; line-height: 1.2; scroll-margin-top: 92px; }
+.legal-prosa p { margin: 0 0 1em; }
+.legal-prosa ul { margin: 0 0 1em; padding-left: 1.2rem; }
+.legal-prosa li { margin-bottom: .4rem; }
+.legal-prosa a { color: var(--tx-primario); }
+.legal-nota {
+  padding: 1rem 1.25rem;
+  border-radius: var(--tx-radio);
+  background: var(--tx-naranja-100);
+  border-left: 4px solid var(--tx-naranja-500);
+}
+
+@media (max-width: 900px) {
+  .legal-documento { grid-template-columns: 1fr; }
+  .legal-indice { position: static; }
+}
+@media (max-width: 640px) {
+  .legal-cabecera-interior { width: calc(100% - 1.5rem); gap: .5rem; }
+  .legal-marca-texto, .legal-nav a span { display: none; }
+  .legal-nav a { padding: .55rem; }
   .legal-hero { padding-top: 2rem; }
 }
