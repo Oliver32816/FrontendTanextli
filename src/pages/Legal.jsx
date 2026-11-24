@@ -1,35 +1,45 @@
 // Aviso de privacidad y términos de uso. Se ven sin iniciar sesión porque Google los pide
 // públicos para publicar "Continuar con Google".
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import '../styles/legal.css'
 
 // Correo al que las personas escriben para dudas o para pedir que se borre su cuenta
 export const CORREO_CONTACTO = import.meta.env.VITE_CORREO_CONTACTO || 'CORREO_DEL_PROYECTO@gmail.com'
 const ACTUALIZADO = '23 de noviembre de 2026'
 
-function Pagina({ titulo, children }) {
+function Pagina({ titulo, etiqueta, children }) {
+  const { pathname } = useLocation()
+  const actual = (ruta) => (pathname === ruta ? 'page' : undefined)
   return (
     <div className="legal">
-      <header className="legal__cabecera">
-        <Link to="/" className="legal__marca">🍃 Tanextli</Link>
-        <nav>
-          <Link to="/privacidad">Privacidad</Link>
-          <Link to="/terminos">Términos</Link>
-        </nav>
+      <div className="tx-fondo-decorativo" aria-hidden="true"><span /><span /><span /></div>
+      <header className="legal-cabecera">
+        <div className="legal-cabecera-interior">
+          <Link to="/" className="tx-marca">
+            <img src="/logo.svg" alt="" width="38" height="38" />
+            <span className="legal-marca-texto">Tanextli<small>Aprende náhuatl</small></span>
+          </Link>
+          <nav className="legal-nav">
+            <Link to="/privacidad" aria-current={actual('/privacidad')}>Privacidad</Link>
+            <Link to="/terminos" aria-current={actual('/terminos')}>Términos</Link>
+          </nav>
+        </div>
       </header>
-      <main className="legal__contenido">
-        <h1>{titulo}</h1>
-        <p className="legal__fecha">Última actualización: {ACTUALIZADO}</p>
+      <section className="legal-hero">
+        <span className="tx-insignia tx-aparecer">{etiqueta}</span>
+        <h1 className="tx-aparecer tx-retraso-1">{titulo}</h1>
+        <p className="legal-fecha tx-aparecer tx-retraso-2">Última actualización: {ACTUALIZADO}</p>
+      </section>
+      <main className="legal-contenido tx-tarjeta tx-aparecer tx-retraso-3">
         {children}
-        <p className="legal__volver"><Link to="/">← Volver a Tanextli</Link></p>
+        <p className="legal-volver"><Link to="/">← Volver a Tanextli</Link></p>
       </main>
     </div>
   )
 }
-
 export function Privacidad() {
   return (
-    <Pagina titulo="Aviso de privacidad">
+        <Pagina titulo={<>Aviso de <span className="tx-degradado">privacidad</span></>} etiqueta="Tus datos, cuidados">
       <p>
         Tanextli es una aplicación educativa para aprender náhuatl, desarrollada como proyecto de servicio social.
         Este aviso explica qué datos guardamos, para qué los usamos y cómo puedes pedir que se borren.
@@ -91,7 +101,7 @@ export function Privacidad() {
 
 export function Terminos() {
   return (
-    <Pagina titulo="Términos de uso">
+        <Pagina titulo={<>Términos de <span className="tx-degradado">uso</span></>} etiqueta="Reglas claras">
       <p>Al usar Tanextli aceptas estos términos. Si no estás de acuerdo, por favor no uses la aplicación.</p>
 
       <h2>Qué es Tanextli</h2>

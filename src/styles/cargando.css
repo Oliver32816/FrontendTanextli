@@ -1,48 +1,49 @@
 .cargando {
+  position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  background: #eaf7ec;
+  gap: 18px;
+  background: var(--tx-fondo);
+  font-family: var(--tx-fuente);
 }
 
-.cargando-spinner {
+.cargando-logo {
   position: relative;
-  width: 64px;
-  height: 64px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+}
+
+.cargando-logo img {
+  width: 56px;
+  height: 56px;
+  animation: tx-flotar-suave 2.4s ease-in-out infinite;
 }
 
 .cargando-anillo {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 5px solid #cdeed4;
-  border-top-color: #1b4332;
-  animation: cargando-giro 0.9s linear infinite;
-}
-
-.cargando-hoja {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
+  border: 3px solid var(--tx-verde-200);
+  border-top-color: var(--tx-verde-600);
+  animation: tx-girar .9s linear infinite;
 }
 
 .cargando p {
+  position: relative;
+  z-index: 1;
   margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: #2d6a4f;
-}
-
-@keyframes cargando-giro {
-  to { transform: rotate(360deg); }
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--tx-texto-suave);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cargando-anillo { animation: none; }
+  .cargando-anillo, .cargando-logo img { animation: none; }
 }

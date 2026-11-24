@@ -1,0 +1,147 @@
+/* =====================================================================
+   Tanextli · Sistema de diseño (el mismo del portal y del panel)
+   Colores, sombras, botones, campos y animaciones compartidos por toda la app.
+   Todas las clases empiezan con  tx-  y las variables con  --tx-  para no chocar
+   con los estilos de cada pantalla.
+   ===================================================================== */
+
+:root {
+  --tx-verde-900: #0f2e22;
+  --tx-verde-800: #1a4533;
+  --tx-verde-700: #1f5c41;
+  --tx-verde-600: #2b7a56;
+  --tx-verde-500: #3a9a6c;
+  --tx-verde-400: #5cc489;
+  --tx-verde-200: #c8efd6;
+  --tx-verde-100: #e6f7ec;
+  --tx-verde-50: #f3fbf5;
+  --tx-naranja-500: #f08c2b;
+  --tx-naranja-100: #fdebd6;
+  --tx-morado-500: #7c5cd6;
+  --tx-azul-500: #2f80d1;
+  --tx-rojo-500: #d64545;
+  --tx-rojo-100: #fbe3e3;
+
+  --tx-fondo: #f6faf4;
+  --tx-fondo-2: #ffffff;
+  --tx-superficie: rgba(255, 255, 255, 0.78);
+  --tx-borde: rgba(31, 92, 65, 0.12);
+  --tx-texto: #15291f;
+  --tx-texto-suave: #4d6559;
+  --tx-texto-tenue: #7c9086;
+  --tx-primario: var(--tx-verde-700);
+  --tx-primario-hover: var(--tx-verde-800);
+
+  --tx-radio-s: 10px;
+  --tx-radio: 16px;
+  --tx-radio-l: 24px;
+  --tx-sombra-s: 0 1px 2px rgba(15, 46, 34, 0.06), 0 2px 8px rgba(15, 46, 34, 0.05);
+  --tx-sombra: 0 10px 30px -12px rgba(15, 46, 34, 0.25);
+  --tx-sombra-l: 0 30px 60px -20px rgba(15, 46, 34, 0.35);
+  --tx-fuente: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Roboto, Arial, sans-serif;
+  --tx-curva: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------- Fondo decorativo animado (manchas de color que flotan) ---------- */
+.tx-fondo-decorativo { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.tx-fondo-decorativo span {
+  position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55;
+  animation: tx-flotar 18s ease-in-out infinite;
+}
+.tx-fondo-decorativo span:nth-child(1) { width: 480px; height: 480px; background: var(--tx-verde-200); top: -140px; left: -120px; }
+.tx-fondo-decorativo span:nth-child(2) { width: 380px; height: 380px; background: var(--tx-naranja-100); top: 30%; right: -120px; animation-delay: -6s; }
+.tx-fondo-decorativo span:nth-child(3) { width: 420px; height: 420px; background: var(--tx-verde-100); bottom: -160px; left: 30%; animation-delay: -12s; }
+
+/* ---------- Marca ---------- */
+.tx-marca { display: inline-flex; align-items: center; gap: .65rem; color: var(--tx-texto); font-weight: 800; font-size: 1.2rem; text-decoration: none; }
+.tx-marca img { width: 38px; height: 38px; transition: transform .5s var(--tx-curva); }
+.tx-marca:hover img { transform: rotate(-12deg) scale(1.06); }
+.tx-marca small { display: block; font-size: .68rem; font-weight: 600; color: var(--tx-texto-tenue); letter-spacing: .08em; text-transform: uppercase; }
+
+/* ---------- Insignia con punto que late ---------- */
+.tx-insignia {
+  display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .8rem; border-radius: 999px;
+  background: var(--tx-verde-100); color: var(--tx-primario); font-weight: 700; font-size: .78rem; letter-spacing: .04em;
+}
+.tx-insignia::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--tx-verde-400); animation: tx-latido 2s infinite; }
+
+/* ---------- Texto con degradado animado ---------- */
+.tx-degradado {
+  background: linear-gradient(120deg, var(--tx-verde-600), var(--tx-verde-400) 45%, var(--tx-naranja-500));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-size: 200% auto; animation: tx-brillo 8s linear infinite;
+}
+
+/* ---------- Botones ---------- */
+.tx-boton {
+  --bg: var(--tx-primario); --fg: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: .8rem 1.25rem; border-radius: 14px; border: 1px solid transparent;
+  background: var(--bg); color: var(--fg); font: inherit; font-weight: 700; font-size: .95rem;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: transform .2s var(--tx-curva), box-shadow .2s, background-color .2s, opacity .2s;
+  box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--bg) 80%, transparent);
+}
+.tx-boton:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -10px color-mix(in srgb, var(--bg) 90%, transparent); }
+.tx-boton:active { transform: translateY(0); }
+.tx-boton:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.tx-boton svg { width: 18px; height: 18px; flex-shrink: 0; }
+.tx-boton-bloque { width: 100%; }
+.tx-boton-secundario { --bg: var(--tx-fondo-2); --fg: var(--tx-texto); border-color: var(--tx-borde); box-shadow: var(--tx-sombra-s); }
+.tx-boton-fantasma { --bg: transparent; --fg: var(--tx-primario); box-shadow: none; }
+.tx-boton-fantasma:hover { background: var(--tx-verde-50); box-shadow: none; }
+
+/* ---------- Campos ---------- */
+.tx-grupo { margin-bottom: 1rem; }
+.tx-etiqueta { display: block; font-weight: 700; font-size: .86rem; color: var(--tx-texto); margin-bottom: .4rem; }
+.tx-campo-icono { position: relative; }
+.tx-campo-icono > svg {
+  position: absolute; left: .9rem; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; color: var(--tx-texto-tenue); pointer-events: none; transition: color .2s;
+}
+.tx-campo {
+  width: 100%; padding: .78rem 1rem; border-radius: 12px; border: 1.5px solid var(--tx-borde);
+  background: var(--tx-fondo-2); color: var(--tx-texto); font: inherit; font-size: .95rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.tx-campo-icono .tx-campo { padding-left: 2.65rem; }
+.tx-campo::placeholder { color: var(--tx-texto-tenue); }
+.tx-campo:focus { outline: none; border-color: var(--tx-verde-400); box-shadow: 0 0 0 4px color-mix(in srgb, var(--tx-verde-400) 22%, transparent); }
+.tx-campo-icono:focus-within > svg { color: var(--tx-verde-500); }
+
+/* ---------- Tarjeta de vidrio ---------- */
+.tx-tarjeta {
+  background: var(--tx-superficie); border: 1px solid var(--tx-borde); border-radius: var(--tx-radio-l);
+  box-shadow: var(--tx-sombra-s); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+
+/* ---------- Avisos ---------- */
+.tx-alerta {
+  display: flex; gap: .6rem; align-items: flex-start; padding: .75rem .9rem; border-radius: 12px;
+  font-size: .88rem; line-height: 1.45; animation: tx-aparecer .35s var(--tx-curva) both;
+}
+.tx-alerta svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: .1rem; }
+.tx-alerta-error { background: var(--tx-rojo-100); color: #9b2c2c; }
+.tx-alerta-info { background: var(--tx-verde-50); color: var(--tx-verde-700); border: 1px solid var(--tx-verde-200); }
+
+/* ---------- Aparecer al cargar ---------- */
+.tx-aparecer { animation: tx-aparecer .6s var(--tx-curva) both; }
+.tx-retraso-1 { animation-delay: .08s; }
+.tx-retraso-2 { animation-delay: .16s; }
+.tx-retraso-3 { animation-delay: .24s; }
+.tx-retraso-4 { animation-delay: .32s; }
+
+/* ---------- Animaciones ---------- */
+@keyframes tx-flotar { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(40px, -30px) scale(1.06); } 66% { transform: translate(-30px, 25px) scale(.96); } }
+@keyframes tx-flotar-suave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes tx-morfar { 0%, 100% { border-radius: 42% 58% 55% 45% / 45% 45% 55% 55%; transform: rotate(0deg); } 50% { border-radius: 58% 42% 45% 55% / 55% 55% 45% 45%; transform: rotate(8deg); } }
+@keyframes tx-brillo { to { background-position: 200% center; } }
+@keyframes tx-latido { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--tx-verde-400) 70%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@keyframes tx-aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes tx-girar { to { transform: rotate(360deg); } }
+
+/* Respeta a quien pidió menos movimiento en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  .tx-fondo-decorativo span, .tx-degradado, .tx-insignia::before, .tx-aparecer, .tx-alerta { animation: none !important; }
+  .tx-boton, .tx-marca img { transition: none !important; }
+}
