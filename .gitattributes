@@ -1,0 +1,6 @@
+# Saltos de linea uniformes entre Windows y el servidor Linux
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.m4a binary
+*.mp3 binary

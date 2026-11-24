@@ -1,0 +1,312 @@
+.acerca-contenedor {
+  max-width: 820px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+
+/* ---------- Encabezado ---------- */
+.acerca-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: linear-gradient(135deg, #c9f7cf 0%, #e9fbe9 55%, #fdfde8 100%);
+  border-radius: 18px;
+  padding: 32px 40px;
+  margin-bottom: 22px;
+  box-shadow: 0 10px 30px rgba(27, 67, 50, 0.1);
+}
+
+.acerca-blob {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(90, 160, 120, 0.2);
+  pointer-events: none;
+}
+.acerca-blob-1 { width: 160px; height: 160px; right: 150px; bottom: -70px; }
+.acerca-blob-2 { width: 80px; height: 80px; left: 46%; top: -26px; background: rgba(230, 200, 140, 0.35); }
+
+.acerca-hero-texto {
+  position: relative;
+  z-index: 1;
+}
+
+.acerca-eyebrow {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #3a9a72;
+}
+
+.acerca-hero h1 {
+  margin: 0 0 10px;
+  font-size: 52px;
+  line-height: 1;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+.acerca-lema {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d6a4f;
+}
+
+.acerca-mascota {
+   position: relative;
+  z-index: 1;
+  width: 180px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  margin: -28px 0;
+}
+
+/* ---------- Tarjetas ---------- */
+.acerca-tarjeta {
+  background: #fff;
+  border: 1px solid #e1ece4;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(27, 67, 50, 0.05);
+}
+
+.acerca-tarjeta h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #1b4332;
+}
+
+.acerca-tarjeta h2::before {
+  content: "";
+  width: 5px;
+  height: 20px;
+  border-radius: 3px;
+  background: #3a9a72;
+}
+
+.acerca-tarjeta p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #33413a;
+}
+
+/* ---------- Qué encontrarás ---------- */
+.acerca-funciones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.acerca-funcion {
+  background: #eafaf0;
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+}
+
+.acerca-funcion svg {
+  width: 26px;
+  height: 26px;
+  color: #1b4332;
+  margin-bottom: 8px;
+}
+
+.acerca-funcion-titulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1b4332;
+}
+
+.acerca-tarjeta .acerca-funcion-texto {
+  margin-top: 4px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: #2d6a4f;
+}
+
+/* ---------- Dato destacado ---------- */
+.acerca-dato {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.acerca-stat {
+  background: linear-gradient(135deg, #1b4332, #2d6a4f);
+  color: #fff;
+  border-radius: 14px;
+  padding: 18px 26px;
+  text-align: center;
+}
+
+.acerca-stat-numero {
+  display: block;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.acerca-stat-texto {
+  display: block;
+  margin-top: 6px;
+  max-width: 150px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ---------- Equipo ---------- */
+.acerca-equipo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.acerca-persona {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f4faf6;
+  border: 1px solid #e1ece4;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.acerca-avatar {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 800;
+}
+.acerca-avatar-0 { background: #ffe4cf; color: #c2540a; }
+.acerca-avatar-1 { background: #ecdcfb; color: #7a35c9; }
+.acerca-avatar-2 { background: #d6e8fd; color: #1c63c4; }
+.acerca-avatar-3 { background: #cdeed4; color: #1b4332; }
+
+.acerca-tarjeta .acerca-persona-nombre {
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #1b4332;
+}
+
+.acerca-tarjeta .acerca-persona-rol {
+  font-size: 12.5px;
+  line-height: 1.3;
+  color: #2d6a4f;
+}
+
+.acerca-tarjeta .acerca-nota {
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+/* ---------- Créditos ---------- */
+.acerca-creditos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.acerca-credito {
+  background: #f4faf6;
+  border: 1px solid #e1ece4;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.acerca-tarjeta .acerca-credito-titulo {
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #3a9a72;
+}
+
+.acerca-tarjeta .acerca-credito-texto {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* ---------- Fuentes ---------- */
+.acerca-fuentes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.acerca-fuentes li {
+  padding: 10px 0;
+  border-bottom: 1px solid #edf3ef;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #33413a;
+}
+.acerca-fuentes li:last-child { border-bottom: none; padding-bottom: 0; }
+
+.acerca-enlace {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: #eafaf0;
+  color: #1b4332;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.acerca-enlace:hover { background: #d8f0da; }
+
+.acerca-version {
+  margin: 26px 0 8px;
+  text-align: center;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+/* ---------- Animación de entrada ---------- */
+@keyframes acerca-entrada {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.acerca-contenedor > * {
+  animation: acerca-entrada 0.5s ease both;
+}
+.acerca-contenedor > *:nth-child(2) { animation-delay: 0.05s; }
+.acerca-contenedor > *:nth-child(3) { animation-delay: 0.1s; }
+.acerca-contenedor > *:nth-child(4) { animation-delay: 0.15s; }
+.acerca-contenedor > *:nth-child(5) { animation-delay: 0.2s; }
+.acerca-contenedor > *:nth-child(6) { animation-delay: 0.25s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .acerca-contenedor > * { animation: none; }
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 700px) {
+  .acerca-hero { flex-direction: column-reverse; text-align: center; padding: 28px 24px; }
+  .acerca-hero h1 { font-size: 40px; }
+  .acerca-funciones { grid-template-columns: repeat(2, 1fr); }
+  .acerca-dato { grid-template-columns: 1fr; }
+  .acerca-equipo { grid-template-columns: 1fr; }
+  .acerca-creditos { grid-template-columns: 1fr; }
+}

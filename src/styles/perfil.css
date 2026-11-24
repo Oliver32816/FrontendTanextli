@@ -1,0 +1,540 @@
+/* ===== Perfil y Configuración (mismos colores que el menú) ===== */
+.pf-pagina {
+  max-width: 900px;
+}
+
+.pf-titulo {
+  margin: 4px 0 20px;
+  color: #1b4332;
+  font-size: 26px;
+}
+
+.pf-subtitulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 14px;
+  color: #1b4332;
+  font-size: 17px;
+}
+
+.pf-contador {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #2d6a4f;
+  background: #e3f4e6;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.pf-tarjeta {
+  background: #fff;
+  border: 2px solid #d4ecd8;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+/* ---------- Encabezado ---------- */
+.pf-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(135deg, #d8f0da, #eefcef);
+  border-color: #bfe6c4;
+}
+
+.pf-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #1b4332;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.pf-datos {
+  flex: 1;
+  min-width: 0;
+}
+
+.pf-datos h2 {
+  margin: 0;
+  color: #1b4332;
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+
+.pf-datos p {
+  margin: 4px 0 8px;
+  color: #2d6a4f;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.pf-etiqueta {
+  display: inline-block;
+  background: #1b4332;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.pf-mascota {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pf-mascota-imagen {
+  width: 90px;
+}
+
+.pf-globo {
+  margin: 0;
+  max-width: 190px;
+  background: #fff;
+  border: 2px solid #bfe6c4;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1b4332;
+}
+
+/* ---------- Resumen ---------- */
+.pf-resumen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.pf-stat {
+  background: #fff;
+  border: 2px solid #d4ecd8;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.pf-stat-valor {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+.pf-stat-texto {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2d6a4f;
+}
+
+/* ---------- Siguiente lección ---------- */
+.pf-siguiente {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 2px solid #d4ecd8;
+}
+
+.pf-siguiente-icono {
+  font-size: 30px;
+}
+
+.pf-siguiente-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pf-siguiente-texto span {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.pf-siguiente-texto strong {
+  font-size: 16px;
+}
+
+/* ---------- Botones ---------- */
+.pf-boton-chico {
+  flex-shrink: 0;
+  background: #1b4332;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pf-boton-chico:hover {
+  background: #2d6a4f;
+}
+
+.pf-boton-chico:focus-visible,
+.cf-switch:focus-visible {
+  outline: 3px solid #52b788;
+  outline-offset: 2px;
+}
+
+/* ---------- Logros ---------- */
+.pf-logros {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.pf-logro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  border: 2px dashed #cfdcd4;
+  border-radius: 12px;
+  padding: 14px 10px;
+  color: #7a8f83;
+  font-size: 12px;
+}
+
+.pf-logro strong {
+  font-size: 13.5px;
+}
+
+.pf-logro-icono {
+  font-size: 30px;
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.pf-logro-barra {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: #e3efe6;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.pf-logro-barra > div {
+  height: 100%;
+  background: #52b788;
+}
+
+.pf-logro-avance {
+  font-weight: 700;
+  font-size: 11.5px;
+}
+
+.pf-logro.ganado {
+  border-style: solid;
+  border-color: #52b788;
+  background: #eefaf1;
+  color: #1b4332;
+}
+
+.pf-logro.ganado .pf-logro-icono {
+  filter: none;
+  opacity: 1;
+}
+
+.pf-logro.ganado .pf-logro-avance {
+  color: #2d6a4f;
+}
+
+/* ---------- Mi vocabulario ---------- */
+.pf-vacio {
+  margin: 0;
+  color: #5c7a68;
+  font-size: 14px;
+}
+
+.pf-vocab-grupo + .pf-vocab-grupo {
+  margin-top: 16px;
+}
+
+.pf-vocab-grupo h4 {
+  margin: 0 0 8px;
+  color: #1b4332;
+  font-size: 14px;
+}
+
+.pf-vocab {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pf-palabra {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 6px 12px;
+  line-height: 1.25;
+}
+
+.pf-palabra strong {
+  font-size: 14px;
+}
+
+.pf-palabra span {
+  font-size: 11.5px;
+  opacity: 0.85;
+}
+
+/* ---------- Configuración ---------- */
+.cf-opcion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #e3efe6;
+}
+
+.pf-subtitulo + .cf-opcion {
+  border-top: none;
+  padding-top: 0;
+}
+
+.cf-texto label,
+.cf-etiqueta {
+  font-weight: 700;
+  color: #1b4332;
+  font-size: 14.5px;
+}
+
+.cf-texto p {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #5c7a68;
+  overflow-wrap: anywhere;
+}
+
+.cf-switch {
+  flex-shrink: 0;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background: #c9d6ce;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cf-switch-bolita {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.cf-switch.activo {
+  background: #2d6a4f;
+}
+
+.cf-switch.activo .cf-switch-bolita {
+  transform: translateX(20px);
+}
+
+.cf-peligro {
+  background: #b42318;
+}
+
+.cf-peligro:hover {
+  background: #8f1c13;
+}
+
+.cf-aviso {
+  margin: 12px 0 0;
+  background: #e6f4ea;
+  color: #137333;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- Pantallas medianas y celular ---------- */
+@media (max-width: 1000px) {
+  .pf-logros {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .pf-encabezado {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pf-resumen,
+  .pf-logros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pf-siguiente {
+    flex-wrap: wrap;
+  }
+}
+
+/* ===================================================================
+   AJUSTES: usar todo el ancho de la pantalla y nueva Configuración
+   (va al final para que tenga prioridad sobre lo de arriba)
+   =================================================================== */
+.pf-pagina {
+  max-width: none;
+}
+
+/* Logros: 6 por fila en pantallas grandes */
+.pf-logros {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* Configuración en dos columnas */
+.cf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.cf-grid .pf-tarjeta {
+  margin-bottom: 0;
+}
+
+/* Campo del apodo */
+.cf-campo {
+  padding-bottom: 12px;
+}
+
+.cf-campo p {
+  margin: 2px 0 10px;
+  font-size: 12.5px;
+  color: #5c7a68;
+}
+
+.cf-campo-fila {
+  display: flex;
+  gap: 8px;
+}
+
+.cf-campo-fila input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 2px solid #d4ecd8;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1b4332;
+  outline: none;
+}
+
+.cf-campo-fila input:focus {
+  border-color: #52b788;
+}
+
+/* Datos de Mi cuenta */
+.cf-dato {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid #e3efe6;
+  font-size: 14px;
+}
+
+.pf-subtitulo + .cf-dato {
+  border-top: none;
+  padding-top: 0;
+}
+
+.cf-dato span {
+  color: #5c7a68;
+}
+
+.cf-dato strong {
+  color: #1b4332;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.cf-acciones {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid #e3efe6;
+}
+
+/* Zona de cuidado con borde rojizo */
+.cf-cuidado {
+  border-color: #f5c2c0;
+}
+
+@media (max-width: 1400px) {
+  .pf-logros {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .pf-logros {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cf-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .pf-logros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* NUEVO: cabecera de Configuración con la mascota */
+.cf-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.cf-mascota {
+  width: 180px;
+  flex-shrink: 0;
+  margin: -34px 0 -26px;
+}
+@media (max-width: 700px) {
+  .cf-mascota { width: 130px; margin: -20px 0 -14px; }
+}
+}

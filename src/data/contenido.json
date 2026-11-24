@@ -1,0 +1,1412 @@
+{
+  "categorias": [
+    {
+      "id": "familia",
+      "nombre": "Familia",
+      "nahuatl": null,
+      "disponible": true,
+      "subcategorias": [
+        {
+          "id": "familia-principal",
+          "nombre": "Familia principal",
+          "palabras": [
+            {
+              "id": "familia",
+              "espanol": "Familia",
+              "nahuatl": "Cenchan",
+              "audio": "/audios/familia/familia-principal/familia.m4a"
+            },
+            {
+              "id": "padre",
+              "espanol": "Padre",
+              "nahuatl": "Papan",
+              "audio": "/audios/familia/familia-principal/padre.m4a"
+            },
+            {
+              "id": "madre",
+              "espanol": "Madre",
+              "nahuatl": "Maman",
+              "audio": "/audios/familia/familia-principal/madre.m4a"
+            },
+            {
+              "id": "hermano",
+              "espanol": "Hermano",
+              "nahuatl": "Noikniuj",
+              "audio": "/audios/familia/familia-principal/hermano.m4a"
+            },
+            {
+              "id": "hermana",
+              "espanol": "Hermana",
+              "nahuatl": "Noikniuj",
+              "audio": "/audios/familia/familia-principal/hermana.m4a"
+            }
+          ]
+        },
+        {
+          "id": "familia-extendida",
+          "nombre": "Familia extendida",
+          "palabras": [
+            {
+              "id": "abuelo",
+              "espanol": "Abuelo",
+              "nahuatl": "Tatatsin",
+              "audio": "/audios/familia/familia-extendida/abuelo.m4a"
+            },
+            {
+              "id": "abuela",
+              "espanol": "Abuela",
+              "nahuatl": "Nanatsin",
+              "audio": "/audios/familia/familia-extendida/abuela.m4a"
+            },
+            {
+              "id": "tio",
+              "espanol": "Tío",
+              "nahuatl": "Noikniuj papan",
+              "audio": "/audios/familia/familia-extendida/tio.m4a"
+            },
+            {
+              "id": "tia",
+              "espanol": "Tía",
+              "nahuatl": "Noikniuj maman",
+              "audio": "/audios/familia/familia-extendida/tia.m4a"
+            },
+            {
+              "id": "primo",
+              "espanol": "Primo",
+              "nahuatl": "Nomajichniuj",
+              "audio": "/audios/familia/familia-extendida/primo.m4a"
+            }
+          ]
+        },
+        {
+          "id": "mas-familiares",
+          "nombre": "Más familiares",
+          "palabras": [
+            {
+              "id": "prima",
+              "espanol": "Prima",
+              "nahuatl": "Nomajichniuj",
+              "audio": "/audios/familia/mas-familiares/prima.m4a"
+            },
+            {
+              "id": "nieto",
+              "espanol": "Nieto",
+              "nahuatl": "Noixuiuj",
+              "audio": "/audios/familia/mas-familiares/nieto.m4a"
+            },
+            {
+              "id": "nieta",
+              "espanol": "Nieta",
+              "nahuatl": "Noiuiuj",
+              "audio": "/audios/familia/mas-familiares/nieta.m4a"
+            },
+            {
+              "id": "sobrino",
+              "espanol": "Sobrino",
+              "nahuatl": "Nokonemaj",
+              "audio": "/audios/familia/mas-familiares/sobrino.m4a"
+            },
+            {
+              "id": "suegra",
+              "espanol": "Suegra",
+              "nahuatl": "Monnantsin",
+              "audio": "/audios/familia/mas-familiares/suegra.m4a"
+            },
+            {
+              "id": "suegro",
+              "espanol": "Suegro",
+              "nahuatl": "Motatsin",
+              "audio": "/audios/familia/mas-familiares/suegro.m4a"
+            },
+            {
+              "id": "cunada",
+              "espanol": "Cuñada",
+              "nahuatl": "Noikniuj ni cihuat",
+              "audio": "/audios/familia/mas-familiares/cunada.m4a"
+            },
+            {
+              "id": "cunado",
+              "espanol": "Cuñado",
+              "nahuatl": "Noikniuj ni tagat",
+              "audio": "/audios/familia/mas-familiares/cunado.m4a"
+            },
+            {
+              "id": "sobrina",
+              "espanol": "Sobrina",
+              "nahuatl": "Nokonemaj",
+              "audio": "/audios/familia/mas-familiares/sobrina.m4a"
+            }
+          ]
+        },
+        {
+          "id": "personas",
+          "nombre": "Personas",
+          "palabras": [
+            {
+              "id": "nino",
+              "espanol": "Niño",
+              "nahuatl": "Okichpil",
+              "audio": "/audios/familia/personas/nino.m4a"
+            },
+            {
+              "id": "nina",
+              "espanol": "Niña",
+              "nahuatl": "Suapil",
+              "audio": "/audios/familia/personas/nina.m4a"
+            },
+            {
+              "id": "senor",
+              "espanol": "Señor",
+              "nahuatl": "Tagat",
+              "audio": "/audios/familia/personas/senor.m4a"
+            },
+            {
+              "id": "senora",
+              "espanol": "Señora",
+              "nahuatl": "Cihuatsin",
+              "audio": "/audios/familia/personas/senora.m4a"
+            },
+            {
+              "id": "hombre",
+              "espanol": "Hombre",
+              "nahuatl": "Wuehuet",
+              "audio": "/audios/familia/personas/hombre.m4a"
+            },
+            {
+              "id": "mujer",
+              "espanol": "Mujer",
+              "nahuatl": "Lamat",
+              "audio": "/audios/familia/personas/mujer.m4a"
+            },
+            {
+              "id": "bebe",
+              "espanol": "Bebé",
+              "nahuatl": "Pili",
+              "audio": "/audios/familia/personas/bebe.m4a"
+            },
+            {
+              "id": "viejo",
+              "espanol": "Viejo",
+              "nahuatl": "Vevetsin",
+              "audio": "/audios/familia/personas/viejo.m4a"
+            },
+            {
+              "id": "vieja",
+              "espanol": "Vieja",
+              "nahuatl": "Nanatsin",
+              "audio": "/audios/familia/personas/vieja.m4a"
+            },
+            {
+              "id": "joven",
+              "espanol": "Joven",
+              "nahuatl": "Telpoch",
+              "audio": "/audios/familia/personas/joven.m4a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sentimientos",
+      "nombre": "Sentimientos",
+      "nahuatl": "Neyolmatilistli",
+      "disponible": true,
+      "subcategorias": [
+        {
+          "id": "sentimientos-positivos",
+          "nombre": "Sentimientos positivos",
+          "palabras": [
+            {
+              "id": "amor",
+              "espanol": "Amor",
+              "nahuatl": "Tlasojtlalis",
+              "audio": "/audios/sentimientos/sentimientos-positivos/amor.m4a"
+            },
+            {
+              "id": "felicidad",
+              "espanol": "Felicidad",
+              "nahuatl": "Yolpahpaki",
+              "audio": "/audios/sentimientos/sentimientos-positivos/felicidad.m4a"
+            },
+            {
+              "id": "bondad",
+              "espanol": "Bondad",
+              "nahuatl": "Kualiyolotl",
+              "audio": "/audios/sentimientos/sentimientos-positivos/bondad.m4a"
+            },
+            {
+              "id": "emocionado",
+              "espanol": "Emocionado",
+              "nahuatl": "Yolpaktok",
+              "audio": "/audios/sentimientos/sentimientos-positivos/emocionado.m4a"
+            }
+          ]
+        },
+        {
+          "id": "valores-y-emociones",
+          "nombre": "Valores y emociones",
+          "palabras": [
+            {
+              "id": "compasion",
+              "espanol": "Compasión",
+              "nahuatl": "Taikneli",
+              "audio": "/audios/sentimientos/valores-y-emociones/compasion.m4a"
+            },
+            {
+              "id": "respeto",
+              "espanol": "Respeto",
+              "nahuatl": "Mahwiztilia",
+              "audio": "/audios/sentimientos/valores-y-emociones/respeto.m4a"
+            },
+            {
+              "id": "gratitud",
+              "espanol": "Gratitud",
+              "nahuatl": "Tlasojkamatilis",
+              "audio": "/audios/sentimientos/valores-y-emociones/gratitud.m4a"
+            },
+            {
+              "id": "confianza",
+              "espanol": "Confianza",
+              "nahuatl": "Tlaneltokayot",
+              "audio": "/audios/sentimientos/valores-y-emociones/confianza.m4a"
+            },
+            {
+              "id": "carino",
+              "espanol": "Cariño",
+              "nahuatl": "Tlazohkayot",
+              "audio": "/audios/sentimientos/valores-y-emociones/carino.m4a"
+            }
+          ]
+        },
+        {
+          "id": "sentimientos-dificiles",
+          "nombre": "Sentimientos difíciles",
+          "palabras": [
+            {
+              "id": "tristeza",
+              "espanol": "Tristeza",
+              "nahuatl": "Amo yolpahpaki",
+              "audio": "/audios/sentimientos/sentimientos-dificiles/tristeza.m4a"
+            },
+            {
+              "id": "dolor",
+              "espanol": "Dolor",
+              "nahuatl": "Kokoua",
+              "audio": "/audios/sentimientos/sentimientos-dificiles/dolor.m4a"
+            },
+            {
+              "id": "miedo",
+              "espanol": "Miedo",
+              "nahuatl": "Mauik",
+              "audio": "/audios/sentimientos/sentimientos-dificiles/miedo.m4a"
+            },
+            {
+              "id": "inseguridad",
+              "espanol": "Inseguridad",
+              "nahuatl": "Amo yolchikaualis",
+              "audio": "/audios/sentimientos/sentimientos-dificiles/inseguridad.m4a"
+            }
+          ]
+        },
+        {
+          "id": "emociones-intensas",
+          "nombre": "Emociones intensas",
+          "palabras": [
+            {
+              "id": "enojo",
+              "espanol": "Enojo",
+              "nahuatl": "Kualantli",
+              "audio": "/audios/sentimientos/emociones-intensas/enojo.m4a"
+            },
+            {
+              "id": "nostalgia",
+              "espanol": "Nostalgia",
+              "nahuatl": "Elnamikisli",
+              "audio": "/audios/sentimientos/emociones-intensas/nostalgia.m4a"
+            },
+            {
+              "id": "odio",
+              "espanol": "Odio",
+              "nahuatl": "Tlajuelitalis",
+              "audio": "/audios/sentimientos/emociones-intensas/odio.m4a"
+            },
+            {
+              "id": "satisfaccion",
+              "espanol": "Satisfacción",
+              "nahuatl": "Yolpaki",
+              "audio": "/audios/sentimientos/emociones-intensas/satisfaccion.m4a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "colores",
+      "nombre": "Colores",
+      "nahuatl": null,
+      "disponible": true,
+      "subcategorias": [
+        {
+          "id": "colores-basicos",
+          "nombre": "Colores básicos",
+          "palabras": [
+            {
+              "id": "rojo",
+              "espanol": "Rojo",
+              "nahuatl": "Chichiltik",
+              "audio": "/audios/colores/colores-basicos/rojo.m4a"
+            },
+            {
+              "id": "blanco",
+              "espanol": "Blanco",
+              "nahuatl": "Istak",
+              "audio": "/audios/colores/colores-basicos/blanco.m4a"
+            },
+            {
+              "id": "verde",
+              "espanol": "Verde",
+              "nahuatl": "Xoxoktik",
+              "audio": "/audios/colores/colores-basicos/verde.m4a"
+            },
+            {
+              "id": "negro",
+              "espanol": "Negro",
+              "nahuatl": "Tiltik",
+              "audio": "/audios/colores/colores-basicos/negro.m4a"
+            },
+            {
+              "id": "amarillo",
+              "espanol": "Amarillo",
+              "nahuatl": "Kostik",
+              "audio": "/audios/colores/colores-basicos/amarillo.m4a"
+            }
+          ]
+        },
+        {
+          "id": "colores-secundarios",
+          "nombre": "Colores secundarios",
+          "palabras": [
+            {
+              "id": "naranja",
+              "espanol": "Naranja",
+              "nahuatl": "Chilkostik",
+              "audio": "/audios/colores/colores-secundarios/naranja.m4a"
+            },
+            {
+              "id": "morado",
+              "espanol": "Morado",
+              "nahuatl": "Kaniojtik",
+              "audio": "/audios/colores/colores-secundarios/morado.m4a"
+            },
+            {
+              "id": "rosa",
+              "espanol": "Rosa",
+              "nahuatl": "Xochipaltik",
+              "audio": "/audios/colores/colores-secundarios/rosa.m4a"
+            },
+            {
+              "id": "gris",
+              "espanol": "Gris",
+              "nahuatl": "Tenextik",
+              "audio": "/audios/colores/colores-secundarios/gris.m4a"
+            },
+            {
+              "id": "cafe",
+              "espanol": "Café",
+              "nahuatl": "Tilkostik",
+              "audio": "/audios/colores/colores-secundarios/cafe.m4a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "numeros",
+      "nombre": "Números",
+      "nahuatl": null,
+      "disponible": true,
+      "subcategorias": [
+        {
+          "id": "del-1-5",
+          "nombre": "Del 1-5",
+          "palabras": [
+            {
+              "id": "1",
+              "espanol": "1",
+              "nahuatl": "Se",
+              "audio": "/audios/numeros/del-1-5/1.m4a"
+            },
+            {
+              "id": "2",
+              "espanol": "2",
+              "nahuatl": "Ome",
+              "audio": "/audios/numeros/del-1-5/2.m4a"
+            },
+            {
+              "id": "3",
+              "espanol": "3",
+              "nahuatl": "Eyi",
+              "audio": "/audios/numeros/del-1-5/3.m4a"
+            },
+            {
+              "id": "4",
+              "espanol": "4",
+              "nahuatl": "Nahui",
+              "audio": "/audios/numeros/del-1-5/4.m4a"
+            },
+            {
+              "id": "5",
+              "espanol": "5",
+              "nahuatl": "Makuil",
+              "audio": "/audios/numeros/del-1-5/5.m4a"
+            }
+          ]
+        },
+        {
+          "id": "del-6-10",
+          "nombre": "Del 6-10",
+          "palabras": [
+            {
+              "id": "6",
+              "espanol": "6",
+              "nahuatl": "Chikuase",
+              "audio": "/audios/numeros/del-6-10/6.m4a"
+            },
+            {
+              "id": "7",
+              "espanol": "7",
+              "nahuatl": "Chikame",
+              "audio": "/audios/numeros/del-6-10/7.m4a"
+            },
+            {
+              "id": "8",
+              "espanol": "8",
+              "nahuatl": "Chikeyi",
+              "audio": "/audios/numeros/del-6-10/8.m4a"
+            },
+            {
+              "id": "9",
+              "espanol": "9",
+              "nahuatl": "Chiknahui",
+              "audio": "/audios/numeros/del-6-10/9.m4a"
+            },
+            {
+              "id": "10",
+              "espanol": "10",
+              "nahuatl": "Mahtlaktli",
+              "audio": "/audios/numeros/del-6-10/10.m4a"
+            }
+          ]
+        },
+        {
+          "id": "del-11-15",
+          "nombre": "Del 11-15",
+          "palabras": [
+            {
+              "id": "11",
+              "espanol": "11",
+              "nahuatl": "Mahtlaktli ihwan se",
+              "audio": "/audios/numeros/del-11-15/11.m4a"
+            },
+            {
+              "id": "12",
+              "espanol": "12",
+              "nahuatl": "Mahtlaktli ihwan ome",
+              "audio": "/audios/numeros/del-11-15/12.m4a"
+            },
+            {
+              "id": "13",
+              "espanol": "13",
+              "nahuatl": "Mahtlaktli ihwan eyi",
+              "audio": "/audios/numeros/del-11-15/13.m4a"
+            },
+            {
+              "id": "14",
+              "espanol": "14",
+              "nahuatl": "Mahtlaktli ihwan nahui",
+              "audio": "/audios/numeros/del-11-15/14.m4a"
+            },
+            {
+              "id": "15",
+              "espanol": "15",
+              "nahuatl": "Kaxtolli",
+              "audio": "/audios/numeros/del-11-15/15.m4a"
+            }
+          ]
+        },
+        {
+          "id": "del-16-20",
+          "nombre": "Del 16-20",
+          "palabras": [
+            {
+              "id": "16",
+              "espanol": "16",
+              "nahuatl": "Kaxtolli ihwan se",
+              "audio": "/audios/numeros/del-16-20/16.m4a"
+            },
+            {
+              "id": "17",
+              "espanol": "17",
+              "nahuatl": "Kaxtolli ihwan ome",
+              "audio": "/audios/numeros/del-16-20/17.m4a"
+            },
+            {
+              "id": "18",
+              "espanol": "18",
+              "nahuatl": "Kaxtolli ihwan eyi",
+              "audio": "/audios/numeros/del-16-20/18.m4a"
+            },
+            {
+              "id": "19",
+              "espanol": "19",
+              "nahuatl": "Kaxtolli ihwan nahui",
+              "audio": "/audios/numeros/del-16-20/19.m4a"
+            },
+            {
+              "id": "20",
+              "espanol": "20",
+              "nahuatl": "Sempowalli",
+              "audio": "/audios/numeros/del-16-20/20.m4a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frases-comunes",
+      "nombre": "Frases comunes",
+      "nahuatl": null,
+      "disponible": true,
+      "subcategorias": [
+        {
+          "id": "saludos",
+          "nombre": "Saludos",
+          "palabras": [
+            {
+              "id": "hola",
+              "espanol": "Hola",
+              "nahuatl": "Piali",
+              "audio": "/audios/frases-comunes/saludos/hola.m4a"
+            },
+            {
+              "id": "buenos-dias",
+              "espanol": "Buenos días",
+              "nahuatl": "Kwali Tanecik",
+              "audio": "/audios/frases-comunes/saludos/buenos-dias.m4a"
+            },
+            {
+              "id": "buenas-tardes",
+              "espanol": "Buenas tardes",
+              "nahuatl": "Kwali Tiotaki",
+              "audio": "/audios/frases-comunes/saludos/buenas-tardes.m4a"
+            },
+            {
+              "id": "buenas-noches",
+              "espanol": "Buenas noches",
+              "nahuatl": "Kwali Tapoyaui",
+              "audio": "/audios/frases-comunes/saludos/buenas-noches.m4a"
+            },
+            {
+              "id": "gracias",
+              "espanol": "Gracias",
+              "nahuatl": "Tlasohkamatik",
+              "audio": "/audios/frases-comunes/saludos/gracias.m4a"
+            }
+          ]
+        },
+        {
+          "id": "conversacion",
+          "nombre": "Conversación",
+          "palabras": [
+            {
+              "id": "como-esta-tu-familia",
+              "espanol": "¿Cómo está tu familia?",
+              "nahuatl": "¿Keni yetokemo chinikniuan?",
+              "audio": "/audios/frases-comunes/conversacion/como-esta-tu-familia.m4a"
+            },
+            {
+              "id": "como-te-llamas",
+              "espanol": "¿Cómo te llamas?",
+              "nahuatl": "¿Keni motokay?",
+              "audio": "/audios/frases-comunes/conversacion/como-te-llamas.m4a"
+            },
+            {
+              "id": "como-estas",
+              "espanol": "¿Cómo estás?",
+              "nahuatl": "¿Keni tietok?",
+              "audio": "/audios/frases-comunes/conversacion/como-estas.m4a"
+            },
+            {
+              "id": "de-donde-eres",
+              "espanol": "¿De dónde eres?",
+              "nahuatl": "¿Kani tiwala?",
+              "audio": "/audios/frases-comunes/conversacion/de-donde-eres.m4a"
+            },
+            {
+              "id": "de-nada",
+              "espanol": "De nada",
+              "nahuatl": "Amo tlen",
+              "audio": "/audios/frases-comunes/conversacion/de-nada.m4a"
+            },
+            {
+              "id": "estoy-bien",
+              "espanol": "Estoy bien",
+              "nahuatl": "Kwali nica nietok",
+              "audio": "/audios/frases-comunes/conversacion/estoy-bien.m4a"
+            },
+            {
+              "id": "que-necesitas",
+              "espanol": "Qué necesitas",
+              "nahuatl": "¿Toni tikneki?",
+              "audio": "/audios/frases-comunes/conversacion/que-necesitas.m4a"
+            }
+          ]
+        },
+        {
+          "id": "despedida",
+          "nombre": "Despedida",
+          "palabras": [
+            {
+              "id": "que-tengas-un-buen-dia",
+              "espanol": "Que tengas un buen día",
+              "nahuatl": "Ma kwali tonal tikpia",
+              "audio": "/audios/frases-comunes/despedida/que-tengas-un-buen-dia.m4a"
+            },
+            {
+              "id": "que-te-vaya-bien",
+              "espanol": "Que te vaya bien",
+              "nahuatl": "Ma kwali tioj",
+              "audio": "/audios/frases-comunes/despedida/que-te-vaya-bien.m4a"
+            },
+            {
+              "id": "cuidate-mucho",
+              "espanol": "Cuídate mucho",
+              "nahuatl": "Ixmopiali miak",
+              "audio": "/audios/frases-comunes/despedida/cuidate-mucho.m4a"
+            },
+            {
+              "id": "que-descanses",
+              "espanol": "Que descanses",
+              "nahuatl": "Ma tiyo Isewi",
+              "audio": "/audios/frases-comunes/despedida/que-descanses.m4a"
+            },
+            {
+              "id": "que-dios-te-bendiga",
+              "espanol": "Que Dios te bendiga",
+              "nahuatl": "Ma Toteotsin mitz piali",
+              "audio": "/audios/frases-comunes/despedida/que-dios-te-bendiga.m4a"
+            }
+          ]
+        },
+        {
+          "id": "expresiones",
+          "nombre": "Expresiones",
+          "palabras": [
+            {
+              "id": "mi-nombre-es",
+              "espanol": "Mi nombre es",
+              "nahuatl": "Notokay",
+              "audio": "/audios/frases-comunes/expresiones/mi-nombre-es.m4a"
+            },
+            {
+              "id": "te-quiero",
+              "espanol": "Te quiero",
+              "nahuatl": "Nimitztlazohtla",
+              "audio": "/audios/frases-comunes/expresiones/te-quiero.m4a"
+            },
+            {
+              "id": "hasta-luego",
+              "espanol": "Hasta luego",
+              "nahuatl": "Ma tiakan",
+              "audio": "/audios/frases-comunes/expresiones/hasta-luego.m4a"
+            },
+            {
+              "id": "de-acuerdo",
+              "espanol": "De acuerdo",
+              "nahuatl": "Kuali",
+              "audio": "/audios/frases-comunes/expresiones/de-acuerdo.m4a"
+            },
+            {
+              "id": "estas-bonita",
+              "espanol": "Estás bonita",
+              "nahuatl": "Ti kuacualtsin",
+              "audio": "/audios/frases-comunes/expresiones/estas-bonita.m4a"
+            },
+            {
+              "id": "eres-guapo",
+              "espanol": "Eres guapo",
+              "nahuatl": "Ti okichpil kuacualtsin",
+              "audio": "/audios/frases-comunes/expresiones/eres-guapo.m4a"
+            },
+            {
+              "id": "eres-feo-a",
+              "espanol": "Eres Feo/a",
+              "nahuatl": "amo",
+              "audio": null
+            },
+            {
+              "id": "si",
+              "espanol": "Sí",
+              "nahuatl": "Kema",
+              "audio": "/audios/frases-comunes/expresiones/si.m4a"
+            },
+            {
+              "id": "no",
+              "espanol": "No",
+              "nahuatl": "Amo",
+              "audio": "/audios/frases-comunes/expresiones/no.m4a"
+            },
+            {
+              "id": "mucho",
+              "espanol": "Mucho",
+              "nahuatl": "Miak",
+              "audio": "/audios/frases-comunes/expresiones/mucho.m4a"
+            },
+            {
+              "id": "poco",
+              "espanol": "Poco",
+              "nahuatl": "Litsin",
+              "audio": "/audios/frases-comunes/expresiones/poco.m4a"
+            },
+            {
+              "id": "nada",
+              "espanol": "Nada",
+              "nahuatl": "Amo teyi",
+              "audio": "/audios/frases-comunes/expresiones/nada.m4a"
+            },
+            {
+              "id": "mucho-gusto",
+              "espanol": "Mucho gusto",
+              "nahuatl": "Packi noyolo",
+              "audio": "/audios/frases-comunes/expresiones/mucho-gusto.m4a"
+            },
+            {
+              "id": "tengo-hambre",
+              "espanol": "Tengo hambre",
+              "nahuatl": "Nimayana",
+              "audio": "/audios/frases-comunes/expresiones/tengo-hambre.m4a"
+            },
+            {
+              "id": "quiero-comer",
+              "espanol": "Quiero comer",
+              "nahuatl": "Nitakauas neki",
+              "audio": "/audios/frases-comunes/expresiones/quiero-comer.m4a"
+            },
+            {
+              "id": "cuanto-cuesta",
+              "espanol": "¿Cuánto cuesta?",
+              "nahuatl": "Kanachi",
+              "audio": "/audios/frases-comunes/expresiones/cuanto-cuesta.m4a"
+            },
+            {
+              "id": "guarda-silencio",
+              "espanol": "Guarda silencio",
+              "nahuatl": "Ximotencaua",
+              "audio": "/audios/frases-comunes/expresiones/guarda-silencio.m4a"
+            },
+            {
+              "id": "no-tengo",
+              "espanol": "No tengo",
+              "nahuatl": "Amo nikpia",
+              "audio": "/audios/frases-comunes/expresiones/no-tengo.m4a"
+            },
+            {
+              "id": "no-quiero",
+              "espanol": "No quiero",
+              "nahuatl": "Amo nikneki",
+              "audio": "/audios/frases-comunes/expresiones/no-quiero.m4a"
+            },
+            {
+              "id": "no-puedo",
+              "espanol": "No puedo",
+              "nahuatl": "Amo ni wueli",
+              "audio": "/audios/frases-comunes/expresiones/no-puedo.m4a"
+            },
+            {
+              "id": "no-me-gusta",
+              "espanol": "No me gusta",
+              "nahuatl": "Amo ni kuelita",
+              "audio": "/audios/frases-comunes/expresiones/no-me-gusta.m4a"
+            },
+            {
+              "id": "es-dificil",
+              "espanol": "Es difícil",
+              "nahuatl": "Owhui",
+              "audio": "/audios/frases-comunes/expresiones/es-dificil.m4a"
+            },
+            {
+              "id": "no-se",
+              "espanol": "No sé",
+              "nahuatl": "Amo nikmati",
+              "audio": "/audios/frases-comunes/expresiones/no-se.m4a"
+            },
+            {
+              "id": "ya-llegue",
+              "espanol": "Ya llegue",
+              "nahuatl": "Niejokia",
+              "audio": "/audios/frases-comunes/expresiones/ya-llegue.m4a"
+            },
+            {
+              "id": "si-tengo",
+              "espanol": "Sí tengo",
+              "nahuatl": "Kema nik pia",
+              "audio": "/audios/frases-comunes/expresiones/si-tengo.m4a"
+            },
+            {
+              "id": "si-quiero",
+              "espanol": "Sí quiero",
+              "nahuatl": "Kema nik neki",
+              "audio": "/audios/frases-comunes/expresiones/si-quiero.m4a"
+            },
+            {
+              "id": "si-puedo",
+              "espanol": "Sí puedo",
+              "nahuatl": "Kema nik wueli",
+              "audio": "/audios/frases-comunes/expresiones/si-puedo.m4a"
+            },
+            {
+              "id": "si-me-gusta",
+              "espanol": "Sí me gusta",
+              "nahuatl": "Kema nik kuelita",
+              "audio": "/audios/frases-comunes/expresiones/si-me-gusta.m4a"
+            },
+            {
+              "id": "es-facil",
+              "espanol": "Es fácil",
+              "nahuatl": "Amo owhuiyo",
+              "audio": "/audios/frases-comunes/expresiones/es-facil.m4a"
+            },
+            {
+              "id": "si-se",
+              "espanol": "Sí sé",
+              "nahuatl": "Kema nik mati",
+              "audio": "/audios/frases-comunes/expresiones/si-se.m4a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animales",
+      "nombre": "Animales",
+      "nahuatl": null,
+      "disponible": true,
+      "subcategorias": [
+        {
+          "id": "animales-domesticos",
+          "nombre": "Animales domésticos",
+          "palabras": [
+            {
+              "id": "perro",
+              "espanol": "Perro",
+              "nahuatl": "Itzcuintli",
+              "audio": "/audios/animales/animales-domesticos/perro.m4a"
+            },
+            {
+              "id": "gato",
+              "espanol": "Gato",
+              "nahuatl": "Mixton",
+              "audio": "/audios/animales/animales-domesticos/gato.m4a"
+            },
+            {
+              "id": "conejo",
+              "espanol": "Conejo",
+              "nahuatl": "Tochtli",
+              "audio": "/audios/animales/animales-domesticos/conejo.m4a"
+            }
+          ]
+        },
+        {
+          "id": "animales-de-granja",
+          "nombre": "Animales de granja",
+          "palabras": [
+            {
+              "id": "gallina",
+              "espanol": "Gallina",
+              "nahuatl": "Piolamat",
+              "audio": "/audios/animales/animales-de-granja/gallina.m4a"
+            },
+            {
+              "id": "gallo",
+              "espanol": "Gallo",
+              "nahuatl": "Kashtil",
+              "audio": "/audios/animales/animales-de-granja/gallo.m4a"
+            },
+            {
+              "id": "pavo",
+              "espanol": "Pavo",
+              "nahuatl": "Wewejcho",
+              "audio": "/audios/animales/animales-de-granja/pavo.m4a"
+            },
+            {
+              "id": "cerdo",
+              "espanol": "Cerdo",
+              "nahuatl": "Pitsot",
+              "audio": "/audios/animales/animales-de-granja/cerdo.m4a"
+            },
+            {
+              "id": "oveja",
+              "espanol": "Oveja",
+              "nahuatl": "Ichkal",
+              "audio": "/audios/animales/animales-de-granja/oveja.m4a"
+            },
+            {
+              "id": "pato",
+              "espanol": "Pato",
+              "nahuatl": "Apiok",
+              "audio": "/audios/animales/animales-de-granja/pato.m4a"
+            }
+          ]
+        },
+        {
+          "id": "animales-silvestres",
+          "nombre": "Animales silvestres",
+          "palabras": [
+            {
+              "id": "venado",
+              "espanol": "Venado",
+              "nahuatl": "Masat",
+              "audio": "/audios/animales/animales-silvestres/venado.m4a"
+            },
+            {
+              "id": "coyote",
+              "espanol": "Coyote",
+              "nahuatl": "Coyotl",
+              "audio": "/audios/animales/animales-silvestres/coyote.m4a"
+            },
+            {
+              "id": "zorro",
+              "espanol": "Zorro",
+              "nahuatl": "Kuekti",
+              "audio": "/audios/animales/animales-silvestres/zorro.m4a"
+            },
+            {
+              "id": "ardilla",
+              "espanol": "Ardilla",
+              "nahuatl": "Chechelot",
+              "audio": "/audios/animales/animales-silvestres/ardilla.m4a"
+            },
+            {
+              "id": "mapache",
+              "espanol": "Mapache",
+              "nahuatl": "Mapach",
+              "audio": "/audios/animales/animales-silvestres/mapache.m4a"
+            },
+            {
+              "id": "cacomixtle",
+              "espanol": "Cacomixtle",
+              "nahuatl": "Tlacomiztli",
+              "audio": "/audios/animales/animales-silvestres/cacomixtle.m4a"
+            },
+            {
+              "id": "tlacuache",
+              "espanol": "Tlacuache",
+              "nahuatl": "Tlacuatsin",
+              "audio": "/audios/animales/animales-silvestres/tlacuache.m4a"
+            }
+          ]
+        },
+        {
+          "id": "aves-y-reptiles",
+          "nombre": "Aves y reptiles",
+          "palabras": [
+            {
+              "id": "aguila",
+              "espanol": "Águila",
+              "nahuatl": "Tzopilot",
+              "audio": "/audios/animales/aves-y-reptiles/aguila.m4a"
+            },
+            {
+              "id": "colibri",
+              "espanol": "Colibrí",
+              "nahuatl": "Witsikitzin",
+              "audio": "/audios/animales/aves-y-reptiles/colibri.m4a"
+            },
+            {
+              "id": "buho",
+              "espanol": "Búho",
+              "nahuatl": "Tekolot",
+              "audio": "/audios/animales/aves-y-reptiles/buho.m4a"
+            },
+            {
+              "id": "serpiente",
+              "espanol": "Serpiente",
+              "nahuatl": "Kowat",
+              "audio": "/audios/animales/aves-y-reptiles/serpiente.m4a"
+            },
+            {
+              "id": "tortuga",
+              "espanol": "Tortuga",
+              "nahuatl": "Ayotl",
+              "audio": "/audios/animales/aves-y-reptiles/tortuga.m4a"
+            },
+            {
+              "id": "pajaro",
+              "espanol": "Pájaro",
+              "nahuatl": "Tototl",
+              "audio": "/audios/animales/aves-y-reptiles/pajaro.m4a"
+            },
+            {
+              "id": "lagartija",
+              "espanol": "Lagartija",
+              "nahuatl": "Pehpetz",
+              "audio": "/audios/animales/aves-y-reptiles/lagartija.m4a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "objetos",
+      "nombre": "Objetos",
+      "nahuatl": null,
+      "disponible": true,
+      "subcategorias": [
+        {
+          "id": "hogar",
+          "nombre": "Hogar",
+          "palabras": [
+            {
+              "id": "casa",
+              "espanol": "Casa",
+              "nahuatl": "Kalit",
+              "audio": "/audios/objetos/hogar/casa.m4a"
+            },
+            {
+              "id": "patio",
+              "espanol": "Patio",
+              "nahuatl": "Kalixpan",
+              "audio": "/audios/objetos/hogar/patio.m4a"
+            },
+            {
+              "id": "cocina",
+              "espanol": "Cocina",
+              "nahuatl": "Tlacualchihualoyan",
+              "audio": "/audios/objetos/hogar/cocina.m4a"
+            },
+            {
+              "id": "bano",
+              "espanol": "Baño",
+              "nahuatl": "Axixkalli",
+              "audio": "/audios/objetos/hogar/bano.m4a"
+            },
+            {
+              "id": "cuarto-habitacion",
+              "espanol": "Cuarto/habitación",
+              "nahuatl": "Kalkochi",
+              "audio": "/audios/objetos/hogar/cuarto-habitacion.m4a"
+            }
+          ]
+        },
+        {
+          "id": "objetos-de-casa",
+          "nombre": "Objetos de casa",
+          "palabras": [
+            {
+              "id": "mesa",
+              "espanol": "Mesa",
+              "nahuatl": "Tlaixpan",
+              "audio": "/audios/objetos/objetos-de-casa/mesa.m4a"
+            },
+            {
+              "id": "silla",
+              "espanol": "Silla",
+              "nahuatl": "Tokotzoualis",
+              "audio": "/audios/objetos/objetos-de-casa/silla.m4a"
+            },
+            {
+              "id": "cama",
+              "espanol": "Cama",
+              "nahuatl": "Tlapechtli",
+              "audio": "/audios/objetos/objetos-de-casa/cama.m4a"
+            },
+            {
+              "id": "puerta",
+              "espanol": "Puerta",
+              "nahuatl": "Tlatsakua kalit",
+              "audio": "/audios/objetos/objetos-de-casa/puerta.m4a"
+            },
+            {
+              "id": "ventana",
+              "espanol": "Ventana",
+              "nahuatl": "Tlachialoyan",
+              "audio": "/audios/objetos/objetos-de-casa/ventana.m4a"
+            },
+            {
+              "id": "ropero",
+              "espanol": "Ropero",
+              "nahuatl": "Pia tasal",
+              "audio": "/audios/objetos/objetos-de-casa/ropero.m4a"
+            }
+          ]
+        },
+        {
+          "id": "objetos-diversos",
+          "nombre": "Objetos diversos",
+          "palabras": [
+            {
+              "id": "canasta-bolsa",
+              "espanol": "Canasta/Bolsa",
+              "nahuatl": "Chikiwitl",
+              "audio": "/audios/objetos/objetos-diversos/canasta-bolsa.m4a"
+            },
+            {
+              "id": "huarache",
+              "espanol": "Huarache",
+              "nahuatl": "Wuarachi",
+              "audio": "/audios/objetos/objetos-diversos/huarache.m4a"
+            },
+            {
+              "id": "vestido",
+              "espanol": "Vestido",
+              "nahuatl": "Kwewitl",
+              "audio": "/audios/objetos/objetos-diversos/vestido.m4a"
+            },
+            {
+              "id": "almohada",
+              "espanol": "Almohada",
+              "nahuatl": "Tzonpechtli",
+              "audio": "/audios/objetos/objetos-diversos/almohada.m4a"
+            },
+            {
+              "id": "manta-cobija",
+              "espanol": "Manta/Cobija",
+              "nahuatl": "Ayat",
+              "audio": "/audios/objetos/objetos-diversos/manta-cobija.m4a"
+            },
+            {
+              "id": "pantalon",
+              "espanol": "Pantalón",
+              "nahuatl": "Kaltzon",
+              "audio": "/audios/objetos/objetos-diversos/pantalon.m4a"
+            },
+            {
+              "id": "camisa",
+              "espanol": "Camisa",
+              "nahuatl": "Koton",
+              "audio": "/audios/objetos/objetos-diversos/camisa.m4a"
+            },
+            {
+              "id": "falda",
+              "espanol": "Falda",
+              "nahuatl": "Kueitl",
+              "audio": "/audios/objetos/objetos-diversos/falda.m4a"
+            },
+            {
+              "id": "sombrero",
+              "espanol": "Sombrero",
+              "nahuatl": "Ekawilotl",
+              "audio": "/audios/objetos/objetos-diversos/sombrero.m4a"
+            }
+          ]
+        },
+        {
+          "id": "cocina",
+          "nombre": "Cocina",
+          "palabras": [
+            {
+              "id": "plato",
+              "espanol": "Plato",
+              "nahuatl": "Caxitl",
+              "audio": "/audios/objetos/cocina/plato.m4a"
+            },
+            {
+              "id": "vaso",
+              "espanol": "Vaso",
+              "nahuatl": "Acaxit",
+              "audio": "/audios/objetos/cocina/vaso.m4a"
+            },
+            {
+              "id": "caserola",
+              "espanol": "Caserola",
+              "nahuatl": "Caxilt",
+              "audio": "/audios/objetos/cocina/caserola.m4a"
+            },
+            {
+              "id": "olla",
+              "espanol": "Olla",
+              "nahuatl": "Komitl",
+              "audio": "/audios/objetos/cocina/olla.m4a"
+            },
+            {
+              "id": "cuchara",
+              "espanol": "Cuchara",
+              "nahuatl": "Tlamawiloni",
+              "audio": "/audios/objetos/cocina/cuchara.m4a"
+            },
+            {
+              "id": "estufa",
+              "espanol": "Estufa",
+              "nahuatl": "Tekol tepoz",
+              "audio": "/audios/objetos/cocina/estufa.m4a"
+            },
+            {
+              "id": "fregadero",
+              "espanol": "Fregadero",
+              "nahuatl": "Pahpacho caxitl",
+              "audio": "/audios/objetos/cocina/fregadero.m4a"
+            },
+            {
+              "id": "horno",
+              "espanol": "Horno",
+              "nahuatl": "Tlekalli",
+              "audio": "/audios/objetos/cocina/horno.m4a"
+            },
+            {
+              "id": "taza",
+              "espanol": "Taza",
+              "nahuatl": "Akomit",
+              "audio": "/audios/objetos/cocina/taza.m4a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "partes-del-cuerpo",
+      "nombre": "Partes del cuerpo",
+      "nahuatl": null,
+      "disponible": false,
+      "subcategorias": [
+        {
+          "id": "cabeza-y-rostro",
+          "nombre": "Cabeza y rostro",
+          "palabras": [
+            {
+              "id": "boca",
+              "espanol": "Boca",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/boca.m4a"
+            },
+            {
+              "id": "cabello",
+              "espanol": "Cabello",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/cabello.m4a"
+            },
+            {
+              "id": "cabeza",
+              "espanol": "Cabeza",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/cabeza.m4a"
+            },
+            {
+              "id": "ceja",
+              "espanol": "Ceja",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/ceja.m4a"
+            },
+            {
+              "id": "dientes",
+              "espanol": "Dientes",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/dientes.m4a"
+            },
+            {
+              "id": "frente",
+              "espanol": "Frente",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/frente.m4a"
+            },
+            {
+              "id": "lengua",
+              "espanol": "Lengua",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/lengua.m4a"
+            },
+            {
+              "id": "nariz",
+              "espanol": "Nariz",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/nariz.m4a"
+            },
+            {
+              "id": "ojo",
+              "espanol": "Ojo",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/ojo.m4a"
+            },
+            {
+              "id": "oreja",
+              "espanol": "Oreja",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cabeza-y-rostro/oreja.m4a"
+            }
+          ]
+        },
+        {
+          "id": "cuerpo-y-extremidades",
+          "nombre": "Cuerpo y extremidades",
+          "palabras": [
+            {
+              "id": "brazo",
+              "espanol": "Brazo",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/brazo.m4a"
+            },
+            {
+              "id": "cuello",
+              "espanol": "Cuello",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/cuello.m4a"
+            },
+            {
+              "id": "dedos-de-la-mano",
+              "espanol": "Dedos de la mano",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/dedos-de-la-mano.m4a"
+            },
+            {
+              "id": "dedos-del-pie",
+              "espanol": "Dedos del pie",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/dedos-del-pie.m4a"
+            },
+            {
+              "id": "espalda",
+              "espanol": "Espalda",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/espalda.m4a"
+            },
+            {
+              "id": "hombro",
+              "espanol": "Hombro",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/hombro.m4a"
+            },
+            {
+              "id": "mano",
+              "espanol": "Mano",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/mano.m4a"
+            },
+            {
+              "id": "pecho",
+              "espanol": "Pecho",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/pecho.m4a"
+            },
+            {
+              "id": "pie",
+              "espanol": "Pie",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/pie.m4a"
+            },
+            {
+              "id": "pierna",
+              "espanol": "Pierna",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/pierna.m4a"
+            },
+            {
+              "id": "rodilla",
+              "espanol": "Rodilla",
+              "nahuatl": null,
+              "audio": "/audios/partes-del-cuerpo/cuerpo-y-extremidades/rodilla.m4a"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

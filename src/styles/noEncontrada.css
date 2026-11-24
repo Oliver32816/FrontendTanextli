@@ -1,0 +1,57 @@
+.nf-contenedor {
+  min-height: calc(100vh - 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nf-tarjeta {
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  border: 1px solid #e1ece4;
+  border-radius: 18px;
+  padding: 36px 40px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(27, 67, 50, 0.08);
+}
+
+.nf-mascota {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.nf-codigo {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1;
+  color: #3a9a72;
+}
+
+.nf-tarjeta h1 {
+  margin: 8px 0 10px;
+  font-size: 22px;
+  color: #1b4332;
+}
+
+.nf-texto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #33413a;
+}
+
+.nf-boton {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  background: #1b4332;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.nf-boton:hover { background: #2d6a4f; }

@@ -1,0 +1,168 @@
+.categoria-volver {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #2d6a4f;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.categoria-volver:hover { text-decoration: underline; }
+
+.lec-contenedor {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ---------- Encabezado ---------- */
+.lec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.lec-header-texto {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lec-hojas {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.lec-header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+.lec-header p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d6a4f;
+}
+
+.lec-mascota {
+    width: 180px;
+  flex-shrink: 0;
+  margin: -34px 0 -14px;
+}
+
+/* ---------- Progreso ---------- */
+.lec-progreso {
+  background: #e1f5e7;
+  border: 2px solid #c3e3cc;
+  border-radius: 14px;
+  padding: 12px 18px;
+  margin-bottom: 18px;
+}
+
+.lec-progreso-titulo {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1b4332;
+}
+
+.lec-progreso-fila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lec-barra {
+  flex: 1;
+  height: 10px;
+  border-radius: 5px;
+  background: #c9d6cd;
+  overflow: hidden;
+}
+
+.lec-barra-relleno {
+  height: 100%;
+  border-radius: 5px;
+  background: #1b4332;
+}
+
+.lec-porcentaje {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1b4332;
+}
+
+/* ---------- Lista de lecciones ---------- */
+.lec-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lec-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 20px;
+  background: #e1f5e7;
+  border: 2px solid #c3e3cc;
+  border-radius: 12px;
+  font-family: inherit;
+  text-align: left;
+  color: #1b4332;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.lec-card:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #1b4332;
+}
+
+.lec-card:disabled {
+  cursor: not-allowed;
+}
+
+.lec-card-icono svg {
+  width: 30px;
+  height: 30px;
+  color: #3a9a72;
+}
+
+.lec-card-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.lec-card-etiqueta {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d6a4f;
+}
+
+.lec-card-titulo {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.lec-card-palabras {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d6a4f;
+}
+
+.lec-card-estado svg {
+  width: 30px;
+  height: 30px;
+  color: #1b4332;
+}
+
+@media (max-width: 600px) {
+    .lec-mascota { width: 80px; }
+  .lec-mascota .mascota { transform: scale(0.72); transform-origin: right center; }
+  .lec-header h1 { font-size: 24px; }
+}

@@ -1,0 +1,144 @@
+{
+  "frases": [
+    {
+      "id": "a-divertirnos",
+      "texto": "¡A divertirnos!",
+      "audio": "/audios/lobita/a-divertirnos.m4a",
+      "momento": "inicio_actividad",
+      "estadoMascota": "feliz"
+    },
+    {
+      "id": "aprendes-rapidamente",
+      "texto": "Aprendes rápidamente",
+      "audio": "/audios/lobita/aprendes-rapidamente.m4a",
+      "momento": "elogio",
+      "estadoMascota": "feliz"
+    },
+    {
+      "id": "bienvenidos-tani",
+      "texto": "Bienvenidos Tani",
+      "audio": "/audios/lobita/bienvenidos-tani.m4a",
+      "momento": "bienvenida",
+      "estadoMascota": "saludando"
+    },
+    {
+      "id": "enfoca-un-objeto",
+      "texto": "Enfoca un objeto",
+      "audio": "/audios/lobita/enfoca-un-objeto.m4a",
+      "momento": "instruccion_objeto",
+      "estadoMascota": "hablando"
+    },
+    {
+      "id": "escucha-atentamente-y-repite-la-respuesta",
+      "texto": "Escucha atentamente y repite la respuesta",
+      "audio": "/audios/lobita/escucha-atentamente-y-repite-la-respuesta.m4a",
+      "momento": "instruccion_repite",
+      "estadoMascota": "escuchando"
+    },
+    {
+      "id": "escucha-con-atencion-y-repite-conmigo",
+      "texto": "Escucha con atención y repite conmigo",
+      "audio": "/audios/lobita/escucha-con-atencion-y-repite-conmigo.m4a",
+      "momento": "instruccion_escucha",
+      "estadoMascota": "escuchando"
+    },
+    {
+      "id": "estas-listo-para-empezar",
+      "texto": "¿Estás listo para empezar?",
+      "audio": "/audios/lobita/estas-listo-para-empezar.m4a",
+      "momento": "inicio",
+      "estadoMascota": "feliz"
+    },
+    {
+      "id": "estoy-para-ayudarte-en-lo-que-necesites",
+      "texto": "Estoy para ayudarte en lo que necesites",
+      "audio": "/audios/lobita/estoy-para-ayudarte-en-lo-que-necesites.m4a",
+      "momento": "presentacion",
+      "estadoMascota": "feliz"
+    },
+    {
+      "id": "estuviste-cerca-vuelve-a-intentarlo",
+      "texto": "Estuviste cerca, vuelve a intentarlo",
+      "audio": "/audios/lobita/estuviste-cerca-vuelve-a-intentarlo.m4a",
+      "momento": "casi_acierto",
+      "estadoMascota": "error"
+    },
+    {
+      "id": "excelente-comencemos",
+      "texto": "Excelente, comencemos",
+      "audio": "/audios/lobita/excelente-comencemos.m4a",
+      "momento": "inicio_leccion",
+      "estadoMascota": "feliz"
+    },
+    {
+      "id": "excelente-muy-bien",
+      "texto": "Excelente, muy bien",
+      "audio": "/audios/lobita/excelente-muy-bien.m4a",
+      "momento": "acierto",
+      "estadoMascota": "celebrando"
+    },
+    {
+      "id": "fallar-es-parte-del-proceso",
+      "texto": "Fallar es parte del proceso",
+      "audio": "/audios/lobita/fallar-es-parte-del-proceso.m4a",
+      "momento": "animo_tras_error",
+      "estadoMascota": "triste"
+    },
+    {
+      "id": "felicidades-completaste-el-repaso-general",
+      "texto": "Felicidades, completaste el repaso general",
+      "audio": "/audios/lobita/felicidades-completaste-el-repaso-general.m4a",
+      "momento": "fin_repaso",
+      "estadoMascota": "celebrando"
+    },
+    {
+      "id": "final-tani",
+      "texto": null,
+      "audio": "/audios/lobita/final-tani.m4a",
+      "momento": "final",
+      "estadoMascota": "celebrando"
+    },
+    {
+      "id": "has-progresado",
+      "texto": "Has progresado",
+      "audio": "/audios/lobita/has-progresado.m4a",
+      "momento": "progreso",
+      "estadoMascota": "feliz"
+    },
+    {
+      "id": "me-encanta-ensenarte",
+      "texto": "Me encanta enseñarte",
+      "audio": "/audios/lobita/me-encanta-ensenarte.m4a",
+      "momento": "presentacion",
+      "estadoMascota": "feliz"
+    },
+    {
+      "id": "no-te-preocupes-intentalo-nuevamente",
+      "texto": "No te preocupes, inténtalo nuevamente",
+      "audio": "/audios/lobita/no-te-preocupes-intentalo-nuevamente.m4a",
+      "momento": "error",
+      "estadoMascota": "triste"
+    },
+    {
+      "id": "que-te-gustaria-aprender-hoy",
+      "texto": "¿Qué te gustaría aprender hoy?",
+      "audio": "/audios/lobita/que-te-gustaria-aprender-hoy.m4a",
+      "momento": "menu_categorias",
+      "estadoMascota": "hablando"
+    },
+    {
+      "id": "racha-completa",
+      "texto": "¡Racha completa!",
+      "audio": "/audios/lobita/racha-completa.m4a",
+      "momento": "racha",
+      "estadoMascota": "celebrando"
+    },
+    {
+      "id": "recuerda-como-lo-aprendimos",
+      "texto": "Recuerda cómo lo aprendimos",
+      "audio": "/audios/lobita/recuerda-como-lo-aprendimos.m4a",
+      "momento": "repaso",
+      "estadoMascota": "pensando"
+    }
+  ]
+}

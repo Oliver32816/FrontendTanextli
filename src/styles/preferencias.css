@@ -1,0 +1,6 @@
+/* Se activa desde Configuración (services/preferencias.js) */
+
+/* Letra más grande en toda la app */
+html.pref-letra-grande body {
+  zoom: 1.12;
+}
