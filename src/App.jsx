@@ -12,6 +12,7 @@ import Categoria from './pages/Categoria'
 import AcercaDe from './pages/AcercaDe'
 import Cargando from './components/Cargando'
 import NoEncontrada from './pages/NoEncontrada'
+import Administracion from './pages/Administracion'
 import Onboarding from './pages/Onboarding'
 import { onboardingPendiente, marcarOnboardingCompletado } from './services/onboarding'
 import Leccion from './pages/Leccion'
@@ -104,6 +105,11 @@ function App() {
       <Route path="/perfil" element={<Perfil usuario={usuario} />} />
       <Route path="/configuracion" element={<Configuracion usuario={usuario} />} />
       <Route path="/acerca-de" element={<AcercaDe />} />
+      {/* Solo administradores y superusuarios; los demás regresan al inicio */}
+      <Route
+        path="/administracion"
+        element={['admin', 'superuser'].includes(usuario.rol) ? <Administracion usuario={usuario} /> : <Navigate to="/menu" replace />}
+      />
       <Route path="/bienvenida" element={<Onboarding onTerminar={() => navigate('/menu')} />} />
       {/* Cualquier otra dirección muestra la página de "no encontrada" */}
       <Route path="*" element={<NoEncontrada />} />

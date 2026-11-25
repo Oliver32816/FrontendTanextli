@@ -1,0 +1,46 @@
+/* =====================================================================
+   Tany dormida: "zzz" que suben junto a su cabeza (MascotaAnimada)
+   El tamaño de las letras sigue al tamaño de la mascota (--zzz en línea).
+   ===================================================================== */
+.mxa-zzz {
+  position: absolute;
+  z-index: 4;
+  top: -4%;
+  left: -6%;
+  width: 4.5em;
+  height: 5.5em;
+  font-size: var(--zzz, 16px);
+  pointer-events: none;
+}
+.mxa-zzz span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .35), 0 0 14px rgba(155, 126, 240, .65);
+  opacity: 0;
+  animation: mxa-zzz 3s ease-in infinite;
+}
+.mxa-zzz span:nth-child(1) { font-size: 1em; animation-delay: 0s; }
+.mxa-zzz span:nth-child(2) { font-size: 1.35em; animation-delay: 1s; }
+.mxa-zzz span:nth-child(3) { font-size: 1.8em; animation-delay: 2s; }
+@keyframes mxa-zzz {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(10deg) scale(.6); }
+  15%  { opacity: 1; }
+  70%  { opacity: .9; }
+  100% { opacity: 0; transform: translate(-2.6em, -4.6em) rotate(-14deg) scale(1.15); }
+}
+/* En fondos claros las letras llevan un contorno morado para que se vean */
+:root:not([data-tema="oscuro"]) .mxa-zzz span {
+  color: #7c5cd6;
+  text-shadow: 0 1px 0 #fff, 0 0 10px rgba(255, 255, 255, .9);
+}
+.mxa-ancla.dormida .mxa { filter: saturate(.92) brightness(.97); transition: filter .6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mxa-zzz span { animation: none; opacity: 1; }
+  .mxa-zzz span:nth-child(2) { transform: translate(-1em, -1.6em); }
+  .mxa-zzz span:nth-child(3) { transform: translate(-2em, -3.4em); }
+}

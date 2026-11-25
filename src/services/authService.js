@@ -80,3 +80,10 @@ export async function cerrarSesion() {
   }
   olvidarProgreso()
 }
+
+
+// Administración (solo lectura, para admin y superuser): lista de cuentas con su último acceso
+export async function listarUsuariosEquipo() {
+  const { usuarios } = await pedir('/equipo/usuarios')
+  return usuarios || []
+}

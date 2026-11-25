@@ -94,7 +94,7 @@ function Configuracion({ usuario }) {
     const limpio = apodo.trim()
     setPreferencias(guardarPreferencia('apodo', limpio))
     setApodo(limpio)
-    avisar('lobita', limpio ? `Lobita te llamará «${limpio}».` : 'Lobita usará tu primer nombre.')
+    avisar('lobita', limpio ? `Tany te llamará «${limpio}».` : 'Tany usará tu primer nombre.')
     reaccionar('agradecida')
   }
 
@@ -137,7 +137,7 @@ function Configuracion({ usuario }) {
           <div>
             <span className="tx-insignia">Ajustes</span>
             <h1>Configu<span className="tx-degradado">ración</span></h1>
-            <p>Haz que Tanextli se adapte a ti: apariencia, Lobita y tu cuenta.</p>
+            <p>Haz que Tanextli se adapte a ti: apariencia, Tany y tu cuenta.</p>
           </div>
           <div className="cf-mascota">
             {reaccion ? (
@@ -171,7 +171,7 @@ function Configuracion({ usuario }) {
 
           {/* ---------- Lobita ---------- */}
           <section className="pf-tarjeta tx-aparecer tx-retraso-2">
-            <Encabezado icono="🐺" titulo="Lobita" texto="Tu guía en cada lección." />
+            <Encabezado icono="🐺" titulo="Tany" texto="Tu guía en cada lección." />
             <div className="cf-bloque">
               <label htmlFor="apodo" className="cf-etiqueta">¿Cómo quieres que te llame?</label>
               <p className="cf-ayuda">Ahora te dice: <strong>«{obtenerNombreSaludo(usuario)}»</strong></p>
@@ -182,7 +182,7 @@ function Configuracion({ usuario }) {
                 <button type="button" className="pf-boton" onClick={guardarApodo}>Guardar</button>
               </div>
             </div>
-            <Interruptor id="voz-lobita" icono="🔊" etiqueta="Voz de Lobita"
+            <Interruptor id="voz-lobita" icono="🔊" etiqueta="Voz de Tany"
               descripcion="Habla al darte la bienvenida, al acertar y al equivocarte."
               activo={voz} onCambiar={(v) => { setVoz(v); activarVoz(v); if (v) decirLobita('ayuda') }} />
             {avisoDe('lobita')}
@@ -211,7 +211,7 @@ function Configuracion({ usuario }) {
             <Encabezado icono="💡" titulo="Ayuda" texto="Atajos útiles." />
             <button type="button" className="cf-accion" onClick={() => navigate('/bienvenida')}>
               <span className="cf-opcion-icono" aria-hidden="true">👋</span>
-              <span className="cf-texto"><strong>Ver la bienvenida otra vez</strong><span>Repite el recorrido inicial con Lobita.</span></span>
+              <span className="cf-texto"><strong>Ver la bienvenida otra vez</strong><span>Repite el recorrido inicial con Tany.</span></span>
               <span className="cf-flecha" aria-hidden="true">→</span>
             </button>
             <button type="button" className="cf-accion" onClick={() => navigate('/perfil')}>

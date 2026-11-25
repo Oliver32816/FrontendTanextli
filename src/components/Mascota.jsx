@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react' // NUEVO
 import { animaciones, rutinas } from '../data/mascotaAnimaciones' // NUEVO: rutinas
 import '../styles/mascota.css'
 import MascotaAnimada from './MascotaAnimada' // NUEVO: mascota animada por capas
+import { useDormir } from './useDormir'
 
 // Uso:  <Mascota estado="saludo" mensaje="¡Hola!" tamano="grande" globo="arriba" />
 //   estado:  reposo | saludo | feliz | celebra | animo | habla | escucha | piensa | sorpresa | error
@@ -31,7 +32,9 @@ function Mascota({
   entrada,
   flotar = false,
   disparo,
+  dormir = true, // se duerme con "zzz" tras 20 s sin actividad
 }) {
+  const dormida = useDormir(dormir ? undefined : 0)
   // NUEVO: si hay rutina, la mascota recorre sus pasos en bucle
   const pasos = rutina ? rutinas[rutina] : null
   const [paso, setPaso] = useState(0)
@@ -55,7 +58,8 @@ function Mascota({
   const actual = pasos && pasos.length > 0 ? pasos[paso] || pasos[0] : null
   const estadoActual = actual ? actual.estado : estado
   // NUEVO: si el paso de la rutina no trae mensaje, se usa el que se pasó por props
-  const mensajeActual = actual ? (actual.mensaje ?? mensaje) : mensaje
+  // Dormida no habla: se oculta el globo
+  const mensajeActual = dormida ? '' : actual ? (actual.mensaje ?? mensaje) : mensaje
 
   const animacion = animaciones[estadoActual] || animaciones.reposo
 
@@ -79,6 +83,7 @@ function Mascota({
         estado={estadoCapas}
         tamano={typeof tamano === 'number' ? tamano : TAMANOS_CAPAS[tamano] || 260}
         entrada={entrada}
+        dormida={dormida}
       />
     )
   } else if (animacion.tipo === 'video') {

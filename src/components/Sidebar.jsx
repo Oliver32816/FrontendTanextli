@@ -30,6 +30,20 @@ function IconEscudo() {
 // Portal oficial de Tanextli (se abre en otra pestaña). Se puede cambiar con VITE_PORTAL_URL en el .env
 export const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || 'https://olo.tail0de9ec.ts.net/portal/'
 
+// Panel de administración completo (solo superusuarios). Se usa la dirección pública: dentro de
+// la red de Tailscale el servidor la manda al panel; fuera de ella muestra "No tienes acceso".
+export const PANEL_ADMIN_URL = import.meta.env.VITE_PANEL_ADMIN_URL || 'https://olo.tail0de9ec.ts.net/admin/usuarios/'
+
+// Escudo con estrella para administración
+function IconAdmin() {
+  return (
+    <svg className="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3 5 6v5c0 4.5 3 8.5 7 10 4-1.5 7-5.5 7-10V6l-7-3z" />
+      <path d="m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z" />
+    </svg>
+  )
+}
+
 const CUENTA = [
   { to: '/perfil', texto: 'Perfil', Icono: IconPerfil },
   { to: '/configuracion', texto: 'Configuración', Icono: IconConfiguracion },
@@ -116,6 +130,20 @@ function Sidebar() {
           <p className="sidebar-titulo">Mi cuenta</p>
           <nav className="sidebar-nav" aria-label="Cuenta">
             {CUENTA.map((e, i) => enlace(e, i + SECCIONES.length))}
+
+            {/* Administradores: vista de usuarios de solo lectura dentro de la app */}
+            {usuario?.rol === 'admin' &&
+              enlace({ to: '/administracion', texto: 'Administración', Icono: IconAdmin, tono: 'morado' }, SECCIONES.length + CUENTA.length)}
+
+            {/* Superusuarios: panel completo (se abre en otra pestaña) */}
+            {usuario?.rol === 'superuser' && (
+              <a className="sidebar-link sidebar-tono-morado" href={PANEL_ADMIN_URL} target="_blank" rel="noreferrer"
+                style={{ '--i': SECCIONES.length + CUENTA.length }} title="Se abre en otra pestaña (solo dentro de la red de Tailscale)">
+                <span className="sidebar-link-icono"><IconAdmin /></span>
+                <span>Panel de administración</span>
+                <span className="sidebar-externo" aria-hidden="true">↗</span>
+              </a>
+            )}
           </nav>
 
           <div className="sidebar-usuario">

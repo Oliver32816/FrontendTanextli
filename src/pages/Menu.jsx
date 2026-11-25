@@ -144,7 +144,7 @@ function Menu({ usuario }) {
             <h1>
               ¡Hola, <span className="menu-hero-nombre">{nombreUsuario}</span>!
             </h1>
-            <p>Tu esfuerzo de hoy te acerca a grandes logros. Sigue aprendiendo náhuatl con Lobita.</p>
+            <p>Tu esfuerzo de hoy te acerca a grandes logros. Sigue aprendiendo náhuatl con Tany.</p>
 
             <div className="menu-hero-acciones">
               {siguiente ? (

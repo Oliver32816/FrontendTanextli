@@ -715,3 +715,8 @@
   .sidebar-portal-icono { width: 28px; height: 28px; }
   .sidebar-portal-texto small { display: none; }
 }
+
+
+/* Enlace que se abre en otra pestaña (panel de administración) */
+.sidebar-externo { margin-left: auto; font-weight: 800; color: #ffd29a; transition: transform .25s; }
+.sidebar-link:hover .sidebar-externo { transform: translate(2px, -2px); }

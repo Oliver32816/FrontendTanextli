@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar'
 import Mascota from '../components/Mascota'
 import { useAncho, tamanoMascota } from '../components/useAncho'
 import { useContador } from '../components/useContador'
+import { useDormir } from '../components/useDormir'
 import { obtenerResumen, obtenerLogros, obtenerSiguienteLeccion } from '../services/estadisticas'
 import { useLobita } from '../services/useLobita'
 import { exclamar } from '../services/vozLobita'
@@ -81,6 +82,7 @@ function Perfil({ usuario }) {
   const siguiente = obtenerSiguienteLeccion()
   const logrosGanados = logros.filter((l) => l.logrado).length
   const textoLobita = useLobita(grupoDeVoz(resumen.porcentaje), { ms: 6000 })
+  const dormida = useDormir() // mientras Tany duerme no se muestra su globo
   const [refLobita, medida] = useAncho()
   // Se deja espacio arriba para el globo de Lobita
   const tamano = tamanoMascota({ ancho: medida.ancho, alto: Math.max(0, medida.alto - 52) }, { factor: .8, min: 90, max: 190 })
@@ -113,7 +115,7 @@ function Perfil({ usuario }) {
           <AnilloTotal porcentaje={resumen.porcentaje} />
 
           <div className="pf-lobita" ref={refLobita}>
-            <p className="pf-globo">{textoLobita ? exclamar(textoLobita) : mensajeDeLobita(resumen.porcentaje)}</p>
+            {!dormida && <p className="pf-globo">{textoLobita ? exclamar(textoLobita) : mensajeDeLobita(resumen.porcentaje)}</p>}
             <div className="pf-lobita-mascota">
               <Mascota rutina="perfil" tamano={tamano} entrada="deslizar" />
             </div>

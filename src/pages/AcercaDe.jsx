@@ -194,7 +194,7 @@ function AcercaDe() {
             </div>
             <p className="ac-texto">
               Con lecciones por categorías, audios de pronunciación, práctica con el micrófono y actividades
-              interactivas, Tanextli acompaña a cada persona paso a paso en su aprendizaje, con Lobita como guía.
+              interactivas, Tanextli acompaña a cada persona paso a paso en su aprendizaje, con Tany como guía.
             </p>
             <div className="ac-funciones">
               {funciones.map(({ Icono, titulo, texto, tono }, i) => (

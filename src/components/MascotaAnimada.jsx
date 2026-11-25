@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Mascota.css";
+import "../styles/dormir.css";
+import { useDormir, DORMIR_MS } from "./useDormir";
 
 // ---- Capas (todas miden lo mismo y se apilan en el mismo lugar) ----
 import cola from "../assets/mascota/capas/cola.png";
@@ -84,6 +86,9 @@ function Ojo({ lado, fondo, iris, pestanas, mascara }) {
 // mirada:  [x, y] para forzar hacia dónde mira (si no se pone, usa la del estado)
 // entrada: cómo aparece al abrirse la pantalla: "rebote" | "deslizar" | "asomar" | "zoom" | "aparecer"
 // flotar:  true = el globo de texto flota encima de la mascota SIN mover el resto de la pantalla
+// dormir:  true = se duerme (con "zzz") tras 20 s sin actividad; false = nunca se duerme
+// dormida: si se pasa true/false, quien la usa decide cuándo duerme (por ejemplo Mascota.jsx)
+// onDespertar: se llama cuando despierta después de haberse dormido
 export default function MascotaAnimada({
   estado = "reposo",
   mensaje = "",
@@ -93,9 +98,21 @@ export default function MascotaAnimada({
   mirada = null,
   entrada = null,
   flotar = false,
+  dormir = true,
+  dormida: dormidaExterna,
+  onDespertar,
 }) {
-  const nombre = ESTADOS[estado] ? estado : "reposo";
+  const controlada = typeof dormidaExterna === "boolean";
+  const dormidaPropia = useDormir(dormir && !controlada ? DORMIR_MS : 0, onDespertar);
+  const dormida = controlada ? dormidaExterna : dormidaPropia;
+
+  const nombre = dormida ? "sonolienta" : ESTADOS[estado] ? estado : "reposo";
   const cfg = ESTADOS[nombre];
+  if (dormida) {
+    vida = false;
+    mensaje = "";
+    mirada = null;
+  }
 
   const [azar, setAzar] = useState(null);   // mirada al azar
   const [mueve, setMueve] = useState(null); // oreja que se mueve: "i" | "d" | null
@@ -145,7 +162,12 @@ export default function MascotaAnimada({
     <div className="mxa-contenedor">
       {mensaje && !flotar && <div className="mxa-globo">{mensaje}</div>}
 
-      <div className="mxa-ancla">
+      <div className={`mxa-ancla${dormida ? " dormida" : ""}`}>
+        {dormida && (
+          <div className="mxa-zzz" aria-hidden="true" style={{ "--zzz": `${Math.max(13, Math.round(tamano * 0.11))}px` }}>
+            <span>z</span><span>z</span><span>Z</span>
+          </div>
+        )}
         {mensaje && flotar && (
           <div className="mxa-flota">
             <div className="mxa-globo">{mensaje}</div>

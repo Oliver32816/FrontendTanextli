@@ -1,6 +1,6 @@
 // Inicio de sesión y registro. Mismo diseño que el portal de Tanextli:
-// fondo animado, tarjeta de vidrio, Lobita sobre una forma que se transforma y palabras flotando.
-import { useCallback, useEffect, useRef, useState } from 'react'
+// fondo animado, tarjeta de vidrio, Tany sobre una forma que se transforma y palabras flotando.
+import { useCallback, useEffect, useState } from 'react'
 import { registrar, iniciarSesion, iniciarConGoogle } from '../../services/authService'
 import MascotaAnimada from '../../components/MascotaAnimada'
 import { useMascota } from '../../components/useMascota'
@@ -10,7 +10,7 @@ import BotonTema from '../../components/BotonTema'
 import contenido from '../../data/contenido.json'
 import './AuthScreen.css'
 
-// Vocabulario de todas las lecciones (contenido.json) para las palabras que flotan alrededor de Lobita.
+// Vocabulario de todas las lecciones (contenido.json) para las palabras que flotan alrededor de Tany.
 // Se usan las más cortas para que quepan en las burbujas, sin repetir y en orden al azar.
 function armarVocabulario() {
   const vistas = new Set()
@@ -34,7 +34,6 @@ function armarVocabulario() {
 }
 const VOCABULARIO = armarVocabulario()
 const CAMBIO_PALABRA_MS = 1600 // cada cuánto cambia una de las tres burbujas (van por turnos)
-const DORMIR_MS = 20000        // Lobita se duerme si nadie toca la pantalla en este tiempo
 
 // Las tres burbujas cambian de palabra por turnos, sin repetir las que se están viendo
 function usePalabrasFlotantes() {
@@ -54,38 +53,6 @@ function usePalabrasFlotantes() {
     return () => clearInterval(t)
   }, [])
   return indices.map((i) => VOCABULARIO[i] || { nahuatl: 'Cenchan', espanol: 'Familia' })
-}
-
-// Lobita se duerme tras un rato sin actividad y despierta al mover el mouse, tocar o escribir
-function useDormir(ms, alDespertar) {
-  const [dormida, setDormida] = useState(false)
-  const dormidaRef = useRef(false)
-  const despertarRef = useRef(alDespertar)
-  despertarRef.current = alDespertar
-
-  useEffect(() => {
-    let t
-    const programar = () => {
-      clearTimeout(t)
-      t = setTimeout(() => { dormidaRef.current = true; setDormida(true) }, ms)
-    }
-    const actividad = () => {
-      if (dormidaRef.current) {
-        dormidaRef.current = false
-        setDormida(false)
-        despertarRef.current?.()
-      }
-      programar()
-    }
-    const eventos = ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart', 'focusin']
-    eventos.forEach((e) => window.addEventListener(e, actividad, { passive: true }))
-    programar()
-    return () => {
-      clearTimeout(t)
-      eventos.forEach((e) => window.removeEventListener(e, actividad))
-    }
-  }, [ms])
-  return dormida
 }
 
 const Icono = {
@@ -114,9 +81,8 @@ export default function AuthScreen({ onLogin }) {
   const [refEscena, medidaEscena] = useAncho()
   const tamano = tamanoMascota(medidaEscena, { max: 280 })
   const palabras = usePalabrasFlotantes()
-  const dormida = useDormir(DORMIR_MS, () => reaccionar('sorprendida', '¡Uy! Me quedé dormida… ¡ya desperté!', 3000))
 
-  // Al abrir la pantalla Lobita saluda solo con un globo (sin voz)
+  // Al abrir la pantalla Tany saluda solo con un globo (sin voz)
   useEffect(() => {
     reaccionar('saludando', '¡Hola! Inicia sesión para seguir aprendiendo náhuatl', 5000)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,7 +149,7 @@ export default function AuthScreen({ onLogin }) {
       <BotonTema className="auth-tema" />
 
       <div className="auth-tarjeta tx-aparecer">
-        {/* ---------- Lado de Lobita ---------- */}
+        {/* ---------- Lado de Tany ---------- */}
         <aside className="auth-escena" aria-hidden="true">
           <div className="auth-escena-texto">
             <span className="auth-escena-eyebrow">Aprende náhuatl</span>
@@ -200,20 +166,16 @@ export default function AuthScreen({ onLogin }) {
                 </div>
               </div>
             ))}
-            <div className={`auth-lobita${dormida ? ' dormida' : ''}`}>
-              {dormida && (
-                <div className="auth-zzz">
-                  <span>z</span><span>z</span><span>Z</span>
-                </div>
-              )}
+            <div className="auth-lobita">
+              {/* Tany se duerme sola tras 20 s sin actividad (con sus "zzz") y al despertar avisa */}
               <MascotaAnimada
-                estado={dormida ? 'sonolienta' : estado}
-                mensaje={dormida ? '' : mensajeMascota}
+                estado={estado}
+                mensaje={mensajeMascota}
                 tamano={tamano}
-                mirada={dormida ? null : mirada}
-                vida={!dormida}
+                mirada={mirada}
                 entrada="rebote"
                 flotar
+                onDespertar={() => reaccionar('sorprendida', '¡Uy! Me quedé dormida… ¡ya desperté!', 3000)}
               />
             </div>
           </div>
