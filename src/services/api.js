@@ -15,6 +15,21 @@ export function obtenerToken() {
 // Avisa a la app que la sesión venció (App.jsx regresa al login)
 export const EVENTO_SESION_VENCIDA = 'tanextli:sesion-vencida'
 
+// Avisa que la app se cerró o quedó en segundo plano ("Ahora" desaparece en Administración).
+// keepalive deja que la petición termine aunque la pestaña se esté cerrando.
+export function avisarSalida(token = obtenerToken()) {
+  if (!token) return
+  try {
+    fetch(`${API_URL}/auth/salida`, {
+      method: 'POST',
+      keepalive: true,
+      headers: { Authorization: `Bearer ${token}` },
+    }).catch(() => {})
+  } catch {
+    // navegador sin fetch keepalive: el "Ahora" se quita solo en 75 s
+  }
+}
+
 // Rutas donde un 401 significa "dato incorrecto" y no "sesión vencida"
 const RESPUESTA_401_NO_CIERRA = ['/login', '/perfil/password']
 

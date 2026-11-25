@@ -1,5 +1,5 @@
 // Cuenta del usuario: registro, inicio de sesión (correo o Google), sesión guardada y contraseña.
-import { pedir, obtenerToken, TOKEN_KEY } from './api'
+import { pedir, obtenerToken, avisarSalida, TOKEN_KEY } from './api'
 import { olvidarProgreso } from './progreso'
 
 const USER_KEY = 'tanextli_user'
@@ -97,6 +97,7 @@ export async function verificarSesion() {
 }
 
 export async function cerrarSesion() {
+  avisarSalida() // quita el "Ahora" de esta cuenta antes de borrar el token
   try {
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(USER_KEY)

@@ -8,8 +8,8 @@ import { listarUsuariosEquipo } from '../services/authService'
 import '../styles/menu.css'
 import '../styles/administracion.css'
 
-const EN_LINEA_MIN = 3          // "Ahora": la app mandó su latido (cada minuto) hace menos de 3 minutos
-const ACTUALIZAR_MS = 30000     // la lista se refresca sola cada 30 segundos
+const EN_LINEA_SEG = 75         // "Ahora": la app abierta mandó su latido (cada 30 s) hace menos de 75 s
+const ACTUALIZAR_MS = 15000     // la lista se refresca sola cada 15 segundos
 
 const FILTROS = [
   { valor: 'todos', texto: 'Todos' },
@@ -22,11 +22,17 @@ const ROL_TEXTO = { usuario: 'estudiante', admin: 'admin', superuser: 'superuser
 
 const minutosDesde = (fecha) => (fecha ? (Date.now() - new Date(fecha).getTime()) / 60000 : Infinity)
 
+// En línea = tiene la app abierta y visible. La señal se borra al cerrar sesión o salir de la app.
+// (Con un servidor anterior sin ultima_senal se usa la regla vieja: actividad de hace menos de 3 min.)
+const enLineaAhora = (u) => ('ultima_senal' in u
+  ? Boolean(u.ultima_senal) && minutosDesde(u.ultima_senal) * 60 < EN_LINEA_SEG
+  : minutosDesde(u.ultimo_acceso) < 3)
+
 const relativo = new Intl.RelativeTimeFormat('es', { numeric: 'auto' })
 function haceCuanto(fecha) {
   if (!fecha) return 'Nunca'
   const min = minutosDesde(fecha)
-  if (min < EN_LINEA_MIN) return 'Ahora'
+  if (min < 1) return 'hace un momento'
   if (min < 60) return relativo.format(-Math.round(min), 'minute')
   if (min < 60 * 24) return relativo.format(-Math.round(min / 60), 'hour')
   if (min < 60 * 24 * 30) return relativo.format(-Math.round(min / 1440), 'day')
@@ -88,7 +94,7 @@ export default function Administracion({ usuario }) {
       total: lista.length,
       estudiantes: lista.filter((u) => u.rol === 'usuario').length,
       hoy: lista.filter((u) => minutosDesde(u.ultimo_acceso) < 60 * 24).length,
-      enLinea: lista.filter((u) => minutosDesde(u.ultimo_acceso) < EN_LINEA_MIN).length,
+      enLinea: lista.filter(enLineaAhora).length,
     }
   }, [usuarios])
 
@@ -99,7 +105,7 @@ export default function Administracion({ usuario }) {
       .filter((u) => !soloActivos || minutosDesde(u.ultimo_acceso) < 60 * 24 * 7)
       .filter((u) => !texto || `${u.nombre_usuario} ${u.correo}`.toLowerCase().includes(texto))
       // Los más recientes primero; los que nunca han entrado, al final
-      .sort((a, b) => minutosDesde(a.ultimo_acceso) - minutosDesde(b.ultimo_acceso))
+      .sort((a, b) => (enLineaAhora(b) - enLineaAhora(a)) || (minutosDesde(a.ultimo_acceso) - minutosDesde(b.ultimo_acceso)))
   }, [usuarios, busqueda, filtro, soloActivos])
 
   return (
@@ -176,7 +182,7 @@ export default function Administracion({ usuario }) {
           {!error && usuarios && visibles.length === 0 && <p className="ad-vacio">No hay usuarios con esos filtros.</p>}
 
           {!error && visibles.map((u, i) => {
-            const enLinea = minutosDesde(u.ultimo_acceso) < EN_LINEA_MIN
+            const enLinea = enLineaAhora(u)
             return (
               <div key={u.id} className="ad-fila" role="row" style={{ '--i': Math.min(i, 12) }}>
                 <span className="ad-persona">
@@ -193,7 +199,7 @@ export default function Administracion({ usuario }) {
                 <span className={`ad-acceso ${enLinea ? 'en-linea' : u.ultimo_acceso ? '' : 'nunca'}`} data-titulo="Último acceso"
                   title={u.ultimo_acceso ? fechaLarga.format(new Date(u.ultimo_acceso)) : 'Todavía no entra a la app'}>
                   <i aria-hidden="true" />
-                  {haceCuanto(u.ultimo_acceso)}
+                  {enLinea ? 'Ahora' : haceCuanto(u.ultimo_acceso)}
                 </span>
               </div>
             )
