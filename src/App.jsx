@@ -6,6 +6,7 @@ import VerificarCorreo from './pages/Auth/VerificarCorreo'
 import { verificarSesion, cerrarSesion } from './services/authService'
 import { sincronizarProgreso } from './services/progreso'
 import { EVENTO_SESION_VENCIDA } from './services/api'
+import { useLatido } from './services/useLatido'
 import { Privacidad, Terminos } from './pages/Legal'
 import Menu from './pages/Menu'
 import CategoriaIntro from './pages/catInfo'
@@ -53,6 +54,9 @@ function App() {
   const { pathname } = useLocation()
   const [, setBienvenidaVista] = useState(0)
   const [, setVerificacionVista] = useState(0)
+
+  // Con sesión iniciada, avisa cada minuto que la app sigue abierta ("Ahora" en Administración)
+  useLatido(Boolean(usuario))
 
   // Al abrir la app: revisa la sesión guardada y trae el progreso del servidor
   useEffect(() => {

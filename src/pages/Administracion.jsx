@@ -8,8 +8,8 @@ import { listarUsuariosEquipo } from '../services/authService'
 import '../styles/menu.css'
 import '../styles/administracion.css'
 
-const EN_LINEA_MIN = 5          // "En línea" si entró hace menos de 5 minutos
-const ACTUALIZAR_MS = 60000     // la lista se refresca sola cada minuto
+const EN_LINEA_MIN = 3          // "Ahora": la app mandó su latido (cada minuto) hace menos de 3 minutos
+const ACTUALIZAR_MS = 30000     // la lista se refresca sola cada 30 segundos
 
 const FILTROS = [
   { valor: 'todos', texto: 'Todos' },
