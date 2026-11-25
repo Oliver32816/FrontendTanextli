@@ -15,6 +15,9 @@ export function obtenerToken() {
 // Avisa a la app que la sesión venció (App.jsx regresa al login)
 export const EVENTO_SESION_VENCIDA = 'tanextli:sesion-vencida'
 
+// Rutas donde un 401 significa "dato incorrecto" y no "sesión vencida"
+const RESPUESTA_401_NO_CIERRA = ['/login', '/perfil/password']
+
 export async function pedir(endpoint, { method = 'GET', body, conToken = true } = {}) {
   const token = conToken ? obtenerToken() : null
   let respuesta
@@ -40,7 +43,8 @@ export async function pedir(endpoint, { method = 'GET', body, conToken = true } 
     error.status = respuesta.status
     error.errores = datos.errores
     // Token vencido o inválido en una petición que lo usaba
-    if (respuesta.status === 401 && token && endpoint !== '/login') {
+    // (cambiar la contraseña con la actual equivocada también responde 401, pero la sesión sigue bien)
+    if (respuesta.status === 401 && token && !RESPUESTA_401_NO_CIERRA.includes(endpoint)) {
       window.dispatchEvent(new Event(EVENTO_SESION_VENCIDA))
     }
     throw error

@@ -49,6 +49,31 @@ export async function cambiarPassword({ actual, nueva }) {
   return actualizarUsuarioGuardado({ debe_cambiar_password: false })
 }
 
+// ---- Verificar el correo (código de 6 números enviado al correo de la cuenta) ----
+export function enviarCodigoVerificacion() {
+  return pedir('/auth/verificacion/enviar', { method: 'POST', body: {} })
+}
+
+export async function confirmarCorreo(codigo) {
+  const { usuario } = await pedir('/auth/verificacion/confirmar', { method: 'POST', body: { codigo } })
+  return actualizarUsuarioGuardado({ ...usuario, correo_verificado: true })
+}
+
+// ---- Olvidé mi contraseña: código al correo y luego la contraseña nueva ----
+export function pedirCodigoRestablecer(correo) {
+  return pedir('/auth/password/olvide', { method: 'POST', body: { correo }, conToken: false })
+}
+
+// Cambia la contraseña con el código e inicia sesión
+export async function restablecerConCodigo({ correo, codigo, nueva }) {
+  const datos = await pedir('/auth/password/restablecer', {
+    method: 'POST',
+    body: { correo, codigo, password_nueva: nueva },
+    conToken: false,
+  })
+  return guardarSesion(datos)
+}
+
 export function obtenerUsuarioGuardado() {
   try {
     return JSON.parse(localStorage.getItem(USER_KEY))

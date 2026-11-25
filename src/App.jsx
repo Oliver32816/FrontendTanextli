@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import AuthScreen from './pages/Auth/AuthScreen'
 import CambiarPassword from './pages/Auth/CambiarPassword'
+import VerificarCorreo from './pages/Auth/VerificarCorreo'
 import { verificarSesion, cerrarSesion } from './services/authService'
 import { sincronizarProgreso } from './services/progreso'
 import { EVENTO_SESION_VENCIDA } from './services/api'
@@ -28,12 +29,30 @@ seguirTemaDelDispositivo()
 // Páginas que se ven sin iniciar sesión
 const PUBLICAS = { '/privacidad': Privacidad, '/terminos': Terminos }
 
+// Cuentas anteriores a la verificación de correo pueden dejarla "para después" (solo esta visita)
+const CLAVE_VERIFICAR_DESPUES = 'tanextli_verificar_despues'
+function verificacionPospuesta(usuario) {
+  try {
+    return sessionStorage.getItem(CLAVE_VERIFICAR_DESPUES) === String(usuario.id)
+  } catch {
+    return false
+  }
+}
+function posponerVerificacion(usuario) {
+  try {
+    sessionStorage.setItem(CLAVE_VERIFICAR_DESPUES, String(usuario.id))
+  } catch {
+    // sin almacenamiento: se vuelve a preguntar al recargar
+  }
+}
+
 function App() {
   const [usuario, setUsuario] = useState(null)
   const [revisando, setRevisando] = useState(true)
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [, setBienvenidaVista] = useState(0)
+  const [, setVerificacionVista] = useState(0)
 
   // Al abrir la app: revisa la sesión guardada y trae el progreso del servidor
   useEffect(() => {
@@ -82,6 +101,25 @@ function App() {
   // Entró con una contraseña temporal: debe elegir una nueva
   if (usuario.debe_cambiar_password) {
     return <CambiarPassword usuario={usuario} onListo={setUsuario} onSalir={salir} />
+  }
+
+  // Correo sin confirmar: cuenta nueva (false) = obligatorio; cuenta anterior (null) = se puede posponer.
+  // Si el servidor todavía no envía el dato (undefined), no se pide nada.
+  const correoPendiente = usuario.correo_verificado === false
+    || (usuario.correo_verificado === null && !verificacionPospuesta(usuario))
+  if (correoPendiente) {
+    return (
+      <VerificarCorreo
+        usuario={usuario}
+        obligatoria={usuario.correo_verificado === false}
+        onListo={setUsuario}
+        onOmitir={() => {
+          posponerVerificacion(usuario)
+          setVerificacionVista((n) => n + 1)
+        }}
+        onSalir={salir}
+      />
+    )
   }
 
   if (onboardingPendiente(usuario)) {

@@ -1,0 +1,37 @@
+/* Recuperar contraseña y verificar correo (códigos de 6 números) */
+/* ---------- Códigos por correo (recuperar contraseña y verificar correo) ---------- */
+.auth-codigo {
+  text-align: center;
+  font-family: Consolas, Menlo, monospace;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: .55em;
+  padding-left: .55em; /* compensa el espacio después del último número */
+  color: var(--tx-primario);
+}
+.auth-codigo::placeholder { color: var(--tx-texto-tenue); letter-spacing: .55em; }
+.auth-nota { margin-bottom: 1rem; font-size: .86rem; }
+.auth-reenviar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  margin-top: .9rem;
+  font-size: .86rem;
+  color: var(--tx-texto-suave);
+}
+.auth-reenviar button {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--tx-primario);
+  cursor: pointer;
+}
+.auth-reenviar button:hover:not(:disabled) { text-decoration: underline; text-underline-offset: 3px; }
+.auth-reenviar button:disabled { color: var(--tx-texto-tenue); cursor: default; font-variant-numeric: tabular-nums; }
+.auth-pie-verificar { margin-top: .4rem; }
+.auth-icono-listo { background: var(--tx-verde-500) !important; color: #fff !important; animation: auth-listo .6s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes auth-listo { from { transform: scale(.5) rotate(-20deg); opacity: 0; } to { transform: none; opacity: 1; } }

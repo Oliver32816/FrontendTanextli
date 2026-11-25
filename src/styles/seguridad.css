@@ -1,0 +1,88 @@
+/* =====================================================================
+   Configuración → Seguridad (correo y contraseña)
+   ===================================================================== */
+.cf-seguridad { grid-column: 1 / -1; }
+.cf-correo { font-weight: 700; color: var(--tx-texto) !important; overflow-wrap: anywhere; }
+.cf-estado {
+  flex-shrink: 0;
+  padding: .35rem .8rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 800;
+}
+.cf-estado-ok { color: var(--tx-primario); background: var(--tx-verde-100); }
+.cf-estado-pendiente {
+  color: var(--tx-naranja-600, #b35a12);
+  background: var(--tx-naranja-100);
+  border-color: color-mix(in srgb, var(--tx-naranja-500) 35%, transparent);
+  cursor: pointer;
+  animation: tx-latido 2.4s ease-in-out infinite;
+}
+.cf-opcion-columna { flex-direction: column; align-items: stretch; gap: .8rem; }
+.cf-opcion-fila { display: flex; align-items: center; gap: .85rem; }
+.cf-puntos { letter-spacing: .15em; font-weight: 800; color: var(--tx-texto); margin-right: .3rem; }
+.cf-nota {
+  margin: 0;
+  padding: .7rem .9rem;
+  border-radius: 12px;
+  font-size: .84rem;
+  line-height: 1.5;
+  color: var(--tx-texto-suave);
+  background: var(--tx-verde-50);
+  border: 1px dashed var(--tx-borde);
+}
+.cf-acciones { display: flex; flex-wrap: wrap; gap: .55rem; }
+.cf-formulario {
+  display: grid;
+  gap: .8rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: var(--tx-fondo-2);
+  border: 1px solid var(--tx-borde);
+  animation: pf-aviso .35s var(--tx-curva) both;
+}
+.cf-campo { display: grid; gap: .35rem; }
+.cf-campo-password { position: relative; }
+.cf-campo-password .tx-campo { width: 100%; padding-right: 3rem; }
+.cf-ver {
+  position: absolute;
+  top: 50%;
+  right: .45rem;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  color: var(--tx-texto-suave);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.cf-ver:hover { color: var(--tx-primario); background: var(--tx-verde-50); }
+.cf-ver svg { width: 20px; height: 20px; }
+.cf-codigo { text-align: center; font-family: Consolas, Menlo, monospace; font-size: 1.5rem; font-weight: 800; letter-spacing: .5em; padding-left: .5em; color: var(--tx-primario); }
+.cf-error { margin: 0; padding: .6rem .8rem; border-radius: 12px; font-size: .86rem; font-weight: 700; color: var(--tx-texto); background: color-mix(in srgb, var(--tx-rojo-500) 12%, transparent); border: 1px solid color-mix(in srgb, var(--tx-rojo-500) 30%, transparent); }
+
+/* Barra de qué tan segura es la contraseña */
+.cf-fuerza { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .35rem .8rem; }
+.cf-fuerza-barra { display: grid; grid-template-columns: repeat(3, 1fr); gap: .3rem; }
+.cf-fuerza-barra span { height: 6px; border-radius: 999px; background: color-mix(in srgb, var(--tx-texto-tenue) 25%, transparent); transition: background-color .3s; }
+.cf-fuerza-barra.nivel-1 span:nth-child(1) { background: var(--tx-rojo-500); }
+.cf-fuerza-barra.nivel-2 span:nth-child(-n+2) { background: var(--tx-naranja-500); }
+.cf-fuerza-barra.nivel-3 span { background: var(--tx-verde-500); }
+.cf-fuerza-texto { font-size: .8rem; }
+.cf-fuerza-texto.nivel-1 { color: var(--tx-rojo-500); }
+.cf-fuerza-texto.nivel-2 { color: var(--tx-naranja-500); }
+.cf-fuerza-texto.nivel-3 { color: var(--tx-primario); }
+.cf-reglas { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .25rem .9rem; margin: 0; padding: 0; list-style: none; font-size: .8rem; color: var(--tx-texto-tenue); }
+.cf-reglas li.ok { color: var(--tx-primario); font-weight: 700; }
+
+@media (max-width: 640px) {
+  .cf-acciones .pf-boton { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cf-estado-pendiente, .cf-formulario { animation: none; }
+}

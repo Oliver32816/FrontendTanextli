@@ -7,6 +7,7 @@ import { useMascota } from '../../components/useMascota'
 import BotonGoogle from '../../components/BotonGoogle'
 import { useAncho, tamanoMascota } from '../../components/useAncho'
 import BotonTema from '../../components/BotonTema'
+import RecuperarPassword from './RecuperarPassword'
 import contenido from '../../data/contenido.json'
 import './AuthScreen.css'
 
@@ -34,6 +35,7 @@ function armarVocabulario() {
 }
 const VOCABULARIO = armarVocabulario()
 const CAMBIO_PALABRA_MS = 1600 // cada cuánto cambia una de las tres burbujas (van por turnos)
+const CORREO_VALIDO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i
 
 // Las tres burbujas cambian de palabra por turnos, sin repetir las que se están viendo
 function usePalabrasFlotantes() {
@@ -73,7 +75,7 @@ export default function AuthScreen({ onLogin }) {
   const [verPassword, setVerPassword] = useState(false)
   const [mensaje, setMensaje] = useState(null)
   const [cargando, setCargando] = useState(false)
-  const [ayudaPassword, setAyudaPassword] = useState(false)
+  const [recuperando, setRecuperando] = useState(false)
   const [aceptaTerminos, setAceptaTerminos] = useState(false)
 
   const [mirada, setMirada] = useState(null)
@@ -93,13 +95,17 @@ export default function AuthScreen({ onLogin }) {
   const alternarModo = () => {
     setEsRegistro(!esRegistro)
     setMensaje(null)
-    setAyudaPassword(false)
     reaccionar('feliz', esRegistro ? '¡Qué bueno verte de nuevo!' : '¡Crea tu cuenta!', 2500)
   }
 
   const enviar = async (e) => {
     e.preventDefault()
     setMensaje(null)
+    if (esRegistro && !CORREO_VALIDO.test(form.correo.trim())) {
+      setMensaje('Escribe un correo electrónico real (por ejemplo, nombre@gmail.com). Te enviaremos un código para confirmarlo.')
+      reaccionar('pensando', 'Revisa tu correo', 3500)
+      return
+    }
     if (esRegistro && !aceptaTerminos) {
       setMensaje('Para crear tu cuenta acepta los Términos y condiciones y el Aviso de privacidad.')
       reaccionar('pensando', 'Falta aceptar los términos', 3500)
@@ -188,6 +194,14 @@ export default function AuthScreen({ onLogin }) {
             <span>Tanextli<small>Aprende náhuatl</small></span>
           </a>
 
+          {recuperando ? (
+            <RecuperarPassword
+              correoInicial={form.correo}
+              onLogin={onLogin}
+              reaccionar={reaccionar}
+              onVolver={() => { setRecuperando(false); setMensaje(null); reaccionar('feliz', '¡Qué bueno verte de nuevo!', 2500) }}
+            />
+          ) : (
           <div key={esRegistro ? 'registro' : 'login'} className="auth-contenido">
             <span className="tx-insignia tx-aparecer">{esRegistro ? 'Cuenta nueva' : 'Bienvenido de vuelta'}</span>
             <h1 className="auth-titulo tx-aparecer tx-retraso-1">
@@ -229,7 +243,8 @@ export default function AuthScreen({ onLogin }) {
                 <div className="auth-fila-etiqueta">
                   <label className="tx-etiqueta" htmlFor="password">Contraseña</label>
                   {!esRegistro && (
-                    <button type="button" className="auth-enlace" onClick={() => setAyudaPassword((v) => !v)} aria-expanded={ayudaPassword}>
+                    <button type="button" className="auth-enlace"
+                      onClick={() => { setRecuperando(true); setMensaje(null); reaccionar('curiosa', 'Te ayudo a recuperarla', 3000) }}>
                       ¿La olvidaste?
                     </button>
                   )}
@@ -262,17 +277,6 @@ export default function AuthScreen({ onLogin }) {
                 </label>
               )}
 
-              {!esRegistro && ayudaPassword && (
-                <div className="tx-alerta tx-alerta-info auth-ayuda" role="note">
-                  {Icono.info}
-                  <span>
-                    <strong>¿Usas Gmail?</strong> Entra con <em>Continuar con Google</em> usando el mismo correo:
-                    tu cuenta y tu progreso se conservan. Si no, pide a tu maestro o al equipo de Tanextli una
-                    contraseña temporal; la app te pedirá cambiarla al entrar.
-                  </span>
-                </div>
-              )}
-
               {mensaje && (
                 <div className="tx-alerta tx-alerta-error auth-mensaje" role="alert">
                   {Icono.alerta}
@@ -298,6 +302,7 @@ export default function AuthScreen({ onLogin }) {
               <button type="button" onClick={alternarModo}>{esRegistro ? 'Inicia sesión' : 'Crea una cuenta gratis'}</button>
             </p>
           </div>
+          )}
 
           <p className="auth-legal">
             Al continuar aceptas los <a href="/terminos" target="_blank" rel="noreferrer">términos</a> y

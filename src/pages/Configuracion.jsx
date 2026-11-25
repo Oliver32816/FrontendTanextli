@@ -14,6 +14,7 @@ import { cerrarSesion } from '../services/authService'
 import { vozActiva, activarVoz, decirLobita } from '../services/vozLobita'
 import { useLobita } from '../services/useLobita'
 import { temaElegido, elegirTema } from '../services/tema'
+import SeguridadCuenta from '../components/SeguridadCuenta'
 import '../styles/menu.css'
 import '../styles/perfil.css'
 
@@ -224,6 +225,13 @@ function Configuracion({ usuario }) {
               <span className="cf-texto"><strong>Aviso de privacidad</strong><span>Qué datos usamos y cómo los cuidamos.</span></span>
               <span className="cf-flecha" aria-hidden="true">→</span>
             </button>
+          </section>
+
+          {/* ---------- Seguridad: correo y contraseña ---------- */}
+          <section className="pf-tarjeta cf-seguridad tx-aparecer">
+            <Encabezado icono="🔐" titulo="Seguridad" texto="Tu correo y tu contraseña." />
+            <SeguridadCuenta usuario={usuario} onAviso={(texto) => avisar('seguridad', texto)} />
+            {avisoDe('seguridad')}
           </section>
 
           {/* ---------- Zona de cuidado ---------- */}
