@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useParams, useNavigate, Navigate } from 'react-router-dom'
 import Mascota from '../components/Mascota'
 import { categorias } from '../data/categorias'
@@ -10,16 +11,20 @@ import { actividadesDe } from '../data/actividades'
 import { armarPreguntasRepaso, preguntaEscuchaFrase } from '../data/repasoFrases'
 import { rutinas } from '../data/mascotaAnimaciones'
 import { armarPreguntasFamilia } from '../data/repasoFamilia'
-import { decir, elegirFrase, detenerVoz, decirLobita, exclamar, reiniciarLeccion } from '../services/vozLobita' // NUEVO
-import { useLobita } from '../services/useLobita' // NUEVO
+import { decir, elegirFrase, detenerVoz, decirLobita, exclamar, reiniciarLeccion } from '../services/vozLobita'
+import { useLobita } from '../services/useLobita'
 
-// NUEVO: la rutina de la mascota cambia según la categoría (familia, colores, numeros, frases)
+// La rutina de la mascota cambia según la categoría (familia, colores, numeros, frases)
 // "saludo" es la frase con la que Lobita abre la lección y "primero" indica si es el primer paso
 const RutinaContext = createContext({ rutina: 'leccion', saludo: null, primero: false })
 
 // El repaso general muestra ayuda cuando se falla varias veces
 const RepasoContext = createContext(false)
 const AYUDA_REPASO_DESDE = 3 // intentos fallidos para que aparezca la ayuda
+
+// Lugar de la pantalla donde se dibuja la mascota. Está FUERA del bloque que se escala,
+// así la mascota conserva su tamaño y no se achica junto con la actividad.
+const DestinoMascotaContext = createContext(null)
 
 // Títulos de respaldo para la barra de resultado (solo se usan si la frase de Lobita no trae texto)
 const TITULOS_ACIERTO = ['¡Excelente!', '¡Muy bien!', '¡Perfecto!', '¡Bien hecho!', '¡Así se hace!', '¡Genial!', '¡Lo lograste!', '¡Correcto!']
@@ -62,7 +67,7 @@ function mezclar(lista) {
 }
 
 function sonar(src) {
-  detenerVoz() // NUEVO: si Lobita está hablando, se calla para que se oiga la palabra
+  detenerVoz() // si Lobita está hablando, se calla para que se oiga la palabra
   if (!src) return
   const audio = new Audio(src)
   audio.play().catch(() => { })
@@ -115,7 +120,6 @@ function armarHueco(p, palabras, todasLasPalabras, campo = 'nahuatl') {
   return { partes, hueco, opciones: mezclar([correcta, ...distractores]) }
 }
 
-// Elige 3 opciones equivocadas distintas (que no repitan el texto que va en los botones)
 // Los números en español, del 1 al 20, para saber qué número es cada palabra
 const NUMEROS_EN_ESPANOL = [
   'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez',
@@ -130,6 +134,8 @@ function numeralDe(palabra) {
   const i = NUMEROS_EN_ESPANOL.indexOf(normalizar(palabra.espanol))
   return i === -1 ? null : i + 1
 }
+
+// Elige 3 opciones equivocadas distintas (que no repitan el texto que va en los botones)
 function elegirDistractores(p, palabras, todasLasPalabras, campo) {
   const vistos = new Set([p[campo]])
   const elegidas = []
@@ -295,7 +301,7 @@ function useAudio(src) {
   const [aviso, setAviso] = useState(false)
 
   function reproducir() {
-    detenerVoz() // NUEVO
+    detenerVoz()
     setAviso(false)
     if (!src) {
       setAviso(true)
@@ -331,21 +337,24 @@ function Cabecera({ titulo, onVolver }) {
   )
 }
 
-// NUEVO: usa la rutina de la categoría; durante los primeros segundos muestra la frase de inicio de Lobita
+// Dibuja a la mascota en el "destino" (fuera del bloque escalado de la actividad).
+// "grande" se usa en la pantalla final del repaso general, donde la mascota se ve más grande.
+function ZonaMascota({ children, grande }) {
+  const destino = useContext(DestinoMascotaContext)
+  if (!destino) return null
+  return createPortal(
+    <div className={`lp-mascota-zona ${grande ? 'grande' : ''}`}>{children}</div>,
+    destino,
+  )
+}
+
+// Usa la rutina de la categoría; durante los primeros segundos muestra la frase de inicio de Lobita
 function MascotaPista({ pista }) {
-  function MascotaPista({ pista }) {
-    const rutina = useContext(RutinaContext) // NUEVO
-    return (
-      <div className="lp-mascota-zona">
-        <Mascota rutina={rutina} mensaje={pista} tamano="pequeno" globo="arriba" />
-      </div>
-    )
-  }
   const { rutina, saludo } = useContext(RutinaContext)
   return (
-    <div className="lp-mascota-zona">
-      <Mascota rutina={rutina} mensaje={saludo || pista} tamano="pequeno" globo="arriba" />
-    </div>
+    <ZonaMascota>
+      <Mascota rutina={rutina} mensaje={saludo || pista} tamano="pequeno" globo="derecha" />
+    </ZonaMascota>
   )
 }
 
@@ -353,7 +362,7 @@ function Muestra({ color }) {
   return <span className="lp-muestra" style={{ background: color }}></span>
 }
 
-// NUEVO: reacciones de la mascota que van rotando, para que no sea siempre la misma
+// Reacciones de la mascota que van rotando, para que no sea siempre la misma
 const ESTADOS_ACIERTO = ['feliz', 'emocionada', 'agradecida', 'orgullosa', 'celebra', 'baila']
 const ESTADOS_ERROR = ['animo', 'timida', 'piensa']
 let turnoAcierto = Math.floor(Math.random() * ESTADOS_ACIERTO.length)
@@ -362,7 +371,7 @@ let turnoError = Math.floor(Math.random() * ESTADOS_ERROR.length)
 // Barra que sube desde abajo cuando el usuario comprueba su respuesta
 function BarraResultado({ resultado, detalle, textoBoton, onClick }) {
   const correcto = resultado === 'correcto'
-  // NUEVO: Lobita habla siempre (acierto o error), con una frase distinta cada vez
+  // Lobita habla siempre (acierto o error), con una frase distinta cada vez
   const [frase] = useState(() => elegirFrase(correcto ? 'acierto' : 'error'))
   // El título es lo mismo que dice Lobita (si la voz falla, uno de los títulos escritos)
   const [titulo] = useState(() =>
@@ -396,8 +405,8 @@ function BarraResultado({ resultado, detalle, textoBoton, onClick }) {
 /* ---------- Paso: escuchar y repetir ---------- */
 
 function PasoEscuchaRepite({ palabra, onContinuar }) {
-  const { saludo, primero } = useContext(RutinaContext) // NUEVO
-  // NUEVO: en la primera palabra ya habló el inicio de la lección; en las demás da la instrucción
+  const { saludo, primero } = useContext(RutinaContext)
+  // En la primera palabra ya habló el inicio de la lección; en las demás da la instrucción
   const textoEscucha = useLobita('escucha', { activo: !primero })
   const { reproducir, aviso } = useAudio(palabra.audio)
   const huboGrabacionRef = useRef(false)
@@ -467,7 +476,7 @@ function PasoEscuchaRepite({ palabra, onContinuar }) {
     }
   }
 
-  // NUEVO: al terminar de grabar, Lobita felicita
+  // Al terminar de grabar, Lobita felicita
   useEffect(() => {
     if (grabacion === 'lista' && huboGrabacionRef.current) decirLobita('avance')
   }, [grabacion])
@@ -494,7 +503,7 @@ function PasoEscuchaRepite({ palabra, onContinuar }) {
   }
 
   const textoMic = {
-    inactiva: 'Toca el icono del micrófono para empezar y toca para terminar',
+    inactiva: 'Mantén presionado y repite (o toca para empezar y toca para terminar)',
     grabando: modoToque
       ? 'Grabando... toca de nuevo para terminar'
       : 'Grabando... suelta o toca de nuevo para terminar',
@@ -505,14 +514,14 @@ function PasoEscuchaRepite({ palabra, onContinuar }) {
 
   return (
     <>
-      <div className="lp-mascota-zona">
+      <ZonaMascota>
         <Mascota
           estado={estado}
           mensaje={grabacion === 'inactiva' ? (saludo || textoEscucha || mensaje) : mensaje}
           tamano="pequeno"
-          globo="arriba"
+          globo="derecha"
         />
-      </div>
+      </ZonaMascota>
 
       <div className="lp-tarjeta">
         {palabra.colorHex && <Muestra color={palabra.colorHex} />}
@@ -665,7 +674,7 @@ function PasoUnir({ modo = 'palabras', palabras, numero, de, onSiguiente }) {
       <p className="lp-instruccion">
         {esNumeros ? 'Une cada número con su nombre en náhuatl' : 'Selecciona los pares'}
       </p>
-      {/* NUEVO: esta actividad ahora también tiene mascota */}
+      {/* Esta actividad también tiene mascota */}
       {!completo && (
         <MascotaPista pista={esNumeros ? 'Une cada número con su nombre en náhuatl' : 'Une cada palabra con su traducción'} />
       )}
@@ -745,7 +754,6 @@ function PasoOpcionMultiple({ modo, palabra, opciones, numero, de, onSiguiente }
     <>
       <h2 className="lp-actividad">Actividad {numero} de {de}</h2>
       <p className="lp-instruccion">{instrucciones[modo]}</p>
-      {resultado === null && <MascotaPista pista={pistas[modo]} />}
       {resultado === null && <MascotaPista pista={pistas[modo]} />}
 
       {modo === 'leeElige' || modo === 'leeNahuatl' ? (
@@ -1325,7 +1333,7 @@ function PasoEscritura({ palabra, numero, de, onSiguiente }) {
   const [fallos, setFallos] = useState(0)
   const [verRespuesta, setVerRespuesta] = useState(false)
   const campoRef = useRef(null)
-  useLobita('escritura') // NUEVO: "Recuerda cómo lo aprendimos" (una vez por lección)
+  useLobita('escritura') // "Recuerda cómo lo aprendimos" (una vez por lección)
 
   useEffect(() => {
     if (resultado === null && campoRef.current) campoRef.current.focus()
@@ -1347,7 +1355,7 @@ function PasoEscritura({ palabra, numero, de, onSiguiente }) {
     <>
       <h2 className="lp-actividad">Actividad {numero} de {de}</h2>
 
-      {/* NUEVO: la mascota va arriba (antes estaba debajo de la tarjeta y había que bajar para verla) */}
+      {/* La mascota va arriba (antes estaba debajo de la tarjeta y había que bajar para verla) */}
       {resultado === null && <MascotaPista pista="¡Recuerda cómo lo aprendimos!" />}
 
       <div className="lp-tarjeta">
@@ -1394,7 +1402,6 @@ function PasoEscritura({ palabra, numero, de, onSiguiente }) {
           onSaltar={() => onSiguiente(false)}
         />
       )}
-      {resultado === null && <MascotaPista pista="¡Recuerda cómo lo aprendimos!" />}
 
       {resultado === null ? (
         <button className="lp-boton" onClick={comprobar} disabled={!texto.trim()}>Comprobar</button>
@@ -1411,12 +1418,12 @@ function PasoEscritura({ palabra, numero, de, onSiguiente }) {
 
 /* ---------- Pantalla final de la lección ---------- */
 
+// (esta pantalla queda como estaba: mascota arriba del título, con su globo flotante)
 function Resumen({ cantidadPalabras, precision, final, onContinuar, onRepasar }) {
-  const textoFinal = useLobita(final ? 'finRepaso' : 'finLeccion', { ms: 6000 }) // NUEVO
+  const textoFinal = useLobita(final ? 'finRepaso' : 'finLeccion', { ms: 6000 })
   return (
     <div className="lp-resumen">
-      <Mascota estado="celebra" tamano="grande" entrada="zoom" />
-      <Mascota estado="celebra" tamano="grande" entrada="zoom" mensaje={textoFinal} flotar />
+      <Mascota estado="celebra" tamano="resumen" entrada="zoom" mensaje={textoFinal} flotar />
       <h2 className="lp-resumen-titulo">¡Completaste la lección!</h2>
       <div className="lp-stats">
         <div className="lp-stat naranja">
@@ -1531,9 +1538,13 @@ function AyudaRepaso({ fallos, nahuatl, espanol, respuesta, onSaltar }) {
 
 function ResumenRepaso({ actividades, aciertos, porcentaje, onContinuar, onInicio, onProgreso, onRepasarLecciones }) {
   const [oculta, setOculta] = useState(false)
+  const textoFinal = useLobita('finRepaso', { ms: 6000 }) // Lobita felicita por terminar el repaso
   return (
     <div className="lp-repaso lp-repaso-final">
-      <Mascota estado="celebra" tamano="grande" entrada="zoom" />
+      {/* Solo en el repaso general: la mascota va grande al costado (en pantallas anchas) */}
+      <ZonaMascota grande>
+        <Mascota estado="celebra" tamano="mediano" entrada="zoom" mensaje={textoFinal} globo="derecha" />
+      </ZonaMascota>
       <h2 className="lp-repaso-titulo">¡Felicidades!</h2>
       <p className="lp-repaso-sub">Has completado el repaso general</p>
 
@@ -1575,6 +1586,8 @@ function ResumenRepaso({ actividades, aciertos, porcentaje, onContinuar, onInici
 function IntroRepaso({ actividades, hechas, aciertos, onEmpezar }) {
   return (
     <div className="lp-repaso lp-repaso-intro">
+      {/* La mascota también acompaña la pantalla de inicio del repaso */}
+      <MascotaPista pista="Elige una actividad para empezar" />
       <p className="lp-repaso-sub">Pon a prueba tus conocimientos con las actividades de repaso</p>
 
       <div className="lp-rlista">
@@ -1619,12 +1632,17 @@ function ReproductorLeccion({ categoriaId, leccion, palabras, actividades, onRep
   const esRepaso = !!leccion.final
   const [activa, setActiva] = useState(null) // repaso: número de la actividad en curso (null = tarjetas)
   const [hechas, setHechas] = useState([]) // repaso: actividades ya terminadas
-  // NUEVO: al empezar, Lobita saluda y (si la lección empieza escuchando) da la instrucción de repetir
+  // Al empezar, Lobita saluda y (si la lección empieza escuchando) da la instrucción de repetir
   const textoInicio = useLobita(fases[0] && fases[0].tipo === 'escuchar' ? 'inicioEscucha' : 'inicioLeccion', { ms: 7000 })
   useEffect(() => { reiniciarLeccion() }, [])
 
+  // Referencias para ajustar el tamaño de la actividad a la pantalla
+  const [destinoMascota, setDestinoMascota] = useState(null)
+  const contenidoRef = useRef(null)
+  const ajusteRef = useRef(null)
+
   const volver = () => navigate(`/categoria/${categoriaId}/lecciones`)
-  const rutinaMascota = rutinas[categoriaId] ? categoriaId : 'leccion' // NUEVO
+  const rutinaMascota = rutinas[categoriaId] ? categoriaId : 'leccion'
   const total = fases.length
   const fase = fases[indice]
   const puntuables = fases.filter((f) => f.tipo !== 'escuchar').length
@@ -1647,8 +1665,17 @@ function ReproductorLeccion({ categoriaId, leccion, palabras, actividades, onRep
     progreso = Math.round(((indice - inicio) / cantidad) * 100)
   }
 
+  // Al terminar: se guarda en el servidor con los aciertos de cada actividad
   useEffect(() => {
-    if (terminado) marcarLeccionCompletada(categoriaId, leccion.id)
+    if (!terminado) return
+    marcarLeccionCompletada(categoriaId, leccion.id, {
+      actividades: resumenActividades.map((a) => ({
+        tipo: a.tipo,
+        aciertos: aciertosPorActividad[a.numero] || 0,
+        total: a.total,
+      })),
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [terminado, categoriaId, leccion.id])
 
   function empezarActividad(numero) {
@@ -1754,30 +1781,87 @@ function ReproductorLeccion({ categoriaId, leccion, palabras, actividades, onRep
     contenido = <PasoEscritura palabra={fase.palabra} numero={fase.numero} de={fase.de} onSiguiente={avanzar} />
   }
 
+  // Escala la actividad para que llene justo la pantalla (sin scroll y sin sobrepasar).
+  // Deja abajo el espacio de la barra de resultado (solo en las actividades que la usan).
+  const claveAjuste = enIntro ? 'inicio' : terminado ? 'fin' : indice
+  const reservaAbajo = enIntro || terminado || (fase && fase.tipo === 'escuchar') ? 24 : 175
+  useLayoutEffect(() => {
+    const principal = contenidoRef.current
+    const ajuste = ajusteRef.current
+    if (!principal || !ajuste) return undefined
+    let midiendo = false
+
+    function ajustar() {
+      if (midiendo) return
+      midiendo = true
+      principal.style.setProperty('--lp-reserva', `${reservaAbajo}px`)
+      principal.style.setProperty('--lp-zoom', '1')
+      const estilo = getComputedStyle(principal)
+      let alto = principal.clientHeight - parseFloat(estilo.paddingTop) - reservaAbajo
+      const ancho = principal.clientWidth - parseFloat(estilo.paddingLeft) - parseFloat(estilo.paddingRight)
+      // en pantallas angostas la mascota va en una fila arriba y le quita espacio a la actividad
+      if (destinoMascota && getComputedStyle(destinoMascota).position !== 'absolute') {
+        const altoMascota = destinoMascota.offsetHeight
+        if (altoMascota > 0) alto -= altoMascota + (parseFloat(estilo.rowGap) || 18)
+      }
+      const porAlto = alto / ajuste.offsetHeight
+      const porAncho = ancho / ajuste.offsetWidth
+      const zoom = Math.max(0.35, Math.min(porAlto, porAncho, 1.15))
+      principal.style.setProperty('--lp-zoom', zoom.toFixed(3))
+      // la barra de resultado no se achica: se le aplica el zoom contrario
+      principal.style.setProperty('--lp-inv', (1 / zoom).toFixed(3))
+      midiendo = false
+    }
+
+    ajustar()
+    const observador = new ResizeObserver(ajustar)
+    observador.observe(principal)
+    observador.observe(ajuste)
+    if (destinoMascota) observador.observe(destinoMascota)
+    principal.addEventListener('load', ajustar, true) // carga de imágenes
+    const t1 = setTimeout(ajustar, 150)
+    const t2 = setTimeout(ajustar, 600)
+    return () => {
+      observador.disconnect()
+      principal.removeEventListener('load', ajustar, true)
+      clearTimeout(t1)
+      clearTimeout(t2)
+    }
+  }, [claveAjuste, destinoMascota, reservaAbajo])
+
   return (
     <RutinaContext.Provider value={{ rutina: rutinaMascota, saludo: indice === 0 ? textoInicio : null, primero: indice === 0 }}>
       <RepasoContext.Provider value={esRepaso}>
-        <div className="lp-pagina">
-          <Cabecera
-            titulo={`Lección ${leccion.id}: ${leccion.titulo}`}
-            onVolver={esRepaso && activa !== null ? () => setActiva(null) : volver}
-          />
-          {!enIntro && !terminado && (
-            <div className="lp-progreso">
-              <div className="lp-progreso-relleno" style={{ width: `${progreso}%` }}></div>
-            </div>
-          )}
-          <main
-            className={`lp-contenido ${indice % 2 === 1 ? 'lado-izquierdo' : ''} ${esRepaso ? 'en-repaso' : ''}`}
-            key={enIntro ? 'inicio' : terminado ? 'fin' : indice}
-          >
-            {contenido}
-          </main>
-        </div>
+        <DestinoMascotaContext.Provider value={destinoMascota}>
+          <div className="lp-pagina">
+            <Cabecera
+              titulo={`Lección ${leccion.id}: ${leccion.titulo}`}
+              onVolver={esRepaso && activa !== null ? () => setActiva(null) : volver}
+            />
+            {!enIntro && !terminado && (
+              <div className="lp-progreso">
+                <div className="lp-progreso-relleno" style={{ width: `${progreso}%` }}></div>
+              </div>
+            )}
+            <main
+              className={`lp-contenido ${indice % 2 === 1 ? 'lado-izquierdo' : ''} ${esRepaso ? 'en-repaso' : ''}`}
+              key={enIntro ? 'inicio' : terminado ? 'fin' : indice}
+              ref={contenidoRef}
+            >
+              {/* Aquí se dibuja la mascota (no se escala) */}
+              <div className="lp-destino-mascota" ref={setDestinoMascota}></div>
+              {/* La actividad se escala para llenar justo la pantalla */}
+              <div className="lp-ajuste" ref={ajusteRef}>
+                {contenido}
+              </div>
+            </main>
+          </div>
+        </DestinoMascotaContext.Provider>
       </RepasoContext.Provider>
     </RutinaContext.Provider>
   )
 }
+
 /* ---------- Pantalla que se abre desde la lista de lecciones ---------- */
 
 function Leccion() {
@@ -1803,7 +1887,7 @@ function Leccion() {
         />
         <main className="lp-contenido">
           <div className="lp-fin">
-            <Mascota estado="timida" mensaje="Esta lección estará lista muy pronto." tamano="grande" globo="arriba" />       
+            <Mascota estado="timida" mensaje="Esta lección estará lista muy pronto." tamano="resumen" globo="arriba" />
             <button className="lp-boton" onClick={() => navigate(`/categoria/${id}/lecciones`)}>
               Volver a las lecciones
             </button>

@@ -196,6 +196,46 @@
 .auth-legal { margin: 0; text-align: center; font-size: .76rem; color: var(--tx-texto-tenue); line-height: 1.5; }
 .auth-legal a { color: var(--tx-verde-600); font-weight: 600; }
 
+/* Casilla de aceptar términos (solo al crear cuenta) */
+.auth-terminos {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  padding: .7rem .8rem;
+  border-radius: 12px;
+  font-size: .84rem;
+  line-height: 1.45;
+  color: var(--tx-texto-suave);
+  background: var(--tx-verde-50);
+  border: 1px solid var(--tx-borde);
+  margin-bottom: 1rem;
+  cursor: pointer;
+  animation: tx-aparecer .4s var(--tx-curva) both;
+  transition: border-color .2s, background-color .2s;
+}
+.auth-terminos:hover { border-color: color-mix(in srgb, var(--tx-verde-400) 55%, transparent); }
+.auth-terminos input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.auth-terminos-caja {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border-radius: 7px;
+  border: 2px solid var(--tx-verde-400);
+  background: var(--tx-fondo-2);
+  color: #fff;
+  transition: background-color .2s, transform .25s cubic-bezier(.3, 1.4, .5, 1);
+}
+.auth-terminos-caja svg { width: 14px; height: 14px; opacity: 0; transform: scale(.4); transition: opacity .2s, transform .25s cubic-bezier(.3, 1.4, .5, 1); }
+.auth-terminos input:checked + .auth-terminos-caja { background: var(--tx-verde-600); border-color: var(--tx-verde-600); transform: scale(1.06); }
+.auth-terminos input:checked + .auth-terminos-caja svg { opacity: 1; transform: none; }
+.auth-terminos input:focus-visible + .auth-terminos-caja { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tx-verde-400) 40%, transparent); }
+.auth-terminos a { color: var(--tx-primario); font-weight: 700; }
+.auth-enviar:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
 /* ---------- Cambio de contraseña (tarjeta sola) ---------- */
 .auth-tarjeta--sola { width: min(480px, 100%); grid-template-columns: 1fr; }
 .auth-icono-grande {
@@ -245,8 +285,61 @@
   .auth .tx-grupo { margin-bottom: .75rem; }
   .auth-separador { margin: .85rem 0; }
   .auth-alternar { margin-top: .85rem; }
+  .auth-terminos { padding: .5rem .7rem; font-size: .8rem; margin-bottom: .7rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .auth-orbe, .auth-burbuja, .auth-icono-grande, .auth-girando { animation: none; }
+}
+
+/* ---------- Palabras que cambian en las burbujas ---------- */
+.auth-burbuja { transition: box-shadow .3s; }
+.auth-burbuja-palabra { display: grid; animation: auth-palabra-entra .55s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes auth-palabra-entra {
+  0%   { opacity: 0; transform: translateY(8px) rotateX(70deg) scale(.85); filter: blur(3px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* ---------- Lobita dormida: zzz que suben ---------- */
+.auth-zzz {
+  position: absolute;
+  z-index: 3;
+  top: -10%;
+  left: -2%;
+  width: 90px;
+  height: 110px;
+  pointer-events: none;
+}
+.auth-zzz span {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .35), 0 0 14px rgba(155, 126, 240, .6);
+  opacity: 0;
+  animation: auth-zzz 3s ease-in infinite;
+}
+.auth-zzz span:nth-child(1) { font-size: 1.4rem; animation-delay: 0s; }
+.auth-zzz span:nth-child(2) { font-size: 1.9rem; animation-delay: 1s; }
+.auth-zzz span:nth-child(3) { font-size: 2.5rem; animation-delay: 2s; }
+@keyframes auth-zzz {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(10deg) scale(.6); }
+  15%  { opacity: 1; }
+  70%  { opacity: .9; }
+  100% { opacity: 0; transform: translate(-48px, -90px) rotate(-14deg) scale(1.15); }
+}
+.auth-lobita.dormida { filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .28)) saturate(.9) brightness(.95); }
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-burbuja-palabra { animation: none; }
+  .auth-zzz span { animation: none; opacity: 1; }
+  .auth-zzz span:nth-child(1) { transform: translate(0, 0); }
+  .auth-zzz span:nth-child(2) { transform: translate(-18px, -26px); }
+  .auth-zzz span:nth-child(3) { transform: translate(-36px, -56px); }
+}
+/* Celular: la ilustración es chica, los zzz también */
+@media (max-width: 860px) {
+  .auth-zzz { top: -16%; left: -34%; transform: scale(.6); transform-origin: bottom right; }
 }

@@ -1,70 +1,123 @@
+/* Pantalla "¿Qué hay en cada lección?" (la de antes de la lista de lecciones) */
+
+/* La pantalla mide justo la altura de la ventana (sin scroll) y el contenido queda centrado */
+.intro-pagina {
+  position: relative; /* NUEVO: para colocar "Volver" en la esquina */
+  height: 100vh;
+  height: 100dvh;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* NUEVO: "← Volver al inicio" en la esquina superior izquierda (cambia top/left para moverlo) */
+.intro-volver {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  margin: 0;
+  z-index: 2;
+}
+
+/* El tamaño lo calcula catInfo.jsx según el espacio libre (variable --intro-zoom):
+   el bloque se agranda o se achica hasta llenar justo la pantalla. */
+.intro-contenido {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  zoom: var(--intro-zoom, 0.85);
+}
+
 .intro-titulo {
-  text-align: center;
-  font-size: 22px;
-  font-weight: 800;
-  color: #1b4332;
-  margin: 24px 0 32px;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1b4332;
+}
+.intro-hojas { font-size: 20px; opacity: 0.85; }
+
+/* Mascota con el globo a un lado */
+.intro-mascota {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.intro-mascota .mxa-ancla { zoom: 0.8; }
+.intro-mascota .mascota-globo {
+  max-width: 300px;
+  padding: 12px 18px;
+  font-size: 16px;
 }
 
-.intro-hojas {
-  font-size: 14px;
-  opacity: 0.5;
-}
-
+/* Tarjetas de las actividades */
 .intro-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  max-width: 600px;
-  margin: 0 auto 32px;
 }
 
 .intro-tarjeta {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   background: #fff;
   border: 2px solid #dfe9e2;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(27, 67, 50, 0.05);
 }
-
 .intro-tarjeta svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   color: #1b4332;
-  margin-bottom: 10px;
 }
-
 .intro-tarjeta h3 {
-  margin: 0 0 6px;
-  font-size: 15px;
+  margin: 6px 0 0;
+  font-size: 17px;
+  font-weight: 800;
   color: #1b4332;
 }
-
 .intro-tarjeta p {
   margin: 0;
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 600;
+  line-height: 1.35;
   color: #2d6a4f;
-  line-height: 1.4;
 }
 
 .intro-continuar {
-  display: block;
-  margin: 0 auto;
-  padding: 13px 40px;
+  width: 100%;
+  max-width: 300px;
+  padding: 13px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #1b4332;
-  color: #fff;
+  font-family: inherit;
   font-size: 15px;
   font-weight: 700;
+  color: #fff;
   cursor: pointer;
 }
 .intro-continuar:hover { background: #2d6a4f; }
 
-@media (max-width: 600px) {
-  .intro-grid { grid-template-columns: 1fr; max-width: 100%; }
+/* Celular: las tarjetas van en una columna y la pantalla puede desplazarse */
+@media (max-width: 700px) {
+  .intro-pagina { height: auto; min-height: 100dvh; overflow: visible; justify-content: flex-start; }
+  .intro-volver { position: static; align-self: flex-start; margin-bottom: 8px; }
+  .intro-contenido { zoom: 1; }
+  .intro-mascota .mxa-ancla { zoom: 0.7; }
+  .intro-grid { grid-template-columns: 1fr; }
+  .intro-titulo { font-size: 22px; }
 }

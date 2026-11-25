@@ -18,7 +18,7 @@ import MascotaAnimada from './MascotaAnimada' // NUEVO: mascota animada por capa
 //   Ejemplo:  <Mascota rutina="menu" tamano="pequeno" entrada="asomar" />
 
 // NUEVO: tamaño en píxeles cuando la animación es de tipo 'capas' (súbelos o bájalos aquí)
-const TAMANOS_CAPAS = { mini: 90, barra: 150, pequeno: 180, mediano: 260, grande: 340 }
+const TAMANOS_CAPAS = { mini: 90, barra: 150, pequeno: 180, resumen: 210, mediano: 260, grande: 340 }
 // NUEVO: recuerda la última variante elegida de cada estado, para no repetirla dos veces seguidas
 const ultimaVariante = {}
 

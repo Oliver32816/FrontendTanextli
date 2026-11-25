@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import Mascota from '../components/Mascota'
 import { categorias } from '../data/categorias'
 import {
@@ -92,10 +92,58 @@ const pasos = [
 
 function Onboarding({ onTerminar }) {
   const [paso, setPaso] = useState(0)
+  const contenidoRef = useRef(null)
   const actual = pasos[paso]
   const esUltimo = paso === pasos.length - 1
   const porcentaje = Math.round(((paso + 1) / pasos.length) * 100)
   const items = actual.tipo === 'categorias' ? itemsCategorias : actual.items
+
+  // NUEVO: mide el espacio libre de la pantalla y ajusta el tamaño de la mascota
+  // para que todo quepa sin barra de desplazamiento. Se vuelve a medir cuando cambia la
+  // ventana, cuando carga la imagen de la mascota o cuando cambia el contenido.
+  useLayoutEffect(() => {
+    const main = contenidoRef.current
+    if (!main) return undefined
+    let zoom = 0.4
+    let enCurso = false
+
+    function ajustar() {
+      if (enCurso) return
+      const caja = main.firstElementChild
+      const ancla = caja && caja.querySelector('.mxa-ancla')
+      if (!ancla) return
+      enCurso = true
+      const estilo = getComputedStyle(main)
+      const libre = main.clientHeight - parseFloat(estilo.paddingTop) - parseFloat(estilo.paddingBottom)
+      for (let i = 0; i < 6; i++) {
+        const alturaMascota = ancla.getBoundingClientRect().height
+        if (alturaMascota < 20) break // la mascota todavía no cargó: se mide otra vez después
+        const otros = caja.getBoundingClientRect().height - alturaMascota // globo, texto, lista...
+        const nuevo = Math.min(1, Math.max(0.15, (zoom * (libre - otros - 12)) / alturaMascota))
+        if (Math.abs(nuevo - zoom) < 0.01) break
+        zoom = nuevo
+        main.style.setProperty('--ob-zoom', zoom.toFixed(3))
+      }
+      enCurso = false
+    }
+
+    main.style.setProperty('--ob-zoom', String(zoom))
+    ajustar()
+    const observador = new ResizeObserver(ajustar)
+    observador.observe(main)
+    if (main.firstElementChild) observador.observe(main.firstElementChild)
+    main.addEventListener('load', ajustar, true) // carga de imágenes de la mascota
+    const t1 = setTimeout(ajustar, 150)
+    const t2 = setTimeout(ajustar, 600)
+    const t3 = setTimeout(ajustar, 1500)
+    return () => {
+      observador.disconnect()
+      main.removeEventListener('load', ajustar, true)
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(t3)
+    }
+  }, [paso])
 
   function continuar() {
     if (esUltimo) {
@@ -132,7 +180,7 @@ function Onboarding({ onTerminar }) {
         <button className="ob-omitir" onClick={onTerminar}>Omitir</button>
       </header>
 
-      <main className="ob-contenido" key={actual.id}>
+      <main className="ob-contenido" key={actual.id} ref={contenidoRef}>
         {actual.tipo === 'bienvenida' || actual.tipo === 'cierre' ? (
           <div className="ob-centro">
             <Mascota estado={actual.estado} mensaje={actual.mensaje} tamano="grande" globo="arriba" />

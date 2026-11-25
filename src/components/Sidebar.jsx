@@ -27,6 +27,9 @@ function IconEscudo() {
   )
 }
 
+// Portal oficial de Tanextli (se abre en otra pestaña). Se puede cambiar con VITE_PORTAL_URL en el .env
+export const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || 'https://olo.tail0de9ec.ts.net/portal/'
+
 const CUENTA = [
   { to: '/perfil', texto: 'Perfil', Icono: IconPerfil },
   { to: '/configuracion', texto: 'Configuración', Icono: IconConfiguracion },
@@ -99,6 +102,15 @@ function Sidebar() {
         <nav className="sidebar-nav" aria-label="Categorías">
           {SECCIONES.map(enlace)}
         </nav>
+
+        <a className="sidebar-portal" href={PORTAL_URL} target="_blank" rel="noreferrer">
+          <span className="sidebar-portal-icono" aria-hidden="true">🌐</span>
+          <span className="sidebar-portal-texto">
+            <strong>Portal oficial</strong>
+            <small>Recursos de Tanextli</small>
+          </span>
+          <span className="sidebar-portal-flecha" aria-hidden="true">↗</span>
+        </a>
 
         <div className="sidebar-abajo">
           <p className="sidebar-titulo">Mi cuenta</p>

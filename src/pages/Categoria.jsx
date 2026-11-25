@@ -82,6 +82,7 @@ function Categoria() {
                 tamano="pequeno"
                 entrada={entradaPorCategoria[id] || 'deslizar'}
                 mensaje={textoLobita}
+                globo="izquierda"
                 flotar
               />
             </div>

@@ -1,5 +1,8 @@
 .lp-pagina {
-  min-height: 100vh;
+  color-scheme: light; /* las lecciones usan colores claros: controles del navegador en claro */
+  height: 100vh;
+  height: 100dvh; /* la pantalla mide justo la ventana: sin barra de desplazamiento */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #c9f7cf 0%, #fdfde8 100%);
@@ -56,17 +59,42 @@
 /* ---------- Contenido ---------- */
 .lp-contenido {
   flex: 1;
+  min-height: 0;
   width: 100%;
-  max-width: 820px;
+  max-width: 980px;
   position: relative;
   margin: 0 auto;
-  padding: 20px 24px 230px; /* espacio abajo para la barra de resultado */
+  /* espacio abajo para la barra de resultado: lo calcula Leccion.jsx (variable --lp-reserva) */
+  padding: 20px 24px var(--lp-reserva, 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  animation: lp-entrada 0.3s ease both;
+}
+
+/* Toda la actividad va aquí dentro y se escala (variable --lp-zoom, calculada en Leccion.jsx)
+   para llenar justo la pantalla */
+.lp-ajuste {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
-  animation: lp-entrada 0.3s ease both;
+  zoom: var(--lp-zoom, 1);
 }
+
+/* Lugar de la mascota. Está fuera del bloque que se escala. */
+.lp-destino-mascota {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.lp-destino-mascota:empty { display: none; }
+
+/* la barra de resultado no se achica con la actividad */
+.lp-ajuste .lp-barra { zoom: var(--lp-inv, 1); }
 
 .lp-actividad {
   margin: 0;
@@ -84,8 +112,10 @@
 
 .lp-mascota-zona {
   width: 100%;
+  max-width: 480px;
+  margin: -4px 0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .lp-tarjeta {
@@ -298,7 +328,10 @@
   font-weight: 700;
   text-align: center;
   color: #1b4332;
+  background: #fff;      /* fondo claro siempre, también en tema oscuro */
+  caret-color: #1b4332;
 }
+.lp-input::placeholder { color: #8a9a92; opacity: 1; }
 .lp-input:focus {
   outline: none;
   border-color: #2d6a4f;
@@ -498,33 +531,69 @@
 @media (max-width: 600px) {
   .lp-cabecera { padding: 12px 14px; }
   .lp-cabecera-titulo { font-size: 19px; }
-  .lp-contenido { padding: 16px 16px 280px; }
+  .lp-contenido { padding: 16px 16px var(--lp-reserva, 24px); }
   .lp-barra { padding: 14px 16px; }
   .lp-barra-contenido { flex-direction: column; align-items: stretch; }
   .lp-boton-barra { width: 100%; }
   .lp-stats { flex-direction: column; }
 }
 
-/* ---------- Mascota a un lado (pantallas anchas) ---------- */
-@media (min-width: 820px) {
-  .lp-mascota-zona {
+/* ---------- Mascota (pantallas angostas): fila pequeña con el globo a un lado ---------- */
+.lp-mascota-zona .mascota { gap: 10px; }
+.lp-mascota-zona .mxa-ancla { zoom: 0.6; }
+.lp-mascota-zona .mascota-globo {
+  max-width: 260px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+/* ---------- Mascota a un lado (pantallas anchas) ----------
+   La actividad deja un carril libre a cada lado y la mascota vive en ese carril:
+   así ni su burbuja ni ella tapan el texto. */
+@media (min-width: 1240px) {
+  .lp-contenido {
+    max-width: 1320px;
+    padding-left: 290px;
+    padding-right: 290px;
+  }
+  .lp-destino-mascota {
     position: absolute;
     top: 24px;
     right: 24px;
-    width: 190px;
-    justify-content: center;
+    width: 260px;
   }
-  .lp-mascota-zona .mascota-globo {
-    max-width: 190px;
-    padding: 10px 14px;
-    font-size: 14px;
+  .lp-mascota-zona {
+    width: 100%;
+    max-width: none;
+    margin: 0;
   }
-  .lp-mascota-zona .mascota-medio { width: 100px; }
+  .lp-mascota-zona .mascota { flex-direction: column; }
+  /* Tamaño de la mascota en las actividades (0.9 más chica · 1 medio · 1.1 más grande) */
+  .lp-mascota-zona .mxa-ancla { zoom: 1; }
+  .lp-mascota-zona .mascota-globo { max-width: 240px; font-size: 14px; }
+  /* Pantalla final del repaso general: mascota más grande */
+  .lp-mascota-zona.grande .mxa-ancla { zoom: 1.1; }
+  .lp-mascota-zona.grande .mascota-globo { max-width: 250px; font-size: 15px; }
+  /* la colita del globo pasa abajo */
+  .lp-mascota-zona .mascota-globo-derecha .mascota-globo::after {
+    left: 50%;
+    top: auto;
+    bottom: -9px;
+    margin: 0 0 0 -7px;
+    border: 2px solid #bfe6c4;
+    border-top: none;
+    border-left: none;
+  }
   /* En los pasos pares la mascota pasa al lado izquierdo */
-  .lp-contenido.lado-izquierdo .lp-mascota-zona {
+  .lp-contenido.lado-izquierdo .lp-destino-mascota {
     right: auto;
     left: 24px;
   }
+}
+
+/* Ventanas anchas pero bajitas: la mascota de la pantalla final del repaso se achica para caber */
+@media (min-width: 1240px) and (max-height: 760px) {
+  .lp-mascota-zona.grande .mxa-ancla { zoom: 0.8; }
 }
 
 /* ---------- Ayuda para recordar cómo se escribe ---------- */
@@ -892,11 +961,8 @@ html:has(.lp-pagina) { scrollbar-gutter: stable; }
 .lp-sugerencia-titulo { margin: 0 0 4px; font-weight: 800; font-size: 1.1rem; color: #8a4a05; }
 .lp-sugerencia-texto { margin: 0 0 12px; color: #5b4a2e; }
 .lp-sugerencia-botones { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-/* En pantallas angostas (o con las herramientas del navegador abiertas) la mascota se hace
-   más chica y deja de empujar el contenido hacia abajo */
-@media (max-width: 819px) {
-  .lp-mascota-zona {
-    zoom: 0.6;
-    margin-bottom: -40px;
-  }
-}
+
+/* Pantalla final de la lección: deja espacio arriba para el globo de Lobita (como estaba) */
+.lp-resumen { margin-top: 64px; }
+/* Pantalla final del repaso general: la mascota va aparte (al costado o en una fila arriba) */
+.lp-repaso-final { padding-top: 12px; }

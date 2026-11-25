@@ -1,22 +1,95 @@
 // Inicio de sesión y registro. Mismo diseño que el portal de Tanextli:
 // fondo animado, tarjeta de vidrio, Lobita sobre una forma que se transforma y palabras flotando.
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { registrar, iniciarSesion, iniciarConGoogle } from '../../services/authService'
 import MascotaAnimada from '../../components/MascotaAnimada'
 import { useMascota } from '../../components/useMascota'
 import BotonGoogle from '../../components/BotonGoogle'
 import { useAncho, tamanoMascota } from '../../components/useAncho'
 import BotonTema from '../../components/BotonTema'
+import contenido from '../../data/contenido.json'
 import './AuthScreen.css'
 
-// Palabras que flotan alrededor de Lobita (del contenido de las lecciones)
-const PALABRAS = [
-  { nahuatl: 'Cenchan', espanol: 'Familia' },
-  { nahuatl: 'Maman', espanol: 'Madre' },
-  { nahuatl: 'Papan', espanol: 'Padre' },
-]
+// Vocabulario de todas las lecciones (contenido.json) para las palabras que flotan alrededor de Lobita.
+// Se usan las más cortas para que quepan en las burbujas, sin repetir y en orden al azar.
+function armarVocabulario() {
+  const vistas = new Set()
+  const lista = []
+  for (const categoria of contenido.categorias || []) {
+    for (const sub of categoria.subcategorias || []) {
+      for (const p of sub.palabras || []) {
+        if (!p.nahuatl || p.nahuatl.length > 16) continue
+        const clave = p.nahuatl.toLowerCase() // sin repetir la misma palabra en náhuatl
+        if (vistas.has(clave)) continue
+        vistas.add(clave)
+        lista.push({ nahuatl: p.nahuatl, espanol: /^\d+$/.test(p.espanol) ? `Número ${p.espanol}` : p.espanol })
+      }
+    }
+  }
+  for (let i = lista.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[lista[i], lista[j]] = [lista[j], lista[i]]
+  }
+  return lista
+}
+const VOCABULARIO = armarVocabulario()
+const CAMBIO_PALABRA_MS = 1600 // cada cuánto cambia una de las tres burbujas (van por turnos)
+const DORMIR_MS = 20000        // Lobita se duerme si nadie toca la pantalla en este tiempo
+
+// Las tres burbujas cambian de palabra por turnos, sin repetir las que se están viendo
+function usePalabrasFlotantes() {
+  const [indices, setIndices] = useState([0, 1, 2])
+  useEffect(() => {
+    if (VOCABULARIO.length <= 3) return undefined
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined
+    let turno = 0
+    let siguiente = 3
+    const t = setInterval(() => {
+      const burbuja = turno % 3
+      const nueva = siguiente % VOCABULARIO.length // se guarda aquí: el contador sigue avanzando
+      setIndices((prev) => prev.map((v, i) => (i === burbuja ? nueva : v)))
+      siguiente += 1
+      turno += 1
+    }, CAMBIO_PALABRA_MS)
+    return () => clearInterval(t)
+  }, [])
+  return indices.map((i) => VOCABULARIO[i] || { nahuatl: 'Cenchan', espanol: 'Familia' })
+}
+
+// Lobita se duerme tras un rato sin actividad y despierta al mover el mouse, tocar o escribir
+function useDormir(ms, alDespertar) {
+  const [dormida, setDormida] = useState(false)
+  const dormidaRef = useRef(false)
+  const despertarRef = useRef(alDespertar)
+  despertarRef.current = alDespertar
+
+  useEffect(() => {
+    let t
+    const programar = () => {
+      clearTimeout(t)
+      t = setTimeout(() => { dormidaRef.current = true; setDormida(true) }, ms)
+    }
+    const actividad = () => {
+      if (dormidaRef.current) {
+        dormidaRef.current = false
+        setDormida(false)
+        despertarRef.current?.()
+      }
+      programar()
+    }
+    const eventos = ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart', 'focusin']
+    eventos.forEach((e) => window.addEventListener(e, actividad, { passive: true }))
+    programar()
+    return () => {
+      clearTimeout(t)
+      eventos.forEach((e) => window.removeEventListener(e, actividad))
+    }
+  }, [ms])
+  return dormida
+}
 
 const Icono = {
+  palomita: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5 9-10" /></svg>,
   usuario: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>,
   correo: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="3" /><path d="m4 7 8 6 8-6" /></svg>,
   candado: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="11" width="16" height="10" rx="3" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>,
@@ -34,11 +107,14 @@ export default function AuthScreen({ onLogin }) {
   const [mensaje, setMensaje] = useState(null)
   const [cargando, setCargando] = useState(false)
   const [ayudaPassword, setAyudaPassword] = useState(false)
+  const [aceptaTerminos, setAceptaTerminos] = useState(false)
 
   const [mirada, setMirada] = useState(null)
   const { estado, mensaje: mensajeMascota, reaccionar } = useMascota()
   const [refEscena, medidaEscena] = useAncho()
   const tamano = tamanoMascota(medidaEscena, { max: 280 })
+  const palabras = usePalabrasFlotantes()
+  const dormida = useDormir(DORMIR_MS, () => reaccionar('sorprendida', '¡Uy! Me quedé dormida… ¡ya desperté!', 3000))
 
   // Al abrir la pantalla Lobita saluda solo con un globo (sin voz)
   useEffect(() => {
@@ -58,6 +134,11 @@ export default function AuthScreen({ onLogin }) {
   const enviar = async (e) => {
     e.preventDefault()
     setMensaje(null)
+    if (esRegistro && !aceptaTerminos) {
+      setMensaje('Para crear tu cuenta acepta los Términos y condiciones y el Aviso de privacidad.')
+      reaccionar('pensando', 'Falta aceptar los términos', 3500)
+      return
+    }
     setCargando(true)
     reaccionar('pensando', 'Un momento…', 10000)
     try {
@@ -100,6 +181,7 @@ export default function AuthScreen({ onLogin }) {
     <div className="auth">
       <div className="tx-fondo-decorativo" aria-hidden="true"><span /><span /><span /></div>
       <BotonTema className="auth-tema" />
+
       <div className="auth-tarjeta tx-aparecer">
         {/* ---------- Lado de Lobita ---------- */}
         <aside className="auth-escena" aria-hidden="true">
@@ -110,14 +192,29 @@ export default function AuthScreen({ onLogin }) {
 
           <div className="auth-ilustracion" ref={refEscena}>
             <div className="auth-orbe" />
-            {PALABRAS.map((p, i) => (
-              <div key={p.nahuatl} className={`auth-burbuja auth-burbuja-${i + 1}`}>
-                <strong>{p.nahuatl}</strong>
-                <small>{p.espanol}</small>
+            {palabras.map((p, i) => (
+              <div key={i} className={`auth-burbuja auth-burbuja-${i + 1}`}>
+                <div key={`${p.nahuatl}-${p.espanol}`} className="auth-burbuja-palabra">
+                  <strong>{p.nahuatl}</strong>
+                  <small>{p.espanol}</small>
+                </div>
               </div>
             ))}
-            <div className="auth-lobita">
-              <MascotaAnimada estado={estado} mensaje={mensajeMascota} tamano={tamano} mirada={mirada} entrada="rebote" flotar />
+            <div className={`auth-lobita${dormida ? ' dormida' : ''}`}>
+              {dormida && (
+                <div className="auth-zzz">
+                  <span>z</span><span>z</span><span>Z</span>
+                </div>
+              )}
+              <MascotaAnimada
+                estado={dormida ? 'sonolienta' : estado}
+                mensaje={dormida ? '' : mensajeMascota}
+                tamano={tamano}
+                mirada={dormida ? null : mirada}
+                vida={!dormida}
+                entrada="rebote"
+                flotar
+              />
             </div>
           </div>
         </aside>
@@ -190,6 +287,19 @@ export default function AuthScreen({ onLogin }) {
                 </div>
               </div>
 
+              {esRegistro && (
+                <label className="auth-terminos">
+                  <input type="checkbox" checked={aceptaTerminos}
+                    onChange={(e) => { setAceptaTerminos(e.target.checked); setMensaje(null) }} required />
+                  <span className="auth-terminos-caja" aria-hidden="true">{Icono.palomita}</span>
+                  <span>
+                    He leído y acepto los{' '}
+                    <a href="/terminos" target="_blank" rel="noreferrer">Términos y condiciones</a> y el{' '}
+                    <a href="/privacidad" target="_blank" rel="noreferrer">Aviso de privacidad</a>.
+                  </span>
+                </label>
+              )}
+
               {!esRegistro && ayudaPassword && (
                 <div className="tx-alerta tx-alerta-info auth-ayuda" role="note">
                   {Icono.info}
@@ -208,7 +318,7 @@ export default function AuthScreen({ onLogin }) {
                 </div>
               )}
 
-              <button type="submit" className="tx-boton tx-boton-bloque auth-enviar" disabled={cargando}>
+              <button type="submit" className="tx-boton tx-boton-bloque auth-enviar" disabled={cargando || (esRegistro && !aceptaTerminos)}>
                 {cargando ? <span className="auth-girando" aria-hidden="true" /> : null}
                 {cargando ? 'Un momento…' : esRegistro ? 'Crear mi cuenta' : 'Entrar'}
                 {!cargando && Icono.flecha}
@@ -218,12 +328,12 @@ export default function AuthScreen({ onLogin }) {
             <div className="auth-separador tx-aparecer tx-retraso-4"><span>o</span></div>
 
             <div className="tx-aparecer tx-retraso-4">
-              <BotonGoogle onCredential={entrarConGoogle} deshabilitado={cargando} texto={esRegistro ? 'signup_with' : 'continue_with'} />
+              <BotonGoogle onCredential={entrarConGoogle} deshabilitado={cargando || (esRegistro && !aceptaTerminos)} texto={esRegistro ? 'signup_with' : 'continue_with'} />
             </div>
 
             <p className="auth-alternar">
               {esRegistro ? '¿Ya tienes cuenta?' : '¿Aún no tienes cuenta?'}{' '}
-              <button type="button" onClick={alternarModo}>{esRegistro ? 'Inicia sesión' : 'Crea una gratis'}</button>
+              <button type="button" onClick={alternarModo}>{esRegistro ? 'Inicia sesión' : 'Crea una cuenta gratis'}</button>
             </p>
           </div>
 

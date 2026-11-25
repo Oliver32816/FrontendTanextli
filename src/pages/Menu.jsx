@@ -105,7 +105,7 @@ const HOJAS = [
 
 function Menu({ usuario }) {
   const nombreUsuario = obtenerNombreSaludo(usuario)
-  const textoLobita = useLobita('menu')
+  const textoLobita = useLobita('menu', { ms: 7000 })
   const resumen = useMemo(obtenerResumen, [])
   const siguiente = useMemo(obtenerSiguienteLeccion, [])
   const [refLobita, medidaLobita] = useAncho()
