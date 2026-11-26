@@ -10,6 +10,7 @@
 .ac-tono-azul { --t: var(--tx-azul-500); }
 .ac-tono-naranja { --t: var(--tx-naranja-500); }
 .ac-tono-rosa { --t: #e0559a; }
+.ac-tono-turquesa { --t: #14b8a6; }
 
 /* ---------- Encabezado ---------- */
 .ac-hero {
@@ -228,7 +229,7 @@
 }
 .ac-flecha:hover { background: var(--tx-verde-100); transform: scale(1.08); }
 
-.ac-miembros { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .6rem; margin-top: .9rem; }
+.ac-miembros { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: .6rem; margin-top: .9rem; }
 .ac-miembro {
   position: relative;
   overflow: hidden;

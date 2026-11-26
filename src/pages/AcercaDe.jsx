@@ -15,12 +15,13 @@ const equipo = [
   { nombre: 'Oliver Macias Fernández', rol: 'Programación, Producción y Backend', tono: 'azul' },
   { nombre: 'Roberto Carlos Rojas Valadez', rol: 'Análisis y Programación', tono: 'naranja' },
   { nombre: 'Edgar Baez Santamaria', rol: 'Análisis y Programación', tono: 'rosa' },
+  { nombre: 'Araceli Arenas Castañeda', rol: 'Lingüista, Traducción y Voz de Tany', tono: 'turquesa' },
 ]
 
-const creditos = [
-  { titulo: 'Variante del náhuatl', texto: 'Náhuatl de Puebla (variante por confirmar)', icono: '🗺️' },
-  { titulo: 'Palabras y traducciones', texto: '[Pendiente: persona o fuente que las proporcionó o revisó]', icono: '📝' },
-  { titulo: 'Audios de pronunciación', texto: '[Pendiente: quién los grabó]', icono: '🎙️' },
+const creditos = [  
+  { titulo: 'Variante del náhuatl', texto: 'Náhuatl de la Sierra Noreste de Puebla', icono: '🗺️' },
+  { titulo: 'Palabras y traducciones', texto: 'Araceli Arenas Castañeda y Daniela Alvarado Isidro', icono: '📝' },
+  { titulo: 'Audios de pronunciación', texto: 'Voz de Tany: Araceli Arenas Castañeda', icono: '🎙️' },
 ]
 
 const fuentes = [
