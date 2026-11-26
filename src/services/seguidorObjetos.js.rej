@@ -1,0 +1,31 @@
+diff a/src/services/seguidorObjetos.js b/src/services/seguidorObjetos.js	(rejected hunks)
+@@ -1,10 +1,10 @@
+ // Seguidor de objetos: hace que la cámara sea rápida, estable y precisa.
+ // El modelo revisa ~14 cuadros por segundo y cada cuadro puede equivocarse un poco. Aquí:
+ //  1. Se ignoran clases que casi nunca están frente a la cámara y que el modelo confunde.
+-//  2. Un objeto se MUESTRA cuando su confianza PROMEDIO de varios cuadros llega a 0.55
+-//     (0.65 si es raro en casa). Promediar es más preciso que exigir 0.65 en un solo cuadro:
+-//     este modelo ligero casi nunca da más de 0.6 a objetos reales, aunque acierte.
+-//     Ya visible, se sigue mientras siga >= 0.35 (así no parpadea si un cuadro sale borroso).
++//  2. Un objeto se MUESTRA cuando su confianza PROMEDIO de varios cuadros llega a 0.45
++//     (0.6 si es raro en casa). Ajustado con pruebas reales: un celular bien enfocado con la
++//     cámara de una laptop sale ~50 %, así que exigir 0.55 o 0.65 lo ocultaba.
++//     Ya visible, se sigue mientras siga >= 0.25 (así no parpadea si un cuadro sale borroso).
+ //  3. Sin duplicados: un solo recuadro por objeto aunque el modelo diga dos cosas distintas
+ //     (se queda la etiqueta más segura) ni recuadros chicos repetidos dentro de uno grande.
+ //  4. Cada objeto se sigue entre cuadros: recuadro suavizado y nombre decidido por "votos".
+@@ -17,10 +17,10 @@ const RAROS = new Set([
+   'hot dog', 'traffic light', 'airplane', 'train', 'boat', 'elephant', 'bear', 'zebra',
+   'giraffe', 'tie', 'skateboard', 'toilet', 'hair drier', 'toaster',
+ ])
+-const UMBRAL_NACER = 0.42        // para empezar a seguir algo (todavía no se muestra)
+-const UMBRAL_MOSTRAR = 0.55      // confianza promedio para mostrarlo
+-const UMBRAL_MOSTRAR_RARO = 0.65
+-const UMBRAL_SEGUIR = 0.35
++const UMBRAL_NACER = 0.35        // para empezar a seguir algo (todavía no se muestra)
++const UMBRAL_MOSTRAR = 0.45      // confianza promedio para mostrarlo
++const UMBRAL_MOSTRAR_RARO = 0.6
++const UMBRAL_SEGUIR = 0.25
+ const PARA_APARECER = 3     // cuadros (~0.2 s) para mostrarlo
+ const PARA_DESAPARECER = 4  // cuadros perdidos para quitarlo
+ const SUAVIZADO = 0.55      // 0 = no se mueve, 1 = sigue cada temblor del modelo

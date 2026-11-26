@@ -9,12 +9,23 @@ import {
   IconNumeros, IconPerfil, IconConfiguracion, IconSalir, IconInfo,
 } from './Icons'
 
+// Cámara náhuatl (realidad aumentada)
+function IconCamara() {
+  return (
+    <svg className="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 8h3l2-3h6l2 3h3v11H4z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </svg>
+  )
+}
+
 const SECCIONES = [
   { to: '/menu', texto: 'Inicio', Icono: IconInicio, tono: 'verde', end: true },
   { to: '/categoria/colores', texto: 'Colores', Icono: IconColores, tono: 'morado' },
   { to: '/categoria/numeros', texto: 'Números', Icono: IconNumeros, tono: 'azul' },
   { to: '/categoria/familia', texto: 'Familia', Icono: IconFamilia, tono: 'naranja' },
   { to: '/categoria/frases', texto: 'Frases', Icono: IconFrases, tono: 'verde' },
+  { to: '/camara', texto: 'XAR Náhuatl', Icono: IconCamara, tono: 'azul' },
 ]
 
 // Escudo para el enlace de privacidad

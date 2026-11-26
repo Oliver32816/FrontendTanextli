@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import AuthScreen from './pages/Auth/AuthScreen'
 import CambiarPassword from './pages/Auth/CambiarPassword'
@@ -20,6 +20,8 @@ import { onboardingPendiente, marcarOnboardingCompletado } from './services/onbo
 import Leccion from './pages/Leccion'
 import Perfil from './pages/Perfil'
 import Configuracion from './pages/Configuracion'
+// La cámara carga el reconocimiento de objetos solo cuando se abre (no pesa en el resto de la app)
+const Camara = lazy(() => import('./pages/Camara'))
 import { aplicarPreferencias } from './services/preferencias'
 import { seguirTemaDelDispositivo } from './services/tema'
 import './styles/preferencias.css'
@@ -147,6 +149,7 @@ function App() {
       <Route path="/perfil" element={<Perfil usuario={usuario} />} />
       <Route path="/configuracion" element={<Configuracion usuario={usuario} />} />
       <Route path="/acerca-de" element={<AcercaDe />} />
+      <Route path="/camara" element={<Suspense fallback={<Cargando />}><Camara /></Suspense>} />
       {/* Solo administradores y superusuarios; los demás regresan al inicio */}
       <Route
         path="/administracion"
