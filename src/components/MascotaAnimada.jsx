@@ -4,35 +4,56 @@ import "../styles/dormir.css";
 import { useDormir, DORMIR_MS } from "./useDormir";
 
 // ---- Capas (todas miden lo mismo y se apilan en el mismo lugar) ----
-import cola from "../assets/mascota/capas/cola.png";
-import antebrazo from "../assets/mascota/capas/antebrazo.png";
-import mano from "../assets/mascota/capas/mano.png";
-import cuerpo from "../assets/mascota/capas/cuerpo.png";
-import orejaI from "../assets/mascota/capas/oreja-i.png";
-import orejaD from "../assets/mascota/capas/oreja-d.png";
-import cabeza from "../assets/mascota/capas/cabeza.png";
-import cejaI from "../assets/mascota/capas/ceja-i.png";
-import cejaD from "../assets/mascota/capas/ceja-d.png";
-import ojoFondoI from "../assets/mascota/capas/ojo-fondo-i.png";
-import ojoFondoD from "../assets/mascota/capas/ojo-fondo-d.png";
-import irisI from "../assets/mascota/capas/iris-i.png";
-import irisD from "../assets/mascota/capas/iris-d.png";
-import pestanasI from "../assets/mascota/capas/pestanas-i.png";
-import pestanasD from "../assets/mascota/capas/pestanas-d.png";
-import ojoMascaraI from "../assets/mascota/capas/ojo-mascara-i.png";
-import ojoMascaraD from "../assets/mascota/capas/ojo-mascara-d.png";
-import sonrisa from "../assets/mascota/capas/sonrisa.png";
+import cola from "../assets/mascota/capas/cola.webp";
+import antebrazo from "../assets/mascota/capas/antebrazo.webp";
+import mano from "../assets/mascota/capas/mano.webp";
+import cuerpo from "../assets/mascota/capas/cuerpo.webp";
+import orejaI from "../assets/mascota/capas/oreja-i.webp";
+import orejaD from "../assets/mascota/capas/oreja-d.webp";
+import cabeza from "../assets/mascota/capas/cabeza.webp";
+import cejaI from "../assets/mascota/capas/ceja-i.webp";
+import cejaD from "../assets/mascota/capas/ceja-d.webp";
+import ojoFondoI from "../assets/mascota/capas/ojo-fondo-i.webp";
+import ojoFondoD from "../assets/mascota/capas/ojo-fondo-d.webp";
+import irisI from "../assets/mascota/capas/iris-i.webp";
+import irisD from "../assets/mascota/capas/iris-d.webp";
+import pestanasI from "../assets/mascota/capas/pestanas-i.webp";
+import pestanasD from "../assets/mascota/capas/pestanas-d.webp";
+import ojoMascaraI from "../assets/mascota/capas/ojo-mascara-i.webp";
+import ojoMascaraD from "../assets/mascota/capas/ojo-mascara-d.webp";
+import sonrisa from "../assets/mascota/capas/sonrisa.webp";
 
 // ---- Expresiones ----
-import bocaAbierta from "../assets/mascota/expresiones/bocas/boca-abierta.png";
-import bocaGrande from "../assets/mascota/expresiones/bocas/boca-grande.png";
-import bocaTriste from "../assets/mascota/expresiones/bocas/boca-triste.png";
-import bocaSorpresa from "../assets/mascota/expresiones/bocas/boca-sorpresa.png";
-import bocaHmm from "../assets/mascota/expresiones/bocas/boca-hmm.png";
-import ojoCerradoI from "../assets/mascota/expresiones/ojos/ojo-cerrado-i.png";
-import ojoCerradoD from "../assets/mascota/expresiones/ojos/ojo-cerrado-d.png";
-import ojoFelizI from "../assets/mascota/expresiones/ojos/ojo-feliz-i.png";
-import ojoFelizD from "../assets/mascota/expresiones/ojos/ojo-feliz-d.png";
+import bocaAbierta from "../assets/mascota/expresiones/bocas/boca-abierta.webp";
+import bocaGrande from "../assets/mascota/expresiones/bocas/boca-grande.webp";
+import bocaTriste from "../assets/mascota/expresiones/bocas/boca-triste.webp";
+import bocaSorpresa from "../assets/mascota/expresiones/bocas/boca-sorpresa.webp";
+import bocaHmm from "../assets/mascota/expresiones/bocas/boca-hmm.webp";
+import ojoCerradoI from "../assets/mascota/expresiones/ojos/ojo-cerrado-i.webp";
+import ojoCerradoD from "../assets/mascota/expresiones/ojos/ojo-cerrado-d.webp";
+import ojoFelizI from "../assets/mascota/expresiones/ojos/ojo-feliz-i.webp";
+import ojoFelizD from "../assets/mascota/expresiones/ojos/ojo-feliz-d.webp";
+
+// ---- Precarga ----
+// Tany se arma con ~30 capas. Si se muestra antes de que TODAS lleguen, se ve "a pedazos"
+// (por ejemplo, los ojos en blanco porque el fondo del ojo llegó antes que el iris).
+// Por eso se descargan y decodifican todas al abrir la app, y Tany aparece cuando están listas.
+const TODAS_LAS_CAPAS = [cola, antebrazo, mano, cuerpo, orejaI, orejaD, cabeza, cejaI, cejaD, ojoFondoI, ojoFondoD, irisI, irisD, pestanasI, pestanasD, ojoMascaraI, ojoMascaraD, sonrisa, bocaAbierta, bocaGrande, bocaTriste, bocaSorpresa, bocaHmm, ojoCerradoI, ojoCerradoD, ojoFelizI, ojoFelizD];
+const imagenesListas = []; // se guardan para que el navegador no las descarte
+let mascotaLista = false;
+const promesaMascota = typeof window === "undefined"
+  ? Promise.resolve()
+  : Promise.all(
+      TODAS_LAS_CAPAS.map((src) => {
+        const img = new Image();
+        img.decoding = "async";
+        img.src = src;
+        imagenesListas.push(img);
+        return (img.decode ? img.decode() : Promise.resolve()).catch(() => {});
+      })
+    ).then(() => {
+      mascotaLista = true;
+    });
 
 // ---- Estados ----
 // boca:   sonrisa | hablando | grande | triste | sorpresa | hmm
@@ -102,6 +123,15 @@ export default function MascotaAnimada({
   dormida: dormidaExterna,
   onDespertar,
 }) {
+  // Tany aparece (con un suave desvanecido) cuando todas sus capas ya están listas
+  const [lista, setLista] = useState(mascotaLista);
+  useEffect(() => {
+    if (lista) return undefined;
+    let vigente = true;
+    promesaMascota.then(() => { if (vigente) setLista(true); });
+    return () => { vigente = false; };
+  }, [lista]);
+
   const controlada = typeof dormidaExterna === "boolean";
   const dormidaPropia = useDormir(dormir && !controlada ? DORMIR_MS : 0, onDespertar);
   const dormida = controlada ? dormidaExterna : dormidaPropia;
@@ -175,7 +205,7 @@ export default function MascotaAnimada({
         )}
 
         <div
-          className="mxa"
+          className={`mxa${lista ? "" : " mxa-cargando"}`}
           role="img"
           aria-label="Mascota de Tanextli"
           data-estado={nombre}

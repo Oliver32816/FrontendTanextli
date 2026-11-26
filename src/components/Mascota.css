@@ -730,3 +730,7 @@
   82%  { transform: translateY(0) scale(1.02, .98); }
   100% { opacity: 1; transform: translateY(0) scale(1, 1); }
 }
+/* Tany aparece hasta que todas sus capas cargaron (así nunca se ve "a pedazos") */
+.mxa { transition: opacity .35s ease; }
+.mxa.mxa-cargando { opacity: 0; }
+.mxa.mxa-cargando * { animation-play-state: paused !important; }
