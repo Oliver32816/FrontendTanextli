@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { urlAudio } from '../services/audios';
 import Mascota from "./Mascota";
 import { useMascota } from "./useMascota";
 import contenido from "../data/contenido.json";
@@ -12,7 +13,7 @@ export default function PruebaContenido() {
 
   // Reproduce un audio (solo funciona después de un clic del usuario)
   const sonar = (ruta) => {
-    const audio = new Audio(ruta);
+    const audio = new Audio(urlAudio(ruta));
     audio.play().catch((e) => console.error("No se pudo reproducir", ruta, e));
   };
 

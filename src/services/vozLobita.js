@@ -1,5 +1,6 @@
-// Voz de Lobita: reproduce los audios de public/audios/lobita y devuelve el texto para el globo.
+// Voz de Lobita (Tany): reproduce sus audios (servidos por el servidor, /audios/lobita) y devuelve el texto para el globo.
 import datos from '../data/lobita.json'
+import { urlAudio } from './audios'
 
 const CLAVE_VOZ = 'tanextli_voz_lobita'
 const frases = Object.fromEntries(datos.frases.map((f) => [f.id, f]))
@@ -60,7 +61,7 @@ const audios = {}
 function audioDe(f) {
   if (!f || !f.audio) return null
   if (!audios[f.id]) {
-    const a = new Audio(f.audio)
+    const a = new Audio(urlAudio(f.audio))
     a.preload = 'auto'
     audios[f.id] = a
   }

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { urlAudio } from '../services/audios'
 import { createPortal } from 'react-dom'
 import { useParams, useNavigate, Navigate } from 'react-router-dom'
 import Mascota from '../components/Mascota'
@@ -69,7 +70,7 @@ function mezclar(lista) {
 function sonar(src) {
   detenerVoz() // si Lobita está hablando, se calla para que se oiga la palabra
   if (!src) return
-  const audio = new Audio(src)
+  const audio = new Audio(urlAudio(src))
   audio.play().catch(() => { })
 }
 
@@ -308,7 +309,7 @@ function useAudio(src) {
       return
     }
     if (audioRef.current) audioRef.current.pause()
-    const audio = new Audio(src)
+    const audio = new Audio(urlAudio(src))
     audioRef.current = audio
     audio.play().catch(() => setAviso(true))
   }
@@ -951,7 +952,7 @@ function PasoArmar({ palabra, opciones, numero, de, onSiguiente }) {
     let i = 0
     const siguiente = () => {
       if (i >= palabra.audios.length) return
-      const audio = new Audio(palabra.audios[i])
+      const audio = new Audio(urlAudio(palabra.audios[i]))
       i += 1
       audioRef.current = audio
       audio.onended = siguiente
