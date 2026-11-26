@@ -1,6 +1,6 @@
 // Voz de Lobita (Tany): reproduce sus audios (servidos por el servidor, /audios/lobita) y devuelve el texto para el globo.
 import datos from '../data/lobita.json'
-import { urlAudio } from './audios'
+import { audioPara, precargarAudios } from './audios'
 
 const CLAVE_VOZ = 'tanextli_voz_lobita'
 const frases = Object.fromEntries(datos.frases.map((f) => [f.id, f]))
@@ -61,9 +61,7 @@ const audios = {}
 function audioDe(f) {
   if (!f || !f.audio) return null
   if (!audios[f.id]) {
-    const a = new Audio(urlAudio(f.audio))
-    a.preload = 'auto'
-    audios[f.id] = a
+    audios[f.id] = audioPara(f.audio)
   }
   return audios[f.id]
 }
@@ -185,4 +183,11 @@ export function decirLobita(grupo, opciones = {}) {
   }
   sonar(0)
   return lista[0]
+}
+// Las frases de Tany son pocas y cortas: se descargan en segundo plano al abrir la app,
+// para que la bienvenida y sus comentarios suenen sin retraso.
+if (typeof window !== 'undefined') {
+  const precargarVoz = () => precargarAudios(datos.frases.map((f) => f.audio))
+  if ('requestIdleCallback' in window) window.requestIdleCallback(precargarVoz, { timeout: 2500 })
+  else setTimeout(precargarVoz, 800)
 }

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { urlAudio } from '../services/audios'
+import { audioPara, precargarAudios, rutasDeAudio } from '../services/audios'
 import { createPortal } from 'react-dom'
 import { useParams, useNavigate, Navigate } from 'react-router-dom'
 import Mascota from '../components/Mascota'
@@ -70,7 +70,7 @@ function mezclar(lista) {
 function sonar(src) {
   detenerVoz() // si Lobita está hablando, se calla para que se oiga la palabra
   if (!src) return
-  const audio = new Audio(urlAudio(src))
+  const audio = audioPara(src)
   audio.play().catch(() => { })
 }
 
@@ -309,7 +309,7 @@ function useAudio(src) {
       return
     }
     if (audioRef.current) audioRef.current.pause()
-    const audio = new Audio(urlAudio(src))
+    const audio = audioPara(src)
     audioRef.current = audio
     audio.play().catch(() => setAviso(true))
   }
@@ -952,7 +952,7 @@ function PasoArmar({ palabra, opciones, numero, de, onSiguiente }) {
     let i = 0
     const siguiente = () => {
       if (i >= palabra.audios.length) return
-      const audio = new Audio(urlAudio(palabra.audios[i]))
+      const audio = audioPara(palabra.audios[i])
       i += 1
       audioRef.current = audio
       audio.onended = siguiente
@@ -1870,6 +1870,14 @@ function Leccion() {
   const navigate = useNavigate()
   const [vuelta, setVuelta] = useState(0) // sube al repasar la lección, para empezarla de nuevo
   const categoria = categorias[id]
+
+  // Al entrar, se descargan en segundo plano TODOS los audios de la lección (y de su categoría,
+  // para los repasos): así suenan al instante al tocar el botón.
+  useEffect(() => {
+    const leccionActual = categorias[id]?.lecciones.find((l) => String(l.id) === leccionId)
+    const deLeccion = leccionActual && contenidoLecciones[id]?.[leccionActual.id]
+    precargarAudios(rutasDeAudio(deLeccion || contenidoLecciones[id] || {}))
+  }, [id, leccionId])
   const leccion = categoria ? categoria.lecciones.find((l) => String(l.id) === leccionId) : null
 
   if (!categoria || !leccion) {

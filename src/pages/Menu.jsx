@@ -1,6 +1,6 @@
 // Menú principal: saludo con Lobita, tu avance, la palabra del día y las categorías.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { urlAudio } from '../services/audios'
+import { audioPara, precargarAudios } from '../services/audios'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import CategoriaCard from '../components/CategoriaCard'
@@ -69,6 +69,7 @@ function Dato({ valor, sufijo = '', texto, icono }) {
 
 function PalabraDelDia() {
   const palabra = useMemo(palabraDelDia, [])
+  useEffect(() => { precargarAudios([palabra?.audio]) }, [palabra])
   const audio = useRef(null)
   const [sonando, setSonando] = useState(false)
   if (!palabra) return null
@@ -76,7 +77,7 @@ function PalabraDelDia() {
   const escuchar = () => {
     if (!palabra.audio) return
     audio.current?.pause()
-    audio.current = new Audio(urlAudio(palabra.audio))
+    audio.current = audioPara(palabra.audio)
     setSonando(true)
     audio.current.onended = () => setSonando(false)
     audio.current.play().catch(() => setSonando(false))

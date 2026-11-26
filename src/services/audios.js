@@ -23,3 +23,46 @@ export function urlAudio(ruta) {
   if (/^(https?:|blob:|data:)/.test(ruta)) return ruta // ya es una dirección completa
   return `${MEDIA_URL}${encodeURI(ruta.startsWith('/') ? ruta : `/${ruta}`)}`
 }
+
+// ---------- Precarga: que el audio suene AL INSTANTE al tocar el botón ----------
+// Cada audio se descarga una sola vez y se reutiliza (el navegador lo deja listo en memoria).
+const cache = new Map()
+
+function crear(url) {
+  const audio = new Audio(url)
+  audio.preload = 'auto'
+  cache.set(url, audio)
+  return audio
+}
+
+// Devuelve el audio listo para reproducir (desde el principio). Reemplaza a `new Audio(ruta)`.
+export function audioPara(ruta) {
+  const url = urlAudio(ruta)
+  const audio = cache.get(url)
+  if (!audio) return crear(url)
+  audio.pause()
+  audio.onended = null
+  audio.onerror = null
+  try { audio.currentTime = 0 } catch { /* aún no cargaba */ }
+  return audio
+}
+
+// Empieza a descargar audios en segundo plano (por ejemplo, todos los de una lección al entrar)
+export function precargarAudios(rutas = []) {
+  ;[...new Set(rutas.filter(Boolean))].forEach((ruta) => {
+    const url = urlAudio(ruta)
+    if (!cache.has(url)) crear(url).load()
+  })
+}
+
+// Busca todas las rutas "/audios/…" dentro de unos datos (palabras, frases, combinaciones…)
+export function rutasDeAudio(datos, lista = []) {
+  if (typeof datos === 'string') {
+    if (datos.startsWith('/audios/')) lista.push(datos)
+  } else if (Array.isArray(datos)) {
+    datos.forEach((d) => rutasDeAudio(d, lista))
+  } else if (datos && typeof datos === 'object') {
+    Object.values(datos).forEach((d) => rutasDeAudio(d, lista))
+  }
+  return lista
+}
