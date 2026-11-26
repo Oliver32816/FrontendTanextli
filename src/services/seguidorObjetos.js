@@ -1,8 +1,10 @@
 // Seguidor de objetos: hace que la cámara sea rápida, estable y precisa.
 // El modelo revisa ~14 cuadros por segundo y cada cuadro puede equivocarse un poco. Aquí:
 //  1. Se ignoran clases que casi nunca están frente a la cámara y que el modelo confunde.
-//  2. Un objeto NUEVO solo aparece con confianza >= 0.65 (0.75 si es raro en casa).
-//     Ya visible, se sigue mientras siga >= 0.40 (así no parpadea si un cuadro sale borroso).
+//  2. Un objeto se MUESTRA cuando su confianza PROMEDIO de varios cuadros llega a 0.45
+//     (0.6 si es raro en casa). Ajustado con pruebas reales: un celular bien enfocado con la
+//     cámara de una laptop sale ~50 %, así que exigir 0.55 o 0.65 lo ocultaba.
+//     Ya visible, se sigue mientras siga >= 0.25 (así no parpadea si un cuadro sale borroso).
 //  3. Sin duplicados: un solo recuadro por objeto aunque el modelo diga dos cosas distintas
 //     (se queda la etiqueta más segura) ni recuadros chicos repetidos dentro de uno grande.
 //  4. Cada objeto se sigue entre cuadros: recuadro suavizado y nombre decidido por "votos".
@@ -15,10 +17,11 @@ const RAROS = new Set([
   'hot dog', 'traffic light', 'airplane', 'train', 'boat', 'elephant', 'bear', 'zebra',
   'giraffe', 'tie', 'skateboard', 'toilet', 'hair drier', 'toaster',
 ])
-const UMBRAL_ENTRAR = 0.65
-const UMBRAL_ENTRAR_RARO = 0.75
-const UMBRAL_SEGUIR = 0.4
-const PARA_APARECER = 2     // cuadros seguidos (~0.15 s) para mostrarlo
+const UMBRAL_NACER = 0.35        // para empezar a seguir algo (todavía no se muestra)
+const UMBRAL_MOSTRAR = 0.45      // confianza promedio para mostrarlo
+const UMBRAL_MOSTRAR_RARO = 0.6
+const UMBRAL_SEGUIR = 0.25
+const PARA_APARECER = 3     // cuadros (~0.2 s) para mostrarlo
 const PARA_DESAPARECER = 4  // cuadros perdidos para quitarlo
 const SUAVIZADO = 0.55      // 0 = no se mueve, 1 = sigue cada temblor del modelo
 
@@ -78,13 +81,11 @@ export function crearSeguidor() {
         Object.keys(mejor.votos).forEach((k) => { mejor.votos[k] *= 0.8 })
         mejor.votos[d.nombre] = (mejor.votos[d.nombre] || 0) + d.confianza
         mejor.nombre = Object.entries(mejor.votos).sort((a, b) => b[1] - a[1])[0][0]
-        mejor.confianza = mezclar(mejor.confianza, d.confianza, 0.4)
+        mejor.confianza = mezclar(mejor.confianza, d.confianza, 0.35)
         mejor.vistas += 1
         mejor.perdidas = 0
       } else {
-        // 2: solo nace un objeto nuevo si el modelo está muy seguro
-        const umbral = RAROS.has(d.nombre) ? UMBRAL_ENTRAR_RARO : UMBRAL_ENTRAR
-        if (d.confianza < umbral) return
+        if (d.confianza < minimo(UMBRAL_NACER)) return
         const nuevo = { id: siguienteId++, nombre: d.nombre, confianza: d.confianza, caja: { ...d.caja }, votos: { [d.nombre]: d.confianza }, vistas: 1, perdidas: 0 }
         objetos.push(nuevo)
         usados.add(nuevo.id)
@@ -95,7 +96,13 @@ export function crearSeguidor() {
     objetos = objetos.filter((o) => o.perdidas <= PARA_DESAPARECER)
 
     return objetos
-      .filter((o) => o.vistas >= PARA_APARECER && o.perdidas <= 2)
+      .filter((o) => {
+        if (o.vistas < PARA_APARECER || o.perdidas > 2) return false
+        // una vez mostrado, se queda aunque baje un poco (evita parpadeos)
+        if (o.mostrado) return true
+        o.mostrado = o.confianza >= minimo(RAROS.has(o.nombre) ? UMBRAL_MOSTRAR_RARO : UMBRAL_MOSTRAR)
+        return o.mostrado
+      })
       .map((o) => ({ id: o.id, nombre: o.nombre, confianza: o.confianza, vistas: o.vistas, caja: { ...o.caja } }))
   }
 

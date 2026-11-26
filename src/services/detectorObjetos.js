@@ -113,6 +113,57 @@ export async function cambiarACPU(calidad = 'rapida') {
   return obtenerDetector(calidad)
 }
 
+// ---------- Clasificador (segundo paso: ¿qué es exactamente este objeto?) ----------
+// EfficientNet-Lite0 entrenado con ImageNet: ~1000 cosas, mucho más específicas que el detector.
+// Se usa en cada objeto POR SEPARADO (recortándolo de la imagen) y en el centro de la imagen
+// cuando el detector no encuentra nada.
+const CLASIFICADOR = {
+  local: '/modelos/efficientnet_lite0.tflite',
+  cdn: 'https://storage.googleapis.com/mediapipe-models/image_classifier/efficientnet_lite0/float32/1/efficientnet_lite0.tflite',
+}
+let clasificadorPromesa = null
+export function obtenerClasificador() {
+  if (!clasificadorPromesa) {
+    clasificadorPromesa = (async () => {
+      const { ImageClassifier } = await import('@mediapipe/tasks-vision')
+      const vision = await prepararVision()
+      const modelo = (await existe(CLASIFICADOR.local)) ? CLASIFICADOR.local : CLASIFICADOR.cdn
+      const opciones = (delegate) => ({ baseOptions: { modelAssetPath: modelo, delegate }, runningMode: 'IMAGE', maxResults: 3 })
+      try {
+        // En el procesador: así no compite por la tarjeta gráfica con el detector
+        return await ImageClassifier.createFromOptions(vision, opciones('CPU'))
+      } catch {
+        return ImageClassifier.createFromOptions(vision, opciones('CPU'))
+      }
+    })().catch((err) => {
+      console.warn('[XAR] Sin clasificador (se usa solo el detector):', err)
+      return null
+    })
+  }
+  return clasificadorPromesa
+}
+
+// Recorta una zona del video (con un poco de margen) y la clasifica
+const lienzoRecorte = typeof document !== 'undefined' ? document.createElement('canvas') : null
+export function clasificarZona(clasificador, video, caja) {
+  if (!lienzoRecorte) return []
+  const vw = video.videoWidth
+  const vh = video.videoHeight
+  const margen = 0.12
+  const x = Math.max(0, caja.x - caja.ancho * margen)
+  const y = Math.max(0, caja.y - caja.alto * margen)
+  const w = Math.min(vw - x, caja.ancho * (1 + margen * 2))
+  const h = Math.min(vh - y, caja.alto * (1 + margen * 2))
+  if (w < 24 || h < 24) return []
+  lienzoRecorte.width = 224
+  lienzoRecorte.height = 224
+  lienzoRecorte.getContext('2d').drawImage(video, x, y, w, h, 0, 0, 224, 224)
+  const resultado = clasificador.classify(lienzoRecorte)
+  return (resultado?.classifications?.[0]?.categories || [])
+    .map((c) => ({ nombre: c.categoryName || c.displayName || '', confianza: c.score || 0 }))
+    .filter((c) => c.nombre)
+}
+
 // ---------- Rostro (solo cámara frontal) ----------
 // BlazeFace: modelo muy pequeño (~0.2 MB) y rapidísimo. Sirve para que las etiquetas
 // nunca tapen la cara de quien sostiene el objeto.

@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Mascota from '../components/Mascota'
-import { obtenerDetector, detectar, cambiarACPU, infoDetector, obtenerDetectorRostro, detectarRostros } from '../services/detectorObjetos'
-import { cargarVocabulario, traducirDeteccion } from '../services/vocabularioCamara'
+import { obtenerDetector, detectar, cambiarACPU, infoDetector, obtenerDetectorRostro, detectarRostros, obtenerClasificador, clasificarZona } from '../services/detectorObjetos'
+import { cargarVocabulario, traducirDeteccion, traducirClase } from '../services/vocabularioCamara'
 import { crearSeguidor, normalizarCaja } from '../services/seguidorObjetos'
 import { ICONO_TIPO, SUGERENCIAS_CAMARA } from '../data/objetosCamara'
 import '../styles/camara.css'
@@ -117,6 +117,9 @@ export default function Camara() {
   const seguidorRef = useRef(crearSeguidor())
   const nuevaTimerRef = useRef(0)
   const resultadoRef = useRef(null)
+  const clasificadorRef = useRef(null)     // se usa en cuanto termina de cargar (no frena la cámara)
+  const votosClaseRef = useRef(new Map())  // id del objeto -> votos del clasificador
+  const centroRef = useRef({ votos: {}, trad: {} })
 
   const [estado, setEstado] = useState('cargando') // cargando | lista | error
   const [error, setError] = useState(null)
@@ -191,6 +194,8 @@ export default function Camara() {
       try {
         await obtenerDetector(calidad)
         if (!cancelado) { setEstado('lista'); setSinNadaDesde(Date.now()) }
+        // El clasificador (segundo paso) carga en segundo plano
+        obtenerClasificador().then((c) => { clasificadorRef.current = c })
       } catch {
         if (!cancelado) { setError('modelo'); setEstado('error') }
       }
@@ -277,7 +282,72 @@ export default function Camara() {
         // Las personas se ocultan (con la cámara frontal siempre estás detrás del objeto).
         // Si se activan, solo aparecen cuando no hay nada más en la imagen.
         if (!verPersonas || estables.some((o) => o.nombre !== 'person')) estables = estables.filter((o) => o.nombre !== 'person')
-        const traducidos = estables.map((o) => ({ ...o, traduccion: traducirDeteccion(o.nombre) }))
+
+        // ----- Segundo paso: conocer cada objeto POR SEPARADO con el clasificador -----
+        // Cada cuadro se recorta UN objeto (por turnos) y el clasificador vota qué es exactamente.
+        const clasificador = clasificadorRef.current
+        const votos = votosClaseRef.current
+        const ids = new Set(estables.map((o) => o.id))
+        votos.forEach((_, id) => { if (!ids.has(id)) votos.delete(id) })
+        const candidatos = estables.filter((o) => o.nombre !== 'person')
+        if (clasificador && candidatos.length) {
+          const o = candidatos[cuadros % candidatos.length]
+          let cats = []
+          try { cats = clasificarZona(clasificador, video, o.caja) } catch { /* un cuadro perdido no importa */ }
+          const memo = votos.get(o.id) || { votos: {}, trad: {} }
+          Object.keys(memo.votos).forEach((k) => { memo.votos[k] *= 0.8 })
+          cats.forEach((c) => {
+            const t = traducirClase(c.nombre)
+            if (!t || c.confianza < minimo(0.12)) return
+            memo.votos[t.espanol] = (memo.votos[t.espanol] || 0) + c.confianza
+            memo.trad[t.espanol] = t
+          })
+          votos.set(o.id, memo)
+        }
+        const traducir = (o) => {
+          const memo = votos.get(o.id)
+          const mejor = memo && Object.entries(memo.votos).sort((a, b) => b[1] - a[1])[0]
+          const delDetector = traducirDeteccion(o.nombre)
+          // El nombre del clasificador (más específico) gana si está seguro, salvo que el detector
+          // esté muy seguro de que es otro tipo de cosa (por ejemplo, un perro al 80 % no se vuelve "taza")
+          if (mejor && mejor[1] > minimo(0.45)) {
+            const clase = memo.trad[mejor[0]]
+            if (o.confianza < 0.7 || clase.tipo === delDetector.tipo) return { ...clase, fuente: 'clasificador' }
+          }
+          return delDetector
+        }
+        const traducidos = estables.map((o) => ({ ...o, traduccion: traducir(o) }))
+
+        // ----- Si el detector no ve nada: el clasificador mira el CENTRO de la imagen -----
+        const centro = centroRef.current
+        if (traducidos.length === 0 && clasificador && cuadros % 3 === 0) {
+          const lado = Math.min(video.videoWidth, video.videoHeight) * 0.62
+          const caja = { x: (video.videoWidth - lado) / 2, y: (video.videoHeight - lado) / 2, ancho: lado, alto: lado }
+          let cats = []
+          try { cats = clasificarZona(clasificador, video, caja) } catch { /* nada */ }
+          Object.keys(centro.votos).forEach((k) => { centro.votos[k] *= 0.75 })
+          cats.forEach((c) => {
+            const t = traducirClase(c.nombre)
+            if (!t || c.confianza < minimo(0.15)) return
+            centro.votos[t.espanol] = (centro.votos[t.espanol] || 0) + c.confianza
+            centro.trad[t.espanol] = t
+            centro.ultima = { ...(centro.ultima || {}), [t.espanol]: c.confianza }
+          })
+          centro.caja = caja
+        } else if (traducidos.length > 0) {
+          centro.votos = {}
+        }
+        if (traducidos.length === 0 && centro.caja) {
+          const mejor = Object.entries(centro.votos).sort((a, b) => b[1] - a[1])[0]
+          // El centro es una adivinanza del clasificador sin recuadro del detector: se exige más.
+          // Solo entra a la colección cuando está MUY seguro (evita guardar cosas como "excusado").
+          if (mejor && mejor[1] > minimo(1.4) && (centro.ultima?.[mejor[0]] || 0) >= minimo(0.35)) {
+            traducidos.push({
+              id: 'centro', nombre: 'centro', confianza: centro.ultima?.[mejor[0]] || 0, vistas: mejor[1] >= 2.2 ? 10 : 0,
+              caja: centro.caja, traduccion: { ...centro.trad[mejor[0]], fuente: 'centro' },
+            })
+          }
+        }
         setObjetos(acomodar(traducidos, video, visorRef.current, frontal, rostros.map((r) => r.caja)))
 
         // Resultado en formato estándar para la capa de RA (coordenadas de 0 a 1000)
@@ -443,7 +513,7 @@ export default function Camara() {
         {diagnostico && (
           <pre className="cam-diagnostico">
             {`Estado: ${estado}${error ? ` (${error})` : ''}
-Motor: ${infoDetector.motor} · Modelo: ${infoDetector.modelo}
+Motor: ${infoDetector.motor} · Modelo: ${infoDetector.modelo} · Clasificador: ${clasificadorRef.current ? 'listo' : 'cargando…'}
 Cuadros: ${diag.cuadros} · Estables: ${objetos.length}
 Ve: ${diag.ultimas || '—'}${diag.error ? `\nError: ${diag.error}` : ''}
 ${resultadoRef.current ? JSON.stringify(resultadoRef.current, null, 1).slice(0, 600) : ''}`}
@@ -530,6 +600,10 @@ ${resultadoRef.current ? JSON.stringify(resultadoRef.current, null, 1).slice(0, 
           <div className="cam-coleccion-titulo">
             <span>📚 Tu colección</span>
             <b>{coleccion.length} {coleccion.length === 1 ? 'palabra' : 'palabras'} en náhuatl</b>
+            {(coleccion.length > 0 || vistasSesion.length > 0) && (
+              <button type="button" className="cam-limpiar" onClick={() => { guardarColeccion([]); setColeccion([]); setVistasSesion([]) }}
+                title="Empezar la colección de nuevo">Reiniciar</button>
+            )}
           </div>
           {vistasSesion.length > 0 && (
             <ul>

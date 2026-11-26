@@ -5,6 +5,7 @@
 import { pedir } from './api'
 import { contenidoLecciones } from '../data/lecciones'
 import { OBJETOS_CAMARA } from '../data/objetosCamara'
+import { claseEnEspanol } from '../data/clasesImagenet'
 
 export const normalizar = (texto = '') => texto
   .toLowerCase()
@@ -48,16 +49,28 @@ export function cargarVocabulario() {
   return cargando
 }
 
-// "dog" -> { espanol: 'Perro', nahuatl: 'Itzcuintli', tipo: 'animal' }
-// Si no está en el vocabulario: nahuatl = null
-export function traducirDeteccion(nombreIngles) {
-  const objeto = OBJETOS_CAMARA[nombreIngles]
-  const espanol = objeto?.es[0] || nombreIngles
-  const tipo = objeto?.tipo || 'objeto'
-  const opciones = objeto?.es || [nombreIngles]
+// Regla: primero se RECONOCE el objeto (en inglés, por el modelo), luego se TRADUCE al español
+// y al final se busca en NUESTRO vocabulario. Siempre hay respuesta: si la palabra no está,
+// nahuatl = null ("Desconocido"); si ni siquiera hay traducción al español, se muestra en inglés.
+function buscarEnVocabulario(opciones, tipo) {
+  const espanol = opciones[0]
   for (const opcion of opciones) {
     const encontrada = diccionario?.get(normalizar(opcion))
     if (encontrada) return { espanol, nahuatl: encontrada.nahuatl, tipo }
   }
   return { espanol, nahuatl: null, tipo }
+}
+
+const enIngles = (nombre) => ({ espanol: nombre.charAt(0).toUpperCase() + nombre.slice(1), nahuatl: null, tipo: 'objeto', enIngles: true })
+
+// Detector (80 cosas): "dog" -> { espanol: 'Perro', nahuatl: 'Itzcuintli', tipo: 'animal' }
+export function traducirDeteccion(nombreIngles) {
+  const objeto = OBJETOS_CAMARA[nombreIngles]
+  return objeto ? buscarEnVocabulario(objeto.es, objeto.tipo) : enIngles(nombreIngles)
+}
+
+// Clasificador (~1000 cosas): "coffee mug" -> { espanol: 'Taza', … } · null si no hay traducción
+export function traducirClase(nombreIngles) {
+  const clase = claseEnEspanol(nombreIngles)
+  return clase ? buscarEnVocabulario(clase.es, clase.tipo) : null
 }

@@ -364,6 +364,9 @@
 .cam-coleccion-titulo { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; font-size: .8rem; }
 .cam-coleccion-titulo span { font-weight: 800; color: var(--tx-texto-suave); }
 .cam-coleccion-titulo b { color: var(--tx-primario); }
+.cam-limpiar { margin-left: auto; padding: .15rem .55rem; border: 1px solid var(--tx-borde); border-radius: 999px; background: none; color: var(--tx-texto-tenue); font: inherit; font-size: .72rem; font-weight: 700; cursor: pointer; }
+.cam-limpiar:hover { color: var(--tx-texto); border-color: var(--tx-texto-tenue); }
+.cam-coleccion-titulo b + .cam-limpiar { margin-left: .5rem; }
 .cam-coleccion ul { display: flex; gap: .4rem; margin: 0; padding: 0 0 .2rem; list-style: none; overflow-x: auto; scrollbar-width: thin; }
 .cam-coleccion li {
   flex-shrink: 0;
