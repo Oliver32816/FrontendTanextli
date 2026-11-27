@@ -4,6 +4,15 @@
 
 .ac-contenedor { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
 
+
+/* Color de cada integrante del equipo (los mismos de la app móvil) */
+.ac-tono-daniela { --t: #0fda78; }
+.ac-tono-karla { --t: #5406fdfa; }
+.ac-tono-oliver { --t: #1206fdfb; }
+.ac-tono-roberto { --t: #dfed19bb; }
+.ac-tono-edgar { --t: #f80202; }
+.ac-tono-araceli { --t: #e705eb; }
+
 /* Colores por integrante / función */
 .ac-tono-verde { --t: var(--tx-verde-500); }
 .ac-tono-morado { --t: var(--tx-morado-500); }

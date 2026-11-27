@@ -10,12 +10,12 @@ import '../styles/acercaDe.css'
 const VERSION = '1.0'
 
 const equipo = [
-  { nombre: 'Daniela Alvarado Isidro', rol: 'Líder de proyecto, Análisis y Programación', tono: 'verde' },
-  { nombre: 'Karla Jazmín Calderón Hernández', rol: 'Diseño y Programación', tono: 'morado' },
-  { nombre: 'Oliver Macias Fernández', rol: 'Programación, Producción y Backend', tono: 'azul' },
-  { nombre: 'Roberto Carlos Rojas Valadez', rol: 'Análisis y Programación', tono: 'naranja' },
-  { nombre: 'Edgar Baez Santamaria', rol: 'Análisis y Programación', tono: 'rosa' },
-  { nombre: 'Araceli Arenas Castañeda', rol: 'Lingüista, Traducción y Voz de Tany', tono: 'turquesa' },
+  { nombre: 'Daniela Alvarado Isidro', rol: 'Líder de proyecto, Análisis y Programación', tono: 'daniela' },
+  { nombre: 'Karla Jazmín Calderón Hernández', rol: 'Diseño y Programación', tono: 'karla' },
+  { nombre: 'Oliver Macias Fernández', rol: 'Programación, Producción y Backend', tono: 'oliver' },
+  { nombre: 'Roberto Carlos Rojas Valadez', rol: 'Análisis y Programación', tono: 'roberto' },
+  { nombre: 'Edgar Baez Santamaria', rol: 'Análisis y Programación', tono: 'edgar' },
+  { nombre: 'Araceli Arenas Castañeda', rol: 'Lingüista, Traducción y Voz de Tany', tono: 'araceli' },
 ]
 
 const creditos = [  
