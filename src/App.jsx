@@ -8,6 +8,7 @@ import { sincronizarProgreso } from './services/progreso'
 import { EVENTO_SESION_VENCIDA } from './services/api'
 import { useLatido } from './services/useLatido'
 import { Privacidad, Terminos } from './pages/Legal'
+import AppGoogle from './pages/AppGoogle'
 import Menu from './pages/Menu'
 import CategoriaIntro from './pages/catInfo'
 import Categoria from './pages/Categoria'
@@ -30,7 +31,7 @@ import './styles/preferencias.css'
 aplicarPreferencias()
 seguirTemaDelDispositivo()
 // Páginas que se ven sin iniciar sesión
-const PUBLICAS = { '/privacidad': Privacidad, '/terminos': Terminos }
+const PUBLICAS = { '/privacidad': Privacidad, '/terminos': Terminos, '/app-google': AppGoogle }
 
 // Cuentas anteriores a la verificación de correo pueden dejarla "para después" (solo esta visita)
 const CLAVE_VERIFICAR_DESPUES = 'tanextli_verificar_despues'

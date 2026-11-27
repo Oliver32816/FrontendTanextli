@@ -37,7 +37,7 @@ function LogoGoogle() {
   )
 }
 
-export default function BotonGoogle({ onCredential, deshabilitado = false, texto = 'continue_with' }) {
+export default function BotonGoogle({ onCredential, deshabilitado = false, texto = 'continue_with', nonce }) {
   const contenedor = useRef(null)
   const alRecibir = useRef(onCredential)
   const [ancho, setAncho] = useState(320)
@@ -66,6 +66,8 @@ export default function BotonGoogle({ onCredential, deshabilitado = false, texto
           callback: (respuesta) => alRecibir.current?.(respuesta.credential),
           ux_mode: 'popup',
           context: 'signin',
+          // La app móvil manda un nonce: Google lo firma dentro del token y la app lo comprueba
+          ...(nonce ? { nonce } : {}),
         })
         contenedor.current.replaceChildren()
         google.accounts.id.renderButton(contenedor.current, {
@@ -83,7 +85,7 @@ export default function BotonGoogle({ onCredential, deshabilitado = false, texto
     return () => {
       cancelado = true
     }
-  }, [ancho, texto])
+  }, [ancho, texto, nonce])
 
   // Sin ID de cliente (o si Google no carga): botón visible pero desactivado
   if (!CLIENT_ID || falla) {
